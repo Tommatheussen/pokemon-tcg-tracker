@@ -1,0 +1,13 @@
+.set-list {
+  overflow: auto;
+}
+
+.main {
+  height: 700px;
+}
+
+.main .md-sidenav-content, 
+.main md-sidenav {
+  display: flex;
+  overflow: visible;
+}

@@ -1,0 +1,27 @@
+<md-sidenav-container class="main">
+  <md-sidenav #sidenav opened="true" mode="side">
+      <md-list class="set-list">
+        <span *ngFor="let set of sets">
+          <md-list-item (click)="setSelected(set)">
+            <h4 md-line>{{ set.name }}</h4>
+            <p md-line>{{ set.releaseDate }}</p>
+          </md-list-item>
+          <md-divider></md-divider>
+        </span>
+      </md-list>
+  </md-sidenav>
+  
+  <ng2-md-datatable selectable>
+    <ng2-md-datatable-header>
+      <ng2-md-datatable-column sortableValue="name">Name</ng2-md-datatable-column>
+      <ng2-md-datatable-column sortableValue="number" numeric>Number</ng2-md-datatable-column>
+    </ng2-md-datatable-header>
+    <tbody>
+      <ng2-md-datatable-row *ngFor="let card of cards" [selectableValue]="card.id">
+        <td>{{ card.name }}</td>
+        <td class="numeric">{{ card.number }}</td>
+      </ng2-md-datatable-row>
+    </tbody>
+  </ng2-md-datatable>
+
+</md-sidenav-container>
