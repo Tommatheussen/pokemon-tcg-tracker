@@ -13,7 +13,10 @@ router.get('/', (req, res) => {
     },
     json: true
   }).then(function (cards) {
-    return res.send(cards.cards);
+    return res.send({
+      cards: cards.cards,
+      total: cards.totalCards
+    });
   }).catch(function (err) {
     return res.send(err);
   });

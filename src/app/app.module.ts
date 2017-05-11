@@ -7,7 +7,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { MdDataTableModule } from 'ng2-md-datatable';
 
-import { MaterialModule } from '@angular/material';
+import { MdlModule } from '@angular-mdl/core';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -25,7 +25,7 @@ import { HomeComponent } from './home/home.component';
     ReactiveFormsModule,
     FlexLayoutModule,
     MdDataTableModule,
-    MaterialModule.forRoot()
+    MdlModule
   ],
   providers: [],
   bootstrap: [AppComponent]

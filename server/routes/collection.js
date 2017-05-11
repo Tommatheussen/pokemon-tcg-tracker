@@ -6,19 +6,19 @@ db = diskdb.connect('./server/database/', ['collected']);
 
 /* GET api listing. */
 router.get('/', (req, res) => {
-  let set = req.query.set;
+  let setCode = req.query.setCode;
 
   res.send(db.collected.find({
-    set: set
+    setCode: setCode
   }));
 });
 
 router.put('/', (req, res) => {
-  let set = req.body.set;
+  let setCode = req.body.setCode;
   let card = req.body.card;
 
   var existing = db.collected.find({
-    set: set,
+    setCode: setCode,
     card: card
   });
 
@@ -30,7 +30,7 @@ router.put('/', (req, res) => {
       });
   } else {
     db.collected.save({
-      set: set,
+      setCode: setCode,
       card: card,
       collectedOn: Date.now()
     });

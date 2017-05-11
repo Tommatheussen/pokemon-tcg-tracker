@@ -1,27 +1,25 @@
-<md-sidenav-container class="main">
-  <md-sidenav #sidenav opened="true" mode="side">
-      <md-list class="set-list">
-        <span *ngFor="let set of sets">
-          <md-list-item (click)="setSelected(set)">
-            <h4 md-line>{{ set.name }}</h4>
-            <p md-line>{{ set.releaseDate }}</p>
-          </md-list-item>
-          <md-divider></md-divider>
-        </span>
-      </md-list>
-  </md-sidenav>
-  
-  <ng2-md-datatable selectable>
-    <ng2-md-datatable-header>
-      <ng2-md-datatable-column sortableValue="name">Name</ng2-md-datatable-column>
-      <ng2-md-datatable-column sortableValue="number" numeric>Number</ng2-md-datatable-column>
-    </ng2-md-datatable-header>
-    <tbody>
-      <ng2-md-datatable-row *ngFor="let card of cards" [selectableValue]="card.id">
-        <td>{{ card.name }}</td>
-        <td class="numeric">{{ card.number }}</td>
-      </ng2-md-datatable-row>
-    </tbody>
-  </ng2-md-datatable>
+<mdl-layout mdl-layout-fixed-drawer md-layout-fixed-header>
+  <mdl-layout-header>
+    <mdl-layout-header-row>
+      <mdl-layout-title>Pokemon TCG Collection Tracker</mdl-layout-title>
+      <mdl-layout-spacer></mdl-layout-spacer>
+      <mdl-layout-title>Set: {{ selectedSet }}</mdl-layout-title>
+    </mdl-layout-header-row>
+  </mdl-layout-header>
+  <mdl-layout-drawer>
+    <mdl-layout-title>Sets</mdl-layout-title>
+    <mdl-list>
+      <mdl-list-item lines="2" *ngFor="let set of sets" (click)="setSelected(set)">
+        <mdl-list-item-primary-content>
+          <span>{{ set.name }}</span>
+          <mdl-list-item-sub-title>{{ set.releaseDate }}</mdl-list-item-sub-title>
+        </mdl-list-item-primary-content>
+      </mdl-list-item>
+    </mdl-list>
+  </mdl-layout-drawer>
+  <mdl-layout-content>
+    <mdl-table [table-model]="tableModel">
 
-</md-sidenav-container>
+    </mdl-table>
+  </mdl-layout-content>
+<mdl-layout>
