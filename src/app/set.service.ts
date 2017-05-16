@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { Http, Response } from '@angular/http';
 
 import { Observable } from 'rxjs';
@@ -12,7 +12,7 @@ import { Set } from './set.interface';
 export class SetService {
 	private _sets: Datastore;
 
-	constructor(private db: DatabaseService, private http: Http) {
+	constructor(private db: DatabaseService, private http: Http, private ngZone: NgZone) {
 		this._sets = db.sets;
 	}
 
@@ -22,13 +22,14 @@ export class SetService {
 			.subscribe(sets => this._sets.insert(sets));
 	}
 
-	public get(): Observable<Set[]> {
-		return Observable.create((observer) => {
-			this._sets.find({}, (err, sets) => {
-				console.log(err, sets);
-				observer.next(sets);
-				observer.complete();
-			});
+  public get(): Observable<Set[]> {
+    return Observable.create(observer => {
+      this._sets.find<Set>({}, (err, sets) => {
+        this.ngZone.run(() => {
+          observer.next(sets);
+          observer.complete();
+        });
+      });
 		});
 	}
 }

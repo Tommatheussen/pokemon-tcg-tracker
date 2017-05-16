@@ -12,6 +12,7 @@ import { HomeComponent } from './home/home.component';
 
 import { DatabaseService } from './database.service';
 import { SetService } from './set.service';
+import { CardService } from './card.service';
 
 import { NgxElectronModule } from 'ngx-electron';
 
@@ -31,8 +32,9 @@ import { NgxElectronModule } from 'ngx-electron';
 	NgxElectronModule
   ],
   providers: [
-	DatabaseService,
-	SetService
+	  DatabaseService,
+    SetService,
+    CardService
   ],
   bootstrap: [AppComponent]
 })
