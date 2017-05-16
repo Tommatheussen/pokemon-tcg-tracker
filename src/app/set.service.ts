@@ -18,10 +18,7 @@ export class SetService {
 
 	public seed(): void {
 		this.http.get('https://api.pokemontcg.io/v1/sets')
-			.map((res: Response) => {
-				console.log(res.json());
-				return <Set[]>res.json().sets
-			})
+			.map((res: Response) => <Set[]>res.json().sets)
 			.subscribe(sets => this._sets.insert(sets));
 	}
 
@@ -29,7 +26,6 @@ export class SetService {
 		return Observable.create((observer) => {
 			this._sets.find({}, (err, sets) => {
 				console.log(err, sets);
-
 				observer.next(sets);
 				observer.complete();
 			});

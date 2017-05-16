@@ -1,0 +1,7 @@
+.set-list .set.active {
+	background-color: lightgray;
+}
+
+.set-list .set:hover {
+	background-color: lightslategray;
+}

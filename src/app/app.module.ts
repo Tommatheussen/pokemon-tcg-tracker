@@ -13,6 +13,8 @@ import { HomeComponent } from './home/home.component';
 import { DatabaseService } from './database.service';
 import { SetService } from './set.service';
 
+import { NgxElectronModule } from 'ngx-electron';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,7 +27,8 @@ import { SetService } from './set.service';
     BrowserAnimationsModule,
     ReactiveFormsModule,
     FlexLayoutModule,
-    MdlModule
+    MdlModule,
+	NgxElectronModule
   ],
   providers: [
 	DatabaseService,

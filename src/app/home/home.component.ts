@@ -5,13 +5,16 @@ import { MdlDefaultTableModel } from '@angular-mdl/core';
 
 import { SetService } from '../set.service';
 
+import { Observable } from 'rxjs';
+import { Set } from '../set.interface';
+
 @Component({
   selector: 'pokemon-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  public sets;
+  public sets: Observable<Set[]>;
   public cards;
   public selectedSet: string;
 
@@ -19,9 +22,7 @@ export class HomeComponent implements OnInit {
 	  this.setService.seed();
 	}
 
-  constructor(private setService: SetService) {
-
-  }
+  constructor(private setService: SetService) { }
 
   tableData = [
     { name: 'Test', id: 1, selected: true },
@@ -37,16 +38,15 @@ export class HomeComponent implements OnInit {
     //this.tableModel.addAll(this.tableData);
     //this.tableModel.data = this.tableData;
 
-	  this.setService.get()
-		  .subscribe(sets => {
-			  console.log(sets);
-			  this.sets = sets
-		  });
+	  this.sets = this.setService.get()
+		 // .subscribe(sets => this.sets = sets );
       //.map((res: Response) => res.json())
       //.subscribe(sets => this.sets = sets);
   }
 
-  /*setSelected(set): void {
+  setSelected(set): void {
+	  this.selectedSet = set.name;
+	  /*
     let params = new URLSearchParams();
     params.append('setCode', set.code);
 
@@ -63,6 +63,6 @@ export class HomeComponent implements OnInit {
       .subscribe(collected => {
 
         console.log(collected);
-      });
-  }*/
+      });*/
+  }
 }
