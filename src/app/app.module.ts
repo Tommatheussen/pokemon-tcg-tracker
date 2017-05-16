@@ -5,12 +5,13 @@ import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
-import { MdDataTableModule } from 'ng2-md-datatable';
-
 import { MdlModule } from '@angular-mdl/core';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
+
+import { DatabaseService } from './database.service';
+import { SetService } from './set.service';
 
 @NgModule({
   declarations: [
@@ -20,14 +21,16 @@ import { HomeComponent } from './home/home.component';
   imports: [
     BrowserModule,
     FormsModule,
-	  HttpModule,
+	HttpModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
     FlexLayoutModule,
-    MdDataTableModule,
     MdlModule
   ],
-  providers: [],
+  providers: [
+	DatabaseService,
+	SetService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
