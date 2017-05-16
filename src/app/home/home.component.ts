@@ -69,7 +69,17 @@ export class HomeComponent implements OnInit {
       })*/
 
     
-   this.sets = this.setService.get()
+    this.sets = this.setService.get()
+
+    this.sets.subscribe(sets => {
+      sets.forEach(set => {
+        this.cardService.countCollected(set.code)
+          .subscribe(count => {
+            //console.log(count);
+            set.collectedCount = count
+          });
+      });
+    }); //this.cardService.countCollected(set.code))
       /*.subscribe(setlist => {
         console.log(setlist);
         this.sets = setlist
@@ -80,9 +90,9 @@ export class HomeComponent implements OnInit {
     this.selectedSet = set.name;
 
     this.cards = this.cardService.get(set.code);
-    this.cards.subscribe(cards => {
+    /*this.cards.subscribe(cards => {
       this.tableModel.data = <IMdlTableModelItem[]>cards;
-    })
+    })*/
    
 /*
     this.http.get('/api/cards', { search: params })

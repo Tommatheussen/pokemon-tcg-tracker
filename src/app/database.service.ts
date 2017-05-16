@@ -7,11 +7,13 @@ import { ElectronService } from 'ngx-electron';
 @Injectable()
 export class DatabaseService {
 	public sets: Datastore;
-	public cards: Datastore;
+  public cards: Datastore;
+  public collection: Datastore;
 
 	constructor(private electronService: ElectronService) {
 		let db = this.electronService.remote.getGlobal('db');
 		this.sets = db.sets;
-		this.cards = db.cards;
+    this.cards = db.cards;
+    this.collection = db.collection;
 	}
 }

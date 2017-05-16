@@ -13,7 +13,15 @@ export class CardService {
 	private _cards: Datastore;
 
 	constructor(private db: DatabaseService, private http: Http, private ngZone: NgZone) {
-		this._cards = db.cards;
+    this._cards = db.cards;
+    
+    this.db.collection.count({ setCode: 'base6'}, (err, count) => {
+      console.log(err, count);
+    });
+
+    this.db.cards.count({ setCode: 'base6' }, (err, count) => {
+      console.log(err, count);
+    })
 	}
 
   public get(setCode: string): Observable<Card[]> {
@@ -40,6 +48,17 @@ export class CardService {
         }
       });
 		});
+  }
+
+  public countCollected(setCode: string): Observable<number> {
+    return Observable.create(observer => {
+      this.db.collection.count({ setCode: setCode, collected: true }, (err, count) => {
+        this.ngZone.run(() => {
+          observer.next(count);
+          observer.complete();
+        });
+      });
+    });
   }
   
   private getCards(setCode: string): Observable<Card[]> {

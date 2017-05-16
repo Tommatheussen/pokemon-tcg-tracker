@@ -58,5 +58,6 @@ app.on('activate', function () {
 
 global.db = {
 	sets: new Datastore({ filename: path.join(app.getAppPath(), 'sets.db'), autoload: true }),
-	cards: new Datastore({ filename: path.join(app.getAppPath(), 'cards.db'), autoload: true })
+  cards: new Datastore({ filename: path.join(app.getAppPath(), 'cards.db'), autoload: true }),
+  collection: new Datastore({ filename: path.join(app.getAppPath(), 'collection.db'), autoload: true})
 }

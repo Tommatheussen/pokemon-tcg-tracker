@@ -3,5 +3,6 @@ export interface Set {
 	series: string;
 	totalCards: number;
 	code: string;
-	releaseDate: string;
+  releaseDate: string;
+  collectedCount: number;
 }

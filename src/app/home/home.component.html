@@ -11,7 +11,7 @@
    	<mdl-list class="set-list">
       <mdl-list-item lines="2" *ngFor="let set of (sets | async)" (click)="setSelected(set)" class="set" [class.active]="set.name == selectedSet">
         <mdl-list-item-primary-content>
-          <span>{{ set.name }}</span>
+          <span>{{ set.name }} {{ set.collectedCount }}</span>
           <mdl-list-item-sub-title>{{ set.releaseDate }}</mdl-list-item-sub-title>
         </mdl-list-item-primary-content>
       </mdl-list-item>
