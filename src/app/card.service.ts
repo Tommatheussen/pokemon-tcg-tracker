@@ -14,19 +14,12 @@ export class CardService {
 
 	constructor(private db: DatabaseService, private http: Http, private ngZone: NgZone) {
     this._cards = db.cards;
-    
-    this.db.collection.count({ setCode: 'base6'}, (err, count) => {
-      console.log(err, count);
-    });
-
-    this.db.cards.count({ setCode: 'base6' }, (err, count) => {
-      console.log(err, count);
-    })
 	}
 
   public get(setCode: string): Observable<Card[]> {
     return Observable.create(observer => {
       this._cards.find<Card>({ setCode: setCode }, (err, cards) => {
+        console.log(err);
         if (!err) {
           console.log(cards);
           if (cards.length == 0) {
@@ -60,7 +53,7 @@ export class CardService {
       });
     });
   }
-  
+
   private getCards(setCode: string): Observable<Card[]> {
     let params = new URLSearchParams();
     params.append('setCode', setCode);

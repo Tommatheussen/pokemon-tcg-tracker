@@ -22,18 +22,7 @@ export class HomeComponent implements OnInit {
 
   public loading: Boolean = true;
 
-  seed(): void {
-	  this.setService.seed();
-	}
-
-  constructor(private setService: SetService, private cardService: CardService) {
-    this.getSets();
-   }
-
-  tableData = [
-    { name: 'Test', id: 1, selected: true },
-    { name: 'Tom', id: 3 , selected: false}
-  ];
+  constructor(private setService: SetService, private cardService: CardService) { }
 
   public tableModel = new MdlDefaultTableModel([
     { key: 'name', name: 'Name', sortable: true },
@@ -41,59 +30,33 @@ export class HomeComponent implements OnInit {
   ]);
 
   ngOnInit(): void {
+    this.getSets();
     //this.tableModel.addAll(this.tableData);
     //this.tableModel.data = this.tableData;
-
-    /*let set = this.setService.get();
-
-    set.subscribe(sets => {
-      this.sets = sets;
-      console.log(sets);
-    }, error => console.log(error), () => {
-      console.log('finished');
-      this.loading = false
-    });*/
-      //.subscribe((sets, err, finished) => this.sets = sets);
-		 // .subscribe(sets => this.sets = sets );
-      //.map((res: Response) => res.json())
-      //.subscribe(sets => this.sets = sets);
-    
-    //this.getSets();
   }
 
   getSets() {
-    /*Observable.bindNodeCallback(this.setService._sets.find({}).exec)()
-      .subscribe(sets => {
-        console.log(sets);
-        this.sets = sets;
-      })*/
-
-    
     this.sets = this.setService.get()
-
-    this.sets.subscribe(sets => {
-      sets.forEach(set => {
-        this.cardService.countCollected(set.code)
-          .subscribe(count => {
-            //console.log(count);
-            set.collectedCount = count
-          });
+      .map((sets: Set[]) => {
+        return sets.sort((a: Set, b: Set) => {
+          if (new Date(b.releaseDate) < new Date(a.releaseDate)) return 1;
+          else if (new Date(b.releaseDate) > new Date(a.releaseDate)) return -1;
+          return 0;
+        });
       });
-    }); //this.cardService.countCollected(set.code))
-      /*.subscribe(setlist => {
-        console.log(setlist);
-        this.sets = setlist
-      });*/
   }
 
-  setSelected(set): void {
+  selectSet(set: Set) {
     this.selectedSet = set.name;
 
     this.cards = this.cardService.get(set.code);
+  }
+
+  setSelected(set): void {
     /*this.cards.subscribe(cards => {
       this.tableModel.data = <IMdlTableModelItem[]>cards;
     })*/
-   
+
 /*
     this.http.get('/api/cards', { search: params })
       .map((res: Response) => res.json())
@@ -106,13 +69,13 @@ export class HomeComponent implements OnInit {
       .subscribe(collected => {
 
         console.log(collected);
-    
+
     if (this.cards && this.collected) {
       this.collected.forEach(collectedEntry => {
         var foundCard = this.cards.find(function (card) {
           return card.id == collectedEntry.card;
         });
-        
+
         foundCard.collected = true;
       });
     }
@@ -123,7 +86,7 @@ export class HomeComponent implements OnInit {
       })
 
       this.tableModel.data = this.cards;
-    }  
+    }
 
     console.log(this.cards);
       });*/

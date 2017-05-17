@@ -12,14 +12,22 @@ import { Set } from './set.interface';
 export class SetService {
 	private _sets: Datastore;
 
-	constructor(private db: DatabaseService, private http: Http, private ngZone: NgZone) {
+	constructor(
+		private db: DatabaseService,
+		private http: Http,
+		private ngZone: NgZone) {
 		this._sets = db.sets;
+		this.seedSets();
 	}
 
-	public seed(): void {
-		this.http.get('https://api.pokemontcg.io/v1/sets')
-			.map((res: Response) => <Set[]>res.json().sets)
-			.subscribe(sets => this._sets.insert(sets));
+	private seedSets(): void {
+		this._sets.count({}, (err: Error, count: number) => {
+			if (count === 0) {
+				this.http.get('https://api.pokemontcg.io/v1/sets')
+					.map((res: Response) => <Set[]>res.json().sets)
+					.subscribe(sets => this._sets.insert(sets));
+			}
+		})
 	}
 
   public get(): Observable<Set[]> {

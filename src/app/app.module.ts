@@ -13,26 +13,25 @@ import { HomeComponent } from './home/home.component';
 import { DatabaseService } from './database.service';
 import { SetService } from './set.service';
 import { CardService } from './card.service';
-
-import { NgxElectronModule } from 'ngx-electron';
+import { MenuItemComponent } from './menu-item/menu-item.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    MenuItemComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
-	HttpModule,
+    HttpModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
     FlexLayoutModule,
     MdlModule,
-	NgxElectronModule
   ],
   providers: [
-	  DatabaseService,
+    DatabaseService,
     SetService,
     CardService
   ],

@@ -2,18 +2,18 @@ import { Injectable } from '@angular/core';
 
 import * as Datastore from 'nedb';
 
-import { ElectronService } from 'ngx-electron';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class DatabaseService {
+	public done: Observable<Boolean> = Observable.of(false);
 	public sets: Datastore;
-  public cards: Datastore;
-  public collection: Datastore;
+	public cards: Datastore;
+	public collection: Datastore;
 
-	constructor(private electronService: ElectronService) {
-		let db = this.electronService.remote.getGlobal('db');
-		this.sets = db.sets;
-    this.cards = db.cards;
-    this.collection = db.collection;
+	constructor() {
+		this.sets = new Datastore({ filename: 'sets.db', autoload: true });
+		this.cards = new Datastore({ filename: 'cards.db', autoload: true });
+		this.collection = new Datastore({ filename: 'collection.db', autoload: true });
 	}
 }
