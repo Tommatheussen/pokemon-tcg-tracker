@@ -41,6 +41,4 @@ testem.log
 .DS_Store
 Thumbs.db
 
-/server/config.js
-/binaries
-/release
+*.db
