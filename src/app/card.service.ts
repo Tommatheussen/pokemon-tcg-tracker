@@ -7,6 +7,7 @@ import { DatabaseService } from './database.service';
 
 import * as Datastore from 'nedb';
 import { Card } from './card.interface';
+import { Set } from './set.interface';
 
 @Injectable()
 export class CardService {
@@ -16,14 +17,13 @@ export class CardService {
     this._cards = db.cards;
 	}
 
-  public get(setCode: string): Observable<Card[]> {
+  public get(set: Set): Observable<Card[]> {
     return Observable.create(observer => {
-      this._cards.find<Card>({ setCode: setCode }, (err, cards) => {
-        console.log(err);
-        if (!err) {
+      this._cards.find<Card>({ setCode: set.code }, (err, cards) => {
+        if (!err || cards.length > set.totalCards) {
           console.log(cards);
-          if (cards.length == 0) {
-            this.getCards(setCode).subscribe(cards => {
+          if (cards.length == 0 || cards.length !== set.totalCards) {
+            this.getCards(set).subscribe(cards => {
               console.log(cards);
               this._cards.insert(cards);
 
@@ -54,9 +54,10 @@ export class CardService {
     });
   }
 
-  private getCards(setCode: string): Observable<Card[]> {
+  private getCards(set: Set): Observable<Card[]> {
     let params = new URLSearchParams();
-    params.append('setCode', setCode);
+    params.append('setCode', set.code);
+    params.append('pageSize', String(set.totalCards));
     return this.http.get('https://api.pokemontcg.io/v1/cards', { search: params }).map((res: Response) => <Card[]>res.json().cards);
   }
 }

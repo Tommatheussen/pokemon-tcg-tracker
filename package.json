@@ -13,6 +13,7 @@
     "@angular-mdl/core": "^4.0.3",
     "@angular/cli": "^1.0.3",
     "@angular/compiler-cli": "^4.1.2",
+    "@swimlane/ngx-datatable": "^9.1.0",
     "body-parser": "^1.17.1",
     "diskdb": "^0.1.17",
     "express": "^4.15.2",

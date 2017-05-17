@@ -16,7 +16,11 @@
     </mdl-list>
   </mdl-layout-drawer>
   <mdl-layout-content>
-    <mdl-table [table-model]="tableModel">
-    </mdl-table>
+    <ngx-datatable
+      [rows]="cards | async"
+      [columns]="columns">
+    </ngx-datatable>
+    <!--<mdl-table [table-model]="tableModel">
+    </mdl-table>-->
   </mdl-layout-content>
 <mdl-layout>

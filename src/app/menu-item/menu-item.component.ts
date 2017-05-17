@@ -1,14 +1,8 @@
 import { Component, AfterViewInit, Input, Output, EventEmitter } from '@angular/core';
-import { Http, Response, URLSearchParams } from '@angular/http';
 
-import { MdlDefaultTableModel, IMdlTableModelItem } from '@angular-mdl/core';
-
-import { SetService } from '../set.service';
 import { CardService } from '../card.service';
 
-import { Observable } from 'rxjs';
 import { Set } from '../set.interface';
-import { Card } from '../card.interface';
 
 @Component({
   selector: 'pokemon-menu-item',
@@ -21,17 +15,7 @@ export class MenuItemComponent implements AfterViewInit {
 
 	public count: number = 0;
 
-  constructor(private setService: SetService, private cardService: CardService) {  }
-
-  tableData = [
-    { name: 'Test', id: 1, selected: true },
-    { name: 'Tom', id: 3 , selected: false}
-  ];
-
-  public tableModel = new MdlDefaultTableModel([
-    { key: 'name', name: 'Name', sortable: true },
-    { key: 'id', name: 'Pokedex', sortable: true }
-  ]);
+  constructor(private cardService: CardService) {  }
 
   ngAfterViewInit(): void {
 	  this.cardService.countCollected(this.set.code)

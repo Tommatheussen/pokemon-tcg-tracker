@@ -15,6 +15,8 @@ import { SetService } from './set.service';
 import { CardService } from './card.service';
 import { MenuItemComponent } from './menu-item/menu-item.component';
 
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,6 +31,7 @@ import { MenuItemComponent } from './menu-item/menu-item.component';
     ReactiveFormsModule,
     FlexLayoutModule,
     MdlModule,
+    NgxDatatableModule
   ],
   providers: [
     DatabaseService,

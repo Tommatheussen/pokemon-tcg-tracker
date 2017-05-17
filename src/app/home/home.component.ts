@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Http, Response, URLSearchParams } from '@angular/http';
 
-import { MdlDefaultTableModel, IMdlTableModelItem } from '@angular-mdl/core';
+import { MdlDefaultTableModel } from '@angular-mdl/core';
 
 import { SetService } from '../set.service';
 import { CardService } from '../card.service';
@@ -20,19 +19,30 @@ export class HomeComponent implements OnInit {
   public cards: Observable<Card[]>;
   public selectedSet: string;
 
-  public loading: Boolean = true;
-
   constructor(private setService: SetService, private cardService: CardService) { }
+
+  public columns = [{
+    name: 'Name'
+  }, {
+    name: 'Number'
+  }, {
+    name: 'Rarity'
+  }, {
+    name: 'Series'
+  }, {
+    name: 'Set'
+  }];
 
   public tableModel = new MdlDefaultTableModel([
     { key: 'name', name: 'Name', sortable: true },
-    { key: 'id', name: 'Pokedex', sortable: true }
+    { key: 'number', name: 'Number', sortable: true },
+    { key: 'rarity', name: 'Rarity', sortable: true },
+    { key: 'series', name: 'Series', sortable: true },
+    { key: 'set', name: 'Set', sortable: true }
   ]);
 
   ngOnInit(): void {
     this.getSets();
-    //this.tableModel.addAll(this.tableData);
-    //this.tableModel.data = this.tableData;
   }
 
   getSets() {
@@ -49,46 +59,48 @@ export class HomeComponent implements OnInit {
   selectSet(set: Set) {
     this.selectedSet = set.name;
 
-    this.cards = this.cardService.get(set.code);
-  }
-
-  setSelected(set): void {
-    /*this.cards.subscribe(cards => {
-      this.tableModel.data = <IMdlTableModelItem[]>cards;
-    })*/
-
-/*
-    this.http.get('/api/cards', { search: params })
-      .map((res: Response) => res.json())
-      .subscribe(cards => {
-        this.tableModel.data = cards.cards;
+    this.cards = this.cardService.get(set)
+      .map(cards => {
+        cards.sort((a: Card, b: Card) => {
+          return a.number - b.number;
+        });
+        return cards;
       });
-
-    this.http.get('/api/collection', { search: params })
-      .map((res: Response) => res.json())
-      .subscribe(collected => {
-
-        console.log(collected);
-
-    if (this.cards && this.collected) {
-      this.collected.forEach(collectedEntry => {
-        var foundCard = this.cards.find(function (card) {
-          return card.id == collectedEntry.card;
+      /*.subscribe(cards => {
+        cards.sort((a: Card, b: Card) => {
+          return a.number - b.number;
         });
 
-        foundCard.collected = true;
-      });
-    }
-
-    if (this.cards) {
-      this.cards.sort(function (a, b) {
-        return a.number - b.number;
-      })
-
-      this.tableModel.data = this.cards;
-    }
-
-    console.log(this.cards);
+        //TODO: Load collection
+        this.tableModel.data = cards;
       });*/
   }
+
+  /*
+      this.http.get('/api/collection', { search: params })
+        .map((res: Response) => res.json())
+        .subscribe(collected => {
+
+          console.log(collected);
+
+      if (this.cards && this.collected) {
+        this.collected.forEach(collectedEntry => {
+          var foundCard = this.cards.find(function (card) {
+            return card.id == collectedEntry.card;
+          });
+
+          foundCard.collected = true;
+        });
+      }
+
+      if (this.cards) {
+        this.cards.sort(function (a, b) {
+          return a.number - b.number;
+        })
+
+        this.tableModel.data = this.cards;
+      }
+
+      console.log(this.cards);
+        });*/
 }
