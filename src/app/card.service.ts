@@ -21,10 +21,8 @@ export class CardService {
     return Observable.create(observer => {
       this._cards.find<Card>({ setCode: set.code }, (err, cards) => {
         if (!err || cards.length > set.totalCards) {
-          console.log(cards);
           if (cards.length == 0 || cards.length !== set.totalCards) {
             this.getCards(set).subscribe(cards => {
-              console.log(cards);
               this._cards.insert(cards);
 
               this.ngZone.run(() => {
@@ -41,17 +39,6 @@ export class CardService {
         }
       });
 		});
-  }
-
-  public countCollected(setCode: string): Observable<number> {
-    return Observable.create(observer => {
-      this.db.collection.count({ setCode: setCode, collected: true }, (err, count) => {
-        this.ngZone.run(() => {
-          observer.next(count);
-          observer.complete();
-        });
-      });
-    });
   }
 
   private getCards(set: Set): Observable<Card[]> {

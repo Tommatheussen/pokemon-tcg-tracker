@@ -5,5 +5,5 @@ export interface Card {
   rarity: string;
   series: string;
   setCode: string;
-  selected: boolean;
+  collected: Date;
 }

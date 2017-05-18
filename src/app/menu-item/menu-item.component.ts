@@ -1,6 +1,6 @@
 import { Component, AfterViewInit, Input, Output, EventEmitter } from '@angular/core';
 
-import { CardService } from '../card.service';
+import { CollectionService } from '../collection.service';
 
 import { Set } from '../set.interface';
 
@@ -11,15 +11,16 @@ import { Set } from '../set.interface';
 })
 export class MenuItemComponent implements AfterViewInit {
   @Input() set: Set;
+  @Input() selectedSet: string;
   @Output() selectSet = new EventEmitter<Set>();
 
 	public count: number = 0;
 
-  constructor(private cardService: CardService) {  }
+  constructor(private collectionService: CollectionService) {  }
 
   ngAfterViewInit(): void {
-	  this.cardService.countCollected(this.set.code)
-		  .subscribe(count => {
+	  this.collectionService.countCollected(this.set.code)
+      .subscribe(count => {
 			  this.count = count;
 		  });
   }

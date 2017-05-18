@@ -13,6 +13,7 @@ import { HomeComponent } from './home/home.component';
 import { DatabaseService } from './database.service';
 import { SetService } from './set.service';
 import { CardService } from './card.service';
+import { CollectionService } from './collection.service';
 import { MenuItemComponent } from './menu-item/menu-item.component';
 
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
@@ -36,7 +37,8 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
   providers: [
     DatabaseService,
     SetService,
-    CardService
+    CardService,
+    CollectionService
   ],
   bootstrap: [AppComponent]
 })

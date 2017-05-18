@@ -3,6 +3,5 @@
     	<span>{{ set.name }}</span>
     	<mdl-list-item-sub-title>{{ set.releaseDate }}</mdl-list-item-sub-title>
 	</mdl-list-item-primary-content>
-	<span >{{ count / set.totalCards * 100 | percent }}</span>
+	<span >{{ count / set.totalCards | percent:'1.0-2' }}</span>
 </mdl-list-item>
-
