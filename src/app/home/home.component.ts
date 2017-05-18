@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef, ViewEncapsulation } from '@angular/core';
 
 import { MdlDefaultTableModel } from '@angular-mdl/core';
 
@@ -14,7 +14,8 @@ import { Collection } from '../collection.interface';
 @Component({
   selector: 'pokemon-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class HomeComponent implements OnInit {
   @ViewChild('collectionTmpl') collectionTmpl: TemplateRef<any>;
