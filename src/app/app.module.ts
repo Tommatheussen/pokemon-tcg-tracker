@@ -5,29 +5,41 @@ import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
-import { MdDataTableModule } from 'ng2-md-datatable';
-
 import { MdlModule } from '@angular-mdl/core';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 
+import { DatabaseService } from './database.service';
+import { SetService } from './set.service';
+import { CardService } from './card.service';
+import { CollectionService } from './collection.service';
+import { MenuItemComponent } from './menu-item/menu-item.component';
+
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    MenuItemComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
-	  HttpModule,
+    HttpModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
     FlexLayoutModule,
-    MdDataTableModule,
-    MdlModule
+    MdlModule,
+    NgxDatatableModule
   ],
-  providers: [],
+  providers: [
+    DatabaseService,
+    SetService,
+    CardService,
+    CollectionService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

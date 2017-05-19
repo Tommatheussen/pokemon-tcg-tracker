@@ -40,7 +40,3 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
-
-/server/config.js
-/binaries
-/release
