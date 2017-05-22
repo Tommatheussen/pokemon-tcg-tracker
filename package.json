@@ -13,7 +13,7 @@
     "start": "concurrently \"electron .\" \"ng serve\" ",
     "build": "ng build",
     "compile": "ng build --base-href . --prod",
-    "release": "compile && build --publish onTagOrDraft"
+    "release": "npm run compile && build --publish onTagOrDraft"
   },
   "repository": {
     "type": "git",
