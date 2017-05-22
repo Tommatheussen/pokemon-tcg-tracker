@@ -8,10 +8,16 @@
   "scripts": {
     "postinstall": "install-app-deps",
     "pack": "build --dir",
-    "dist": "build",
+    "dist": "build --win",
     "ng": "ng",
     "start": "concurrently \"electron .\" \"ng serve\" ",
-    "build": "ng build"
+    "build": "ng build",
+    "compile": "ng build --prod",
+    "release": "yarn compile && build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Tommatheussen/pokemon-tcg-tracker"
   },
   "private": true,
   "dependencies": {
@@ -48,8 +54,10 @@
   },
   "build": {
     "appId": "pokemon.tcg.tracker",
-    "mac": {
-      "category": "apps"
-    }
+    "files": [
+      "node_modules",
+      "dist",
+      "main.js"
+    ]
   }
 }
