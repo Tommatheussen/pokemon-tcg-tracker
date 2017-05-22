@@ -8,10 +8,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 
-import { DatabaseService } from './database.service';
-import { SetService } from './set.service';
-import { CardService } from './card.service';
-import { CollectionService } from './collection.service';
+//import { DatabaseService } from './database.service';
+//import { SetService } from './set.service';
+//import { CardService } from './card.service';
+//import { CollectionService } from './collection.service';
 import { MenuItemComponent } from './menu-item/menu-item.component';
 
 

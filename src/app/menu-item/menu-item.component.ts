@@ -1,16 +1,16 @@
 import { Component, AfterViewInit, Input, Output, EventEmitter } from '@angular/core';
 
-import { CollectionService } from '../collection.service';
+//import { CollectionService } from '../collection.service';
 
-import { Set } from '../set.interface';
+//import { Set } from '../set.interface';
 
 @Component({
   selector: 'pokemon-menu-item',
   templateUrl: './menu-item.component.html',
   styleUrls: ['./menu-item.component.css']
 })
-export class MenuItemComponent implements AfterViewInit {
-  @Input() set: Set;
+export class MenuItemComponent {
+  /*@Input() set: Set;
   @Input() selectedSet: string;
   @Output() selectSet = new EventEmitter<Set>();
 
@@ -27,5 +27,5 @@ export class MenuItemComponent implements AfterViewInit {
 
   select() {
     this.selectSet.emit(this.set);
-  }
+  }*/
 }
