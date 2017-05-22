@@ -7,7 +7,6 @@
   "main": "main.js",
   "typings": "./src/typings.d.ts",
   "scripts": {
-    "postinstall": "install-app-deps",
     "pack": "build --dir",
     "dist": "build --win",
     "ng": "ng",
@@ -22,19 +21,12 @@
   },
   "private": true,
   "dependencies": {
-    "@angular-mdl/core": "^4.0.3",
-    "@angular/cli": "^1.0.3",
-    "@angular/compiler-cli": "^4.1.3",
-    "@swimlane/ngx-datatable": "^9.1.0",
-    "nedb": "^1.8.0",
-    "typescript": "^2.3.2"
-  },
-  "devDependencies": {
     "@angular/animations": "^4.1.3",
     "@angular/common": "^4.1.3",
     "@angular/compiler": "^4.1.3",
     "@angular/core": "^4.1.3",
     "@angular/forms": "^4.1.3",
+    "@angular/compiler-cli": "^4.1.3",
     "@angular/http": "^4.1.3",
     "@angular/platform-browser": "^4.1.3",
     "@angular/platform-browser-dynamic": "^4.1.3",
@@ -42,18 +34,26 @@
     "@types/jasmine": "2.5.47",
     "@types/nedb": "^1.8.3",
     "@types/node": "~7.0.18",
+    "@angular-mdl/core": "^4.0.3",
+    "@swimlane/ngx-datatable": "^9.1.0",
+    "electron-updater": "^1.16.0",
+    "nedb": "^1.8.0",
+    "zone.js": "^0.8.10",
+    "rxjs": "^5.4.0",
+    "electron": "^1.6.8"
+  },
+  "devDependencies": {
+    "@angular/cli": "^1.0.3",
     "codelyzer": "~3.0.1",
     "concurrently": "^3.4.0",
-    "core-js": "^2.4.1",
-    "electron": "^1.6.8",
     "electron-builder": "^17.8.0",
-    "rxjs": "^5.4.0",
     "ts-node": "~3.0.4",
     "tslint": "~5.2.0",
-    "zone.js": "^0.8.10"
+    "typescript": "^2.3.2"
   },
   "build": {
     "appId": "pokemon.tcg.tracker",
+    "productName": "Pokemon TCG Tracker",
     "files": [
       "node_modules/",
       "dist/",
