@@ -12,8 +12,8 @@
     "ng": "ng",
     "start": "concurrently \"electron .\" \"ng serve\" ",
     "build": "ng build",
-    "compile": "ng build --prod",
-    "release": "yarn compile && build"
+    "compile": "ng build --base-href . --prod",
+    "release": "yarn compile && build --publish onTagOrDraft"
   },
   "repository": {
     "type": "git",
@@ -55,9 +55,13 @@
   "build": {
     "appId": "pokemon.tcg.tracker",
     "files": [
-      "node_modules",
-      "dist",
-      "main.js"
-    ]
+      "node_modules/",
+      "dist/",
+      "main.js",
+      "package.json"
+    ],
+    "win": {
+      "target": "nsis"
+    }
   }
 }
