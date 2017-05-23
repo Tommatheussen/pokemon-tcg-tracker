@@ -72,7 +72,7 @@ autoUpdater.on('update-available', () => {
 autoUpdater.on('update-not-available', () => {
   dialog.showMessageBox({
     title: 'No Updates',
-    message: 'Current version is up-to-date.'
+    message: 'Current version is up-to-date. Perfect'
   })
 })
 
