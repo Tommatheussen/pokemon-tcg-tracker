@@ -22,7 +22,8 @@
   },
   "private": true,
   "dependencies": {
-    "electron-updater": "^1.16.0"
+    "electron-updater": "^1.16.0",
+    "js-yaml": "^3.8.4"
   },
   "devDependencies": {
     "electron": "^1.6.8",
