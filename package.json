@@ -22,9 +22,9 @@
   },
   "private": true,
   "dependencies": {
-    "electron": "^1.6.8"
   },
   "devDependencies": {
+    "electron": "^1.6.8",
     "concurrently": "^3.4.0",
     "electron-builder": "^17.8.0"
   },
