@@ -66,14 +66,19 @@ autoUpdater.on('update-available', () => {
     message: 'Found updates, do you want update now?',
     buttons: ['Sure', 'No']
   }, (buttonIndex) => {
+    autoUpdater.downloadUpdate()
   })
 })
 
 autoUpdater.on('update-not-available', () => {
   dialog.showMessageBox({
     title: 'No Updates',
-    message: 'Current version is up-to-date. Perfect'
+    message: 'Current version is up-to-date.'
   })
+})
+
+autoUpdater.on('update-downloaded', (ev, info) => {
+  autoUpdater.quitAndInstall();
 })
 
 autoUpdater.on('error', (event, error) => {
