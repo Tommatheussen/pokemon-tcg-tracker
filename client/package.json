@@ -1,0 +1,42 @@
+{
+  "name": "pokemon-tcg-tracker-client",
+  "description": "Desktop app which keeps track of all collected Pokemon Cards",
+  "version": "0.0.1",
+  "author": "Tom Matheussen",
+  "license": "MIT",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "compile": "ng build --prod -base-href . -op ../dist"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular-mdl/core": "^4.0.3",
+    "@angular/animations": "^4.1.3",
+    "@angular/common": "^4.1.3",
+    "@angular/compiler": "^4.1.3",
+    "@angular/core": "^4.1.3",
+    "@angular/forms": "^4.1.3",
+    "@angular/http": "^4.1.3",
+    "@angular/platform-browser": "^4.1.3",
+    "@angular/platform-browser-dynamic": "^4.1.3",
+    "@angular/router": "^4.1.3",
+    "@swimlane/ngx-datatable": "^9.1.0",
+    "core-js": "^2.4.1",
+    "nedb": "^1.8.0",
+    "rxjs": "^5.4.0",
+    "typescript": "^2.3.2",
+    "zone.js": "^0.8.10"
+  },
+  "devDependencies": {
+    "@angular/cli": "^1.0.3",
+    "@angular/compiler-cli": "^4.1.3",
+    "@types/nedb": "^1.8.3",
+    "@types/node": "~7.0.18",
+    "codelyzer": "~3.0.1",
+    "concurrently": "^3.4.0",
+    "ts-node": "~3.0.4",
+    "tslint": "~5.2.0"
+  }
+}

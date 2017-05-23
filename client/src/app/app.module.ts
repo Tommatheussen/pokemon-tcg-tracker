@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, ErrorHandler } from '@angular/core';
-import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -25,10 +24,8 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
   ],
   imports: [
     BrowserModule,
-    FormsModule,
     HttpModule,
     BrowserAnimationsModule,
-    ReactiveFormsModule,
     MdlModule,
     NgxDatatableModule
   ],
