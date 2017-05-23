@@ -1,7 +1,7 @@
 {
   "name": "pokemon-tcg-tracker",
   "description": "Desktop app which keeps track of all collected Pokemon Cards",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "author": "Tom Matheussen",
   "license": "MIT",
   "main": "main.js",
@@ -33,10 +33,10 @@
     "appId": "pokemon.tcg.tracker",
     "productName": "Pokemon TCG Tracker",
     "files": [
-      "node_modules/",
       "build_client/",
       "main.js",
-      "package.json"
+      "package.json",
+      "node_modules"
     ],
     "win": {
       "target": "nsis"
