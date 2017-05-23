@@ -13,7 +13,7 @@
     "ng": "ng",
     "start": "concurrently \"electron .\" \"cd client && ng serve\" ",
     "build": "ng build",
-    "compile": "cd client && ng build --base-href . --prod -op ../dist",
+    "compile": "cd client && ng build --base-href . --prod -op ../build_client",
     "release": "npm run compile && build --publish onTagOrDraft"
   },
   "repository": {
@@ -30,9 +30,10 @@
   },
   "build": {
     "appId": "pokemon.tcg.tracker",
+    "productName": "Pokemon TCG Tracker",
     "files": [
       "node_modules/",
-      "dist/",
+      "build_client/",
       "main.js",
       "package.json"
     ],
