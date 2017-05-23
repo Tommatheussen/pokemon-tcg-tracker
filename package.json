@@ -1,7 +1,7 @@
 {
   "name": "pokemon-tcg-tracker",
   "description": "Desktop app which keeps track of all collected Pokemon Cards",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "Tom Matheussen",
   "license": "MIT",
   "main": "main.js",
@@ -22,6 +22,7 @@
   },
   "private": true,
   "dependencies": {
+    "electron-updater": "^1.16.0"
   },
   "devDependencies": {
     "electron": "^1.6.8",
@@ -43,6 +44,11 @@
     "nsis": {
       "oneClick": false,
       "allowToChangeInstallationDirectory": true
-    }
+    },
+    "publish": [
+      {
+        "provider": "github"
+      }
+    ]
   }
 }
