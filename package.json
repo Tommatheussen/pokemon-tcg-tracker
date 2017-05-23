@@ -11,7 +11,7 @@
     "pack": "build --dir",
     "dist": "build --win",
     "ng": "ng",
-    "start": "concurrently \"electron .\" \"ng serve\" ",
+    "start": "concurrently \"electron .\" \"cd client && ng serve\" ",
     "build": "ng build",
     "compile": "cd client && ng build --base-href . --prod -op ../dist",
     "release": "npm run compile && build --publish onTagOrDraft"
@@ -37,7 +37,8 @@
       "package.json"
     ],
     "win": {
-      "target": "nsis"
+      "target": "nsis",
+      "allowToChangeInstallationDirectory": true
     }
   }
 }
