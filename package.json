@@ -37,7 +37,9 @@
       "package.json"
     ],
     "win": {
-      "target": "nsis",
+      "target": "nsis"
+    },
+    "nsis": {
       "allowToChangeInstallationDirectory": true
     }
   }
