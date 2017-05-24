@@ -25,7 +25,7 @@ function createWindow () {
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
     mainWindow = null
-  })
+  });
 }
 
 // This method will be called when Electron has finished
@@ -52,34 +52,4 @@ app.on('activate', function () {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
-
-const { autoUpdater } = require("electron-updater");
-const { dialog } = require("electron");
-
-autoUpdater.on('update-available', () => {
-  dialog.showMessageBox({
-    type: 'info',
-    title: 'Found Updates',
-    message: 'Found updates, do you want update now?',
-    buttons: ['Sure', 'No']
-  }, (buttonIndex) => {
-    autoUpdater.downloadUpdate()
-  })
-})
-
-autoUpdater.on('update-not-available', () => {
-  dialog.showMessageBox({
-    title: 'No Updates',
-    message: 'Current version is up-to-date.'
-  })
-})
-
-autoUpdater.on('update-downloaded', (ev, info) => {
-  autoUpdater.quitAndInstall();
-})
-
-autoUpdater.on('error', (event, error) => {
-  dialog.showErrorBox('Error: ', error == null ? "unknown" : (error.stack || error).toString())
-})
-
-autoUpdater.checkForUpdates();
+require('./electron/updater');
