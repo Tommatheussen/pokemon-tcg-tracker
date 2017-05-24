@@ -7,7 +7,6 @@ cache:
   - client/node_modules
   - node_modules
   - '%APPDATA%\npm-cache'
-  - '%USERPROFILE%\.cache\electron-builder'
   - '%USERPROFILE%\.electron'
   - '%LOCALAPPDATA%\electron\Cache'
   - '%LOCALAPPDATA%\electron-builder\cache'
