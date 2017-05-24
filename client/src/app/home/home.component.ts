@@ -11,6 +11,8 @@ import { Set } from '../set.interface';
 import { Card } from '../card.interface';
 import { Collection } from '../collection.interface';
 
+import { ElectronService } from 'ngx-electron';
+
 @Component({
   selector: 'pokemon-home',
   templateUrl: './home.component.html',
@@ -30,8 +32,17 @@ export class HomeComponent implements OnInit {
   constructor(
     private setService: SetService,
     private cardService: CardService,
-    private collectionService: CollectionService
-  ) { }
+    private collectionService: CollectionService,
+    private electronService: ElectronService
+  ) {
+    this.electronService.ipcRenderer.on('test', (event, args) => {
+      console.log(event, args);
+    });
+
+    this.electronService.ipcRenderer.send('start-update', (event, args) => {
+      console.log(event, args);
+    });
+  }
 
   ngOnInit(): void {
     this.getSets();

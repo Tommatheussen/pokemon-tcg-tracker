@@ -15,6 +15,7 @@ import { CollectionService } from './collection.service';
 import { MenuItemComponent } from './menu-item/menu-item.component';
 
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { NgxElectronModule } from 'ngx-electron';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
     MenuItemComponent
   ],
   imports: [
+    NgxElectronModule,
     BrowserModule,
     HttpModule,
     BrowserAnimationsModule,
