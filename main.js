@@ -1,4 +1,5 @@
 const electron = require('electron')
+const isDev = require('electron-is-dev');
 // Module to control application life.
 const app = electron.app
 // Module to create native browser window.
@@ -13,11 +14,12 @@ function createWindow () {
   mainWindow = new BrowserWindow({width: 800, height: 600})
 
   // and load the index.html of the app.
-  mainWindow.loadURL('file://' + __dirname + '/build_client/index.html');
-  //mainWindow.loadURL('http://localhost:4200');
-  // Open the DevTools.
-
-  // mainWindow.webContents.openDevTools()
+  if (isDev) {
+    mainWindow.loadURL('http://localhost:4200');
+    mainWindow.webContents.openDevTools()
+  } else {
+    mainWindow.loadURL('file://' + __dirname + '/build_client/index.html');
+  }
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
@@ -52,4 +54,7 @@ app.on('activate', function () {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
-require('./electron/updater');
+
+if (!isDev) {
+  require('./electron/updater');
+}
