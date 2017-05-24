@@ -7,7 +7,7 @@ import { DatabaseService } from './database.service';
 
 import * as Datastore from 'nedb';
 import { Card } from './card.interface';
-import { Set } from './set.interface';
+import { Set } from './models/set.interface';
 
 @Injectable()
 export class CardService {

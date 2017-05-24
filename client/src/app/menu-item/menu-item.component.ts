@@ -2,7 +2,7 @@ import { Component, AfterViewInit, Input, Output, EventEmitter } from '@angular/
 
 import { CollectionService } from '../collection.service';
 
-import { Set } from '../set.interface';
+import { Set } from '../models/set.interface';
 
 @Component({
   selector: 'pokemon-menu-item',

@@ -3,22 +3,24 @@ import { Http, Response } from '@angular/http';
 
 import { Observable } from 'rxjs';
 
-import { DatabaseService } from './database.service';
-
 import * as Datastore from 'nedb';
-import { Set } from './set.interface';
+import { Set } from './models/set.interface';
+
+import { SetStore } from './database/set.store';
 
 @Injectable()
 export class SetService {
-	private _sets: Datastore;
+	private setStore: SetStore;
 
-	constructor(
-		private db: DatabaseService,
-		private http: Http,
-		private ngZone: NgZone) {
-		this._sets = db.sets;
-		this.seedSets();
+	constructor(private http: Http,	private ngZone: NgZone) {
+		let db = new Datastore({ filename: 'sets.db', autoload: true });
+		this.setStore = new SetStore(db, http);
+
+		//TODO: Seed
+		//this.seedSets();
 	}
+
+	/*
 
 	private seedSets(): void {
 		this._sets.count({}, (err: Error, count: number) => {
@@ -28,7 +30,13 @@ export class SetService {
 					.subscribe(sets => this._sets.insert(sets));
 			}
 		})
+	}*/
+
+	public getSetList(): Observable<Set[]> {
+		return this.setStore.getSets();
 	}
+
+	/*
 
   public get(): Observable<Set[]> {
     return Observable.create(observer => {
@@ -39,5 +47,5 @@ export class SetService {
         });
       });
 		});
-	}
+	}*/
 }

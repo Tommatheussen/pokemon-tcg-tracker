@@ -12,7 +12,7 @@ export class DatabaseService {
 	public collection: Datastore;
 
 	constructor() {
-		this.sets = new Datastore({ filename: 'sets.db', autoload: true });
+		//this.sets = new Datastore({ filename: 'sets.db', autoload: true });
 		this.cards = new Datastore({ filename: 'cards.db', autoload: true });
 		this.collection = new Datastore({ filename: 'collection.db', autoload: true });
 	}
