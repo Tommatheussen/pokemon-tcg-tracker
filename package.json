@@ -1,7 +1,7 @@
 {
   "name": "pokemon-tcg-tracker",
   "description": "Desktop app which keeps track of all collected Pokemon Cards",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "author": "Tom Matheussen",
   "license": "MIT",
   "main": "main.js",
@@ -9,7 +9,9 @@
   "scripts": {
     "postinstall": "install-app-deps",
     "pack": "build --dir",
-    "dist": "build --win",
+    "dist:win": "build --win",
+    "dist:mac": "build --mac",
+    "dist": "npm run dist:win && npm run dist:mac",
     "ng": "ng",
     "start": "concurrently \"electron .\" \"cd client && ng serve\" ",
     "build": "ng build",
@@ -36,6 +38,7 @@
     "files": [
       "build_client/",
       "main.js",
+      "electron",
       "package.json",
       "node_modules/"
     ],
