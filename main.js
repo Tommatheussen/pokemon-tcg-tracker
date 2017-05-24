@@ -11,7 +11,16 @@ let mainWindow
 
 function createWindow () {
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 800, height: 600})
+
+  // Make sure content is always shown on big screen, never collapsed together
+  // Windows adds the scrollbar inside of the window
+  width = (process.platform === "darwin" ? 1025 : 1041);
+  mainWindow = new BrowserWindow({
+    width: width,
+    minWidth: width,
+    height: 600,
+    minHeight: 600
+  })
 
   // and load the index.html of the app.
   if (isDev) {
