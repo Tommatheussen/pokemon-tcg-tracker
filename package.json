@@ -7,6 +7,7 @@
   "main": "main.js",
   "typings": "./src/typings.d.ts",
   "scripts": {
+    "postinstall": "install-app-deps",
     "pack": "build --dir",
     "dist": "build --win",
     "ng": "ng",

@@ -9,15 +9,12 @@ cache:
   - '%APPDATA%\npm-cache'
   - '%USERPROFILE%\.electron'
   - '%LOCALAPPDATA%\electron\Cache'
-  - nsis-3.0.1.13.7z -> appveyor.yml
-  - electron-v1.7.1-win32-x64.zip -> appveyor.yml
-  - winCodeSign-1.7.0.7z -> appveyor.yml
 
 init:
   - git config --global core.autocrlf input
 
 install:
-  - ps: Install-Product node 6 x64
+  - ps: Install-Product node 7 x64
   - npm install
   - cd client && npm install
 
