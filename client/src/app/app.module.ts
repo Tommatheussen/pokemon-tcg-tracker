@@ -3,19 +3,18 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-//import { MdlModule } from '@angular-mdl/core';
+import { MdlModule } from '@angular-mdl/core';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 
-//import { DatabaseService } from './database.service';
-//import { SetService } from './set.service';
-//import { CardService } from './card.service';
-//import { CollectionService } from './collection.service';
+import { DatabaseService } from './database.service';
+import { SetService } from './set.service';
+import { CardService } from './card.service';
+import { CollectionService } from './collection.service';
 import { MenuItemComponent } from './menu-item/menu-item.component';
 
-
-//import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 @NgModule({
   declarations: [
@@ -27,14 +26,14 @@ import { MenuItemComponent } from './menu-item/menu-item.component';
     BrowserModule,
     HttpModule,
     BrowserAnimationsModule,
-    //MdlModule,
-  //  NgxDatatableModule
+    MdlModule,
+    NgxDatatableModule
   ],
   providers: [
- /*   DatabaseService,
+    DatabaseService,
     SetService,
     CardService,
-    CollectionService*/
+    CollectionService
   ],
   bootstrap: [AppComponent]
 })

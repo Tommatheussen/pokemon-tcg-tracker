@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild, TemplateRef, ViewEncapsulation } from '@angular/core';
 
-/*
 import { MdlDefaultTableModel } from '@angular-mdl/core';
 
 import { SetService } from '../set.service';
@@ -10,7 +9,7 @@ import { CollectionService } from '../collection.service';
 import { Observable } from 'rxjs';
 import { Set } from '../set.interface';
 import { Card } from '../card.interface';
-import { Collection } from '../collection.interface';*/
+import { Collection } from '../collection.interface';
 
 @Component({
   selector: 'pokemon-home',
@@ -18,8 +17,8 @@ import { Collection } from '../collection.interface';*/
   styleUrls: ['./home.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class HomeComponent {
- /* @ViewChild('collectionTmpl') collectionTmpl: TemplateRef<any>;
+export class HomeComponent implements OnInit {
+  @ViewChild('collectionTmpl') collectionTmpl: TemplateRef<any>;
 
   public sets: Observable<Set[]>;
   public selectedSet: string;
@@ -104,5 +103,5 @@ export class HomeComponent {
           foundCard.collected = collectedEntry.collected;
         });
       });
-  }*/
+  }
 }

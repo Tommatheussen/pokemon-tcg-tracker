@@ -4,18 +4,27 @@ platform:
   - x64
 
 cache:
+  - client/node_modules
   - node_modules
   - '%APPDATA%\npm-cache'
   - '%USERPROFILE%\.electron'
+  - '%LOCALAPPDATA%\electron\Cache'
+  - '%LOCALAPPDATA%\electron-builder\cache'
 
 init:
   - git config --global core.autocrlf input
 
 install:
-  - ps: Install-Product node 6 x64
+  - ps: Install-Product node 7 x64
+  - npm install -g @angular/cli
   - npm install
+  - cd client && npm install
 
 build_script:
   - npm run release
 
 test: off
+
+branches:
+  only:
+    - master
