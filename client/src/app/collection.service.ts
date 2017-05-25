@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
-import { DatabaseService } from './database.service';
-
 import * as Datastore from 'nedb';
 import { Collection } from './models/collection.interface';
 import { Card } from './models/card.interface';
