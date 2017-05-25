@@ -8,8 +8,8 @@ import { CollectionService } from '../collection.service';
 
 import { Observable } from 'rxjs';
 import { Set } from '../models/set.interface';
-import { Card } from '../card.interface';
-import { Collection } from '../collection.interface';
+import { Card } from '../models/card.interface';
+import { Collection } from '../models/collection.interface';
 
 @Component({
   selector: 'pokemon-home',

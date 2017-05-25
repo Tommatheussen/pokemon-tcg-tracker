@@ -6,7 +6,7 @@ import { DatabaseService } from './database.service';
 
 import * as Datastore from 'nedb';
 import { Collection } from './models/collection.interface';
-import { Card } from './card.interface';
+import { Card } from './models/card.interface';
 
 import { CollectionStore } from './database/collection.store';
 

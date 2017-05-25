@@ -1,16 +1,14 @@
 import { Set } from '../models/set.interface';
 
 import { Http, Response } from '@angular/http';
-import { Observable } from 'rxjs';
-
-import * as Rx from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 import * as Datastore from 'nedb';
 /**
  * Performs CRUD on the NEDB data store that is passed to it in the constructor.
  */
 export class SetStore {
-  private setListSubject = new Rx.Subject();
+  private setListSubject = new Subject();
 
   constructor(
     private db: Datastore,
