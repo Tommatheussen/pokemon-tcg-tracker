@@ -1,54 +1,31 @@
-import { Injectable, NgZone } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
-import { DatabaseService } from './database.service';
-
 import * as Datastore from 'nedb';
-import { Collection } from './collection.interface';
-import { Card } from './card.interface';
+import { Collection } from './models/collection.interface';
+import { Card } from './models/card.interface';
+
+import { CollectionStore } from './database/collection.store';
 
 @Injectable()
 export class CollectionService {
-	private _collection: Datastore;
+  private collectionStore: CollectionStore;
 
-	constructor(
-		private db: DatabaseService,
-		private ngZone: NgZone) {
-		this._collection = db.collection;
-	}
-
-  public get(setCode: string): Observable<Collection[]> {
-    return Observable.create(observer => {
-      this._collection.find<Collection>({ setCode: setCode }, (err, collection) => {
-        this.ngZone.run(() => {
-          observer.next(collection);
-          observer.complete();
-        });
-      });
-		});
+  constructor() {
+    let db = new Datastore({ filename: 'collection.db', autoload: true });
+    this.collectionStore = new CollectionStore(db);
   }
 
-  public collectCard(card: Card): Observable<Card[]> {
-    return Observable.create(observer => {
-      this._collection.insert<Collection>(new Collection(card.id, card.setCode), (err, collection) => {
-        this.ngZone.run(() => {
-          observer.next(collection);
-          observer.complete();
-        });
-      });
-    });
+  public get(setCode: string): Observable<Collection[]> {
+    return this.collectionStore.getCollection(setCode);
+  }
+
+  public collectCard(card: Card): Observable<Collection> {
+    return this.collectionStore.collectCard(card);
   }
 
   public countCollected(setCode: string): Observable<number> {
-    return Observable.create(observer => {
-      this.db.collection.count({ setCode: setCode }, (err, count) => {
-        this.ngZone.run(() => {
-          observer.next(count);
-          observer.complete();
-        });
-      });
-    });
+    return this.collectionStore.countCollectedSet(setCode);
   }
 }

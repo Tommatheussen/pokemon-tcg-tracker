@@ -7,9 +7,9 @@ import { CardService } from '../card.service';
 import { CollectionService } from '../collection.service';
 
 import { Observable } from 'rxjs';
-import { Set } from '../set.interface';
-import { Card } from '../card.interface';
-import { Collection } from '../collection.interface';
+import { Set } from '../models/set.interface';
+import { Card } from '../models/card.interface';
+import { Collection } from '../models/collection.interface';
 
 @Component({
   selector: 'pokemon-home',
@@ -57,7 +57,7 @@ export class HomeComponent implements OnInit {
   }
 
   getSets() {
-    this.sets = this.setService.get()
+    this.sets = this.setService.getSetList()
       .map((sets: Set[]) => {
         return sets.sort((a: Set, b: Set) => {
           if (new Date(b.releaseDate) < new Date(a.releaseDate)) return 1;

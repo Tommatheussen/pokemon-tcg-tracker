@@ -1,7 +1,7 @@
 {
   "name": "pokemon-tcg-tracker",
   "description": "Desktop app which keeps track of all collected Pokemon Cards",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "author": "Tom Matheussen",
   "license": "MIT",
   "main": "main.js",
