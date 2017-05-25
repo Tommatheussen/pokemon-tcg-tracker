@@ -1,16 +1,14 @@
 import { Injectable } from '@angular/core';
 import { MdlSnackbarService, MdlDialogService } from '@angular-mdl/core';
 
-import { InjectionToken } from '@angular/core';
-
-export let NOTES = new InjectionToken<string>("NOTE");
-
 import * as Datastore from 'nedb';
 
 import { Observable } from 'rxjs';
 
 import { ElectronService } from 'ngx-electron';
 import { DialogComponent } from './dialog.component';
+
+import { NOTES } from './notes.class';
 
 @Injectable()
 export class UpdaterService {

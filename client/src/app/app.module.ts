@@ -42,6 +42,9 @@ import { DialogComponent } from './dialog.component';
     CardService,
     CollectionService
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    DialogComponent
+  ]
 })
 export class AppModule { }

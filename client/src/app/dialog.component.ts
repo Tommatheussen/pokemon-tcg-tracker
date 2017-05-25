@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 
-import { NOTES } from './updater.service';
+import { NOTES } from './notes.class';
 
 @Component({
   selector: 'dialog-component',
