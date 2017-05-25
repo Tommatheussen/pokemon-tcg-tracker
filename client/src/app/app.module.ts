@@ -19,11 +19,14 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 import { NgxElectronModule } from 'ngx-electron';
 
+import { DialogComponent } from './dialog.component';
+
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    MenuItemComponent
+    MenuItemComponent,
+    DialogComponent
   ],
   imports: [
     NgxElectronModule,
