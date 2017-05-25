@@ -2,7 +2,7 @@ import { Component, AfterViewInit, Input, Output, EventEmitter } from '@angular/
 
 import { CollectionService } from '../collection.service';
 
-import { Set } from '../set.interface';
+import { Set } from '../models/set.interface';
 
 @Component({
   selector: 'pokemon-menu-item',
@@ -16,7 +16,7 @@ export class MenuItemComponent implements AfterViewInit {
 
 	public count: number = 0;
 
-  constructor(private collectionService: CollectionService) {  }
+  constructor(private collectionService: CollectionService) { }
 
   ngAfterViewInit(): void {
 	  this.collectionService.countCollected(this.set.code)

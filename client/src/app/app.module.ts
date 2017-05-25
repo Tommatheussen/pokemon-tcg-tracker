@@ -8,7 +8,6 @@ import { MdlModule } from '@angular-mdl/core';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 
-import { DatabaseService } from './database.service';
 import { SetService } from './set.service';
 import { CardService } from './card.service';
 import { CollectionService } from './collection.service';
@@ -30,7 +29,6 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
     NgxDatatableModule
   ],
   providers: [
-    DatabaseService,
     SetService,
     CardService,
     CollectionService
