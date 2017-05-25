@@ -16,7 +16,7 @@ export class MenuItemComponent implements AfterViewInit {
 
 	public count: number = 0;
 
-  constructor(private collectionService: CollectionService) {  }
+  constructor(private collectionService: CollectionService) { }
 
   ngAfterViewInit(): void {
 	  this.collectionService.countCollected(this.set.code)
