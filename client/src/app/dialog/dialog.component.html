@@ -1,0 +1,12 @@
+<div>
+  <h3 class="mdl-dialog__title">Version {{ updateInfo.version }} is now available</h3>
+  <div class="mdl-dialog__content">
+    <h4>Release notes:</h4>
+    <p [innerHTML]="updateInfo.releaseNotes"></p>
+  </div>
+  <div class="mdl-dialog__actions">
+    <button mdl-button (click)="doUpdate()" mdl-button-type="raised" mdl-colored="primary" mdl-ripple>Update</button>
+    <mdl-layout-spacer></mdl-layout-spacer>
+    <button mdl-button (click)="dismissUpdate()" mdl-button-type="raised" mdl-ripple>Not now</button>
+  </div>
+</div>

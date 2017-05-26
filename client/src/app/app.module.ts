@@ -19,7 +19,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 import { NgxElectronModule } from 'ngx-electron';
 
-import { DialogComponent } from './dialog.component';
+import { DialogComponent } from './dialog/dialog.component';
 
 @NgModule({
   declarations: [
