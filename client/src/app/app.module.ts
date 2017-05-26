@@ -19,14 +19,14 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 import { NgxElectronModule } from 'ngx-electron';
 
-import { DialogComponent } from './dialog/dialog.component';
+import { UpdateAvailableDialogComponent } from './dialog/update-available-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     MenuItemComponent,
-    DialogComponent
+    UpdateAvailableDialogComponent
   ],
   imports: [
     NgxElectronModule,
@@ -44,7 +44,7 @@ import { DialogComponent } from './dialog/dialog.component';
   ],
   bootstrap: [AppComponent],
   entryComponents: [
-    DialogComponent
+    UpdateAvailableDialogComponent
   ]
 })
 export class AppModule { }

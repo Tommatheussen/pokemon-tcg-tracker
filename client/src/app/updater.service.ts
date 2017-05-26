@@ -6,7 +6,7 @@ import * as Datastore from 'nedb';
 import { Subject, Observable } from 'rxjs';
 
 import { ElectronService } from 'ngx-electron';
-import { DialogComponent } from './dialog/dialog.component';
+import { UpdateAvailableDialogComponent } from './dialog/update-available-dialog.component';
 
 import { UpdateInfo } from './models/update-info.interface';
 import { UPDATE_INFO } from './models/update-info.token';
@@ -23,6 +23,9 @@ export class UpdaterService {
   ) {
     this.setupUpToDateHandler();
     this.setupNewVersionHandler();
+    this.setupDownloadStartedHandler();
+    this.setupDownloadFinishedHandler();
+    //this.setupDownloadProgressHandler();
 
     electronService.ipcRenderer.send("check-update");
   }
@@ -30,8 +33,8 @@ export class UpdaterService {
   private setupNewVersionHandler(): void {  
     this.electronService.ipcRenderer.on("update-available", (ev, info: UpdateInfo) => {
       this.ngZone.run(() => {
-        let updaterDialog: Observable<MdlDialogReference> = this.mdlDialogService.showCustomDialog({
-          component: DialogComponent,
+        let updateAvailableDialog: Observable<MdlDialogReference> = this.mdlDialogService.showCustomDialog({
+          component: UpdateAvailableDialogComponent,
           providers: [
             {
               provide: UPDATE_INFO,
@@ -45,7 +48,7 @@ export class UpdaterService {
           leaveTransitionDuration: 400
         });
 
-        updaterDialog.subscribe((dialogRef: MdlDialogReference) => {
+        updateAvailableDialog.subscribe((dialogRef: MdlDialogReference) => {
           dialogRef.onHide().subscribe((data) => {
             if (data) {
               this.electronService.ipcRenderer.send("download-update");
@@ -61,6 +64,31 @@ export class UpdaterService {
       this.ngZone.run(() => {
         this.mdlSnackbarService.showToast('Hooray, you\'re using the latest version!');
       });  
+    });
+  }
+
+  private setupDownloadStartedHandler(): void {
+    this.electronService.ipcRenderer.on("update-download-started", () => {
+      this.ngZone.run(() => {
+        this.mdlSnackbarService.showToast("Started downloading update, please wait");
+      });
+    });
+  }
+
+  private setupDownloadFinishedHandler(): void {
+    this.electronService.ipcRenderer.on("update-download-finished", () => {
+      this.ngZone.run(() => {
+        let updateDownloadedDialog: Observable<void> = this.mdlDialogService.alert("Update downloaded, application will close to install now", "Ok", "Update downloaded");
+        updateDownloadedDialog.subscribe(() => {
+          this.electronService.ipcRenderer.send("install-update");
+        });
+      });
+    });
+  }
+
+  private setupDownloadProgressHandler(): void {
+     this.electronService.ipcRenderer.on("update-download-progress", (event, progress) => {
+      console.log(progress);
     });
   }
 }

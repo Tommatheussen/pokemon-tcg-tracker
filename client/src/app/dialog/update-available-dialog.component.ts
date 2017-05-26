@@ -5,11 +5,11 @@ import { UpdateInfo } from '../models/update-info.interface';
 import { UPDATE_INFO } from '../models/update-info.token';
 
 @Component({
-  selector: 'dialog-component',
-  templateUrl: './dialog.component.html',
-  styleUrls: ['./dialog.component.css']
+  selector: 'update-available-dialog-component',
+  templateUrl: './update-available-dialog.component.html',
+  styleUrls: ['./update-available-dialog.component.css']
 })
-export class DialogComponent {
+export class UpdateAvailableDialogComponent {
   public updateInfo: UpdateInfo;
 
   constructor(

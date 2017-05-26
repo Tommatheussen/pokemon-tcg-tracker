@@ -14,13 +14,12 @@ autoUpdater.on('update-not-available', () => {
   notify("up-to-date");
 });
 
+autoUpdater.on("download-progress", (progress) => {
+  notify("update-download-progress", progress);
+});
+
 autoUpdater.on('update-downloaded', (event, info) => {
-  dialog.showMessageBox({
-    title: 'Update downloaded',
-    message: 'New version downloaded, installing now'
-  }, (buttonIndex) => {
-    autoUpdater.quitAndInstall();
-  });
+  notify("update-download-finished");
 });
 
 
@@ -41,6 +40,14 @@ ipcMain.on("check-update", () => {
 
 ipcMain.on('download-update', () => {
   autoUpdater.downloadUpdate();
+
+  notify("update-download-started");
+});
+
+ipcMain.on("install-update", () => {
+  autoUpdater.quitAndInstall();
+
+  notify("install-update-starting");
 });
 
 function notify(title, message) {
