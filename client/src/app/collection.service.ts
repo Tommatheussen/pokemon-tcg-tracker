@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/observable';
 
 import * as Datastore from 'nedb';
 import { Collection } from './models/collection.interface';
@@ -13,7 +13,7 @@ export class CollectionService {
   private collectionStore: CollectionStore;
 
   constructor() {
-    let db = new Datastore({ filename: 'collection.db', autoload: true });
+    const db: Datastore = new Datastore({ filename: 'collection.db', autoload: true });
     this.collectionStore = new CollectionStore(db);
   }
 

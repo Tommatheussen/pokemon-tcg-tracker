@@ -14,15 +14,15 @@ export class MenuItemComponent implements AfterViewInit {
   @Input() selectedSet: string;
   @Output() selectSet = new EventEmitter<Set>();
 
-	public count: number = 0;
+  public count = 0;
 
   constructor(private collectionService: CollectionService) { }
 
   ngAfterViewInit(): void {
-	  this.collectionService.countCollected(this.set.code)
+    this.collectionService.countCollected(this.set.code)
       .subscribe(count => {
-			  this.count = count;
-		  });
+        this.count = count;
+      });
   }
 
   select() {
