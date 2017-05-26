@@ -6,7 +6,9 @@ import { SetService } from '../set.service';
 import { CardService } from '../card.service';
 import { CollectionService } from '../collection.service';
 
-import { Observable } from 'rxjs/observable';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/observable/zip';
 import { Set } from '../models/set.interface';
 import { Card } from '../models/card.interface';
 import { Collection } from '../models/collection.interface';

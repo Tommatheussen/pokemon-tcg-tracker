@@ -19,12 +19,12 @@
   <mdl-layout-content>
     <ngx-datatable
       class='material'
-      [columnMode]=''force''
-      [rowHeight]=''auto''
+      [columnMode]='"force"'
+      [rowHeight]='"auto"'
       [rows]='cards'
       [columns]='columns'
       [rowClass]='getRowClass'
-      [messages]='{ emptyMessage: 'No set selected' }'>
+      [messages]='{ emptyMessage: "No set selected" }'>
     </ngx-datatable>
   </mdl-layout-content>
 <mdl-layout>
@@ -33,5 +33,5 @@
   <button *ngIf='!value' mdl-button mdl-button-type='mini-fab' (click)='collectCard(row)'>
     <mdl-icon>library_add</mdl-icon>
   </button>
-  <div *ngIf='value'>{{ value | date : 'mediumDate' }} </div>
+  <div *ngIf='value'>{{ value | date : 'mediumDate' }}</div>
 </ng-template>

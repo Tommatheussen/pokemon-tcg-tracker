@@ -1,7 +1,7 @@
 import { Collection } from '../models/collection.interface';
 
 import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/subject';
+import { Subject } from 'rxjs/Subject';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import * as Datastore from 'nedb';

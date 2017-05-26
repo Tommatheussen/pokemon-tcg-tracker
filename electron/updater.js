@@ -45,9 +45,9 @@ ipcMain.on('download-update', () => {
 });
 
 ipcMain.on('install-update', () => {
-  autoUpdater.quitAndInstall();
-
   notify('install-update-starting');
+
+  autoUpdater.quitAndInstall();
 });
 
 function notify(title, message) {
