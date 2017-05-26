@@ -1,8 +1,8 @@
-import { Observable } from 'rxjs';
-
 import { Collection } from '../models/collection.interface';
 
-import { Subject, BehaviorSubject } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/subject';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import * as Datastore from 'nedb';
 
@@ -10,7 +10,7 @@ import * as Datastore from 'nedb';
  * Performs CRUD on the NEDB data store that is passed to it in the constructor.
  */
 export class CollectionStore {
-  private countCollectedSubject: codeToObservable = {};
+  private countCollectedSubject: CodeToObservable = {};
 
   constructor(
     private db: Datastore) { }
@@ -24,7 +24,7 @@ export class CollectionStore {
   }
 
   public getCollection(setCode): Observable<Collection[]> {
-    let collectionSubject = new Subject();
+    const collectionSubject: Subject<Collection[]> = new Subject();
 
     this.db.find<Collection>({ setCode: setCode }).exec((err, collection) => {
       collectionSubject.next(collection);
@@ -34,9 +34,10 @@ export class CollectionStore {
   }
 
   public collectCard(card): Observable<Collection> {
-    let cardCollectedSubject = new Subject();
+    const cardCollectedSubject: Subject<Collection> = new Subject();
+
     this.db.insert(new Collection(card.id, card.setCode), (err, collection) => {
-      cardCollectedSubject.next(Collection);
+      cardCollectedSubject.next(collection);
 
       this.countSetCollection(card.setCode);
     });
@@ -51,6 +52,6 @@ export class CollectionStore {
   }
 }
 
-interface codeToObservable {
+interface CodeToObservable {
   [setCode: string]: BehaviorSubject<number>;
 }

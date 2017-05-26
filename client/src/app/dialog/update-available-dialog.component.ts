@@ -5,7 +5,7 @@ import { UpdateInfo } from '../models/update-info.interface';
 import { UPDATE_INFO } from '../models/update-info.token';
 
 @Component({
-  selector: 'update-available-dialog-component',
+  selector: 'pokemon-update-available-dialog-component',
   templateUrl: './update-available-dialog.component.html',
   styleUrls: ['./update-available-dialog.component.css']
 })

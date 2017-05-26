@@ -8,30 +8,30 @@
   </mdl-layout-header>
   <mdl-layout-drawer>
     <mdl-layout-title>Sets</mdl-layout-title>
-   	<mdl-list class="set-list">
-		<pokemon-menu-item *ngFor="let set of (sets | async)"
-      [set]="set"
-      (selectSet)="selectSet($event)"
-      [selectedSet]="selectedSet"
+     <mdl-list class='set-list'>
+    <pokemon-menu-item *ngFor='let set of (sets | async)'
+      [set]='set'
+      (selectSet)='selectSet($event)'
+      [selectedSet]='selectedSet'
       ></pokemon-menu-item>
     </mdl-list>
   </mdl-layout-drawer>
   <mdl-layout-content>
     <ngx-datatable
-      class="material"
-      [columnMode]="'force'"
-      [rowHeight]="'auto'"
-      [rows]="cards"
-      [columns]="columns"
-      [rowClass]="getRowClass"
-      [messages]="{ emptyMessage: 'No set selected' }">
+      class='material'
+      [columnMode]=''force''
+      [rowHeight]=''auto''
+      [rows]='cards'
+      [columns]='columns'
+      [rowClass]='getRowClass'
+      [messages]='{ emptyMessage: 'No set selected' }'>
     </ngx-datatable>
   </mdl-layout-content>
 <mdl-layout>
 
-<ng-template #collectionTmpl let-row="row" let-value="value">
-  <button *ngIf="!value" mdl-button mdl-button-type="mini-fab" (click)="collectCard(row)">
+<ng-template #collectionTmpl let-row='row' let-value='value'>
+  <button *ngIf='!value' mdl-button mdl-button-type='mini-fab' (click)='collectCard(row)'>
     <mdl-icon>library_add</mdl-icon>
   </button>
-  <div *ngIf="value">{{ value | date : 'mediumDate' }} </div>
+  <div *ngIf='value'>{{ value | date : 'mediumDate' }} </div>
 </ng-template>

@@ -1,7 +1,7 @@
 .set.active {
-	background-color: lightgray;
+  background-color: lightgray;
 }
 
 .set:hover {
-	background-color: lightslategray;
+  background-color: lightslategray;
 }

@@ -14,7 +14,7 @@ function createWindow () {
 
   // Make sure content is always shown on big screen, never collapsed together
   // Windows adds the scrollbar inside of the window
-  width = (process.platform === "darwin" ? 1025 : 1041);
+  width = (process.platform === 'darwin' ? 1025 : 1041);
   mainWindow = new BrowserWindow({
     width: width,
     minWidth: width,

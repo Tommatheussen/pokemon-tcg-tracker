@@ -1,7 +1,8 @@
 import { Set } from '../models/set.interface';
 
 import { Http, Response } from '@angular/http';
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 
 import * as Datastore from 'nedb';
 /**
@@ -30,7 +31,7 @@ export class SetStore {
         this.setListSubject.next(dbsets);
       }
     });
-    
+
     return this.setListSubject;
   }
 }
