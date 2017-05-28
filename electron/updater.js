@@ -55,3 +55,7 @@ function notify(title, message) {
 
   windows[0].webContents.send(title, message);
 }
+
+module.exports = {
+  autoUpdater
+}
