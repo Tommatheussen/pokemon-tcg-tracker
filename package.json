@@ -16,6 +16,7 @@
     "start": "concurrently \"electron .\" \"cd client && ng serve\" ",
     "build": "ng build",
     "compile": "cd client && ng build --base-href . --prod -op ../build_client",
+    "test-release": "npm run compile && npm run dist:win",
     "release": "npm run compile && build --publish onTagOrDraft"
   },
   "repository": {
@@ -28,9 +29,9 @@
     "js-yaml": "^3.8.4"
   },
   "devDependencies": {
-    "electron": "^1.6.8",
+    "electron": "^1.6.10",
     "concurrently": "^3.4.0",
-    "electron-builder": "^17.8.0"
+    "electron-builder": "^18.0.1"
   },
   "build": {
     "appId": "pokemon.tcg.tracker",

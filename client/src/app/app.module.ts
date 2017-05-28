@@ -13,15 +13,23 @@ import { CardService } from './card.service';
 import { CollectionService } from './collection.service';
 import { MenuItemComponent } from './menu-item/menu-item.component';
 
+import { UpdaterService } from './updater.service';
+
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+
+import { NgxElectronModule } from 'ngx-electron';
+
+import { UpdateAvailableDialogComponent } from './dialog/update-available-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    MenuItemComponent
+    MenuItemComponent,
+    UpdateAvailableDialogComponent
   ],
   imports: [
+    NgxElectronModule,
     BrowserModule,
     HttpModule,
     BrowserAnimationsModule,
@@ -29,10 +37,14 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
     NgxDatatableModule
   ],
   providers: [
+    UpdaterService,
     SetService,
     CardService,
     CollectionService
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    UpdateAvailableDialogComponent
+  ]
 })
 export class AppModule { }

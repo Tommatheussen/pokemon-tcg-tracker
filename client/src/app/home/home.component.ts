@@ -6,7 +6,9 @@ import { SetService } from '../set.service';
 import { CardService } from '../card.service';
 import { CollectionService } from '../collection.service';
 
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/observable/zip';
 import { Set } from '../models/set.interface';
 import { Card } from '../models/card.interface';
 import { Collection } from '../models/collection.interface';
@@ -51,8 +53,8 @@ export class HomeComponent implements OnInit {
   }
 
   dateComparator(dateA: Date, dateB: Date) {
-    if (dateB < dateA) return 1;
-    else if (dateB > dateA) return -1;
+    if (dateB < dateA) { return 1; }
+    if (dateB > dateA) { return -1; }
     return 0;
   }
 
@@ -60,8 +62,8 @@ export class HomeComponent implements OnInit {
     this.sets = this.setService.getSetList()
       .map((sets: Set[]) => {
         return sets.sort((a: Set, b: Set) => {
-          if (new Date(b.releaseDate) < new Date(a.releaseDate)) return 1;
-          else if (new Date(b.releaseDate) > new Date(a.releaseDate)) return -1;
+          if (new Date(b.releaseDate) < new Date(a.releaseDate)) { return 1; }
+          if (new Date(b.releaseDate) > new Date(a.releaseDate)) { return -1; }
           return 0;
         });
       });
@@ -96,8 +98,8 @@ export class HomeComponent implements OnInit {
       .subscribe(([cards, collection]) => {
         this.cards = cards;
         collection.forEach(collectedEntry => {
-          var foundCard = cards.find(function (card) {
-            return card.id == collectedEntry.card;
+          const foundCard: Card = cards.find(function (card) {
+            return card.id === collectedEntry.card;
           });
 
           foundCard.collected = collectedEntry.collected;
