@@ -1,5 +1,6 @@
 const { autoUpdater } = require('electron-updater');
-const { dialog, BrowserWindow, ipcMain } = require('electron');
+const { dialog } = require('electron');
+const { notify, handler } = require('./communicate');
 
 autoUpdater.autoDownload = false;
 
@@ -22,39 +23,32 @@ autoUpdater.on('update-downloaded', (event, info) => {
   notify('update-download-finished');
 });
 
-
-
 autoUpdater.on('error', (event, error) => {
+  //TODO: Remove, integrate in Angular
   dialog.showErrorBox('Error: ', error == null ? 'unknown' : (error.stack || error).toString())
-})
+});
 
 
 /**
  * IPC events
  */
-ipcMain.on('check-update', () => {
+handler('check-update', () => {
   autoUpdater.checkForUpdates();
 
   notify('check-update-started');
 });
 
-ipcMain.on('download-update', () => {
+handler('download-update', () => {
   autoUpdater.downloadUpdate();
 
   notify('update-download-started');
 });
 
-ipcMain.on('install-update', () => {
+handler('install-update', () => {
   notify('install-update-starting');
 
   autoUpdater.quitAndInstall();
 });
-
-function notify(title, message) {
-  let windows = BrowserWindow.getAllWindows();
-
-  windows[0].webContents.send(title, message);
-}
 
 module.exports = {
   autoUpdater

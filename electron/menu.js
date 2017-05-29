@@ -1,28 +1,13 @@
-const { app, Menu } = require('electron');
+const { app, Menu, ipcMain } = require('electron');
 const { autoUpdater } = require('./updater');
+const { notify } = require('./communicate');
 
 const template = [
   {
-    label: 'Edit',
-    submenu: [
-
-    ]
-  },
-  {
-    label: 'View',
-    submenu: [
-      {role: 'resetzoom'},
-      {role: 'zoomin'},
-      {role: 'zoomout'},
-      {type: 'separator'},
-      {role: 'togglefullscreen'}
-    ]
-  },
-  {
     role: 'window',
-    submenu: [
-      {role: 'minimize'},
-      {role: 'close'}
+    submenu: [    
+      { role: 'minimize' },
+      {role: 'togglefullscreen'}
     ]
   },
   {
@@ -36,7 +21,15 @@ const template = [
       },
       {
         label: 'Report a bug',
-        click () { require('electron').shell.openExternal('https://github.com/Tommatheussen/pokemon-tcg-tracker/issues') }
+        click() {
+          require('electron').shell.openExternal('https://github.com/Tommatheussen/pokemon-tcg-tracker/issues');
+        }
+      },
+      {
+        label: 'About',
+        click() {
+          notify('about');
+        }
       }
     ]
   }
