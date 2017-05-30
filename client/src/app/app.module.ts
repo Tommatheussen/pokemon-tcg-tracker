@@ -21,11 +21,16 @@ import { NgxElectronModule } from 'ngx-electron';
 
 import { UpdateAvailableDialogComponent } from './dialog/update-available-dialog.component';
 
+import { RouterModule } from '@angular/router';
+
+import { TestrouteComponent } from './testroute.component';
+
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     MenuItemComponent,
+    TestrouteComponent,
     UpdateAvailableDialogComponent
   ],
   imports: [
@@ -34,7 +39,17 @@ import { UpdateAvailableDialogComponent } from './dialog/update-available-dialog
     HttpModule,
     BrowserAnimationsModule,
     MdlModule,
-    NgxDatatableModule
+    NgxDatatableModule,
+    RouterModule.forRoot([
+      {
+        path: 'test-route',
+        component: TestrouteComponent
+      },
+      {
+        path: 'home',
+        component: HomeComponent
+      }
+    ])
   ],
   providers: [
     UpdaterService,
