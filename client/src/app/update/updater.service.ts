@@ -7,16 +7,19 @@ import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
 import { ElectronService } from 'ngx-electron';
-import { UpdateAvailableDialogComponent } from './dialog/update-available-dialog.component';
+import { UpdateAvailableDialogComponent } from './update-available-dialog.component';
 
-import { UpdateInfo } from './models/update-info.interface';
-import { UPDATE_INFO } from './models/update-info.token';
+import { UpdateInfo } from '../models/update-info.interface';
+import { UPDATE_INFO } from '../models/update-info.token';
+
+import { SettingsService } from '../settings/settings.service';
 
 @Injectable()
 export class UpdaterService {
   private dialogObservable: Subject<string>;
 
   constructor(
+    private settingsService: SettingsService,
     private electronService: ElectronService,
     private mdlSnackbarService: MdlSnackbarService,
     private mdlDialogService: MdlDialogService,
@@ -28,7 +31,12 @@ export class UpdaterService {
     this.setupDownloadFinishedHandler();
     // this.setupDownloadProgressHandler();
 
-    electronService.ipcRenderer.send('check-update');
+    settingsService.getSetting('auto-update')
+      .subscribe((setting) => {
+        if (setting.value) {
+          electronService.ipcRenderer.send('check-update');
+        }
+      });
   }
 
   private setupNewVersionHandler(): void {

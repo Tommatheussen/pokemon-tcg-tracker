@@ -3,10 +3,10 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/observable';
 
 import * as Datastore from 'nedb';
-import { Collection } from './models/collection.interface';
-import { Card } from './models/card.interface';
+import { Collection } from '../models/collection.interface';
+import { Card } from '../models/card.interface';
 
-import { CollectionStore } from './database/collection.store';
+import { CollectionStore } from './collection.store';
 
 @Injectable()
 export class CollectionService {
