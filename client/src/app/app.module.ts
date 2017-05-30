@@ -22,13 +22,15 @@ import { NgxElectronModule } from 'ngx-electron';
 import { SettingsService } from './settings/settings.service';
 
 import { UpdateAvailableDialogComponent } from './update/update-available-dialog.component';
+import { SettingsDialogComponent } from './settings/settings-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     MenuItemComponent,
-    UpdateAvailableDialogComponent
+    UpdateAvailableDialogComponent,
+    SettingsDialogComponent
   ],
   imports: [
     NgxElectronModule,
@@ -47,7 +49,8 @@ import { UpdateAvailableDialogComponent } from './update/update-available-dialog
   ],
   bootstrap: [AppComponent],
   entryComponents: [
-    UpdateAvailableDialogComponent
+    UpdateAvailableDialogComponent,
+    SettingsDialogComponent
   ]
 })
 export class AppModule { }
