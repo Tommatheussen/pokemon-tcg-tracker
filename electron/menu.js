@@ -5,7 +5,7 @@ const { notify } = require('./communicate');
 const template = [
   {
     role: 'window',
-    submenu: [    
+    submenu: [
       { role: 'minimize' },
       {role: 'togglefullscreen'}
     ]
@@ -24,13 +24,13 @@ const template = [
         click() {
           require('electron').shell.openExternal('https://github.com/Tommatheussen/pokemon-tcg-tracker/issues');
         }
-      },
+      }/*,
       {
         label: 'About',
         click() {
           notify('about');
         }
-      }
+      }*/
     ]
   }
 ]
