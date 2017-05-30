@@ -7,5 +7,9 @@ import { UpdaterService } from './update/updater.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor(private updaterService: UpdaterService) { }
+  constructor(
+    private updaterService: UpdaterService
+  ) {
+    this.updaterService.setupHandlers();
+  }
 }

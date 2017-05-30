@@ -24,17 +24,19 @@ export class UpdaterService {
     private mdlSnackbarService: MdlSnackbarService,
     private mdlDialogService: MdlDialogService,
     private ngZone: NgZone
-  ) {
+  ) { }
+
+  public setupHandlers(): void {
     this.setupUpToDateHandler();
     this.setupNewVersionHandler();
     this.setupDownloadStartedHandler();
     this.setupDownloadFinishedHandler();
     // this.setupDownloadProgressHandler();
 
-    settingsService.getSetting('auto-update')
+    this.settingsService.getSetting('auto-update')
       .subscribe((setting) => {
-        if (setting.value) {
-          electronService.ipcRenderer.send('check-update');
+        if (!setting || setting.value) {
+          this.electronService.ipcRenderer.send('check-update');
         }
       });
   }

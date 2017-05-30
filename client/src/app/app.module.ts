@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, ErrorHandler, APP_INITIALIZER } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -43,13 +43,7 @@ import { UpdateAvailableDialogComponent } from './update/update-available-dialog
     UpdaterService,
     SetService,
     CardService,
-    CollectionService,
-    {
-      provide: APP_INITIALIZER,
-      useFactory: (settingsService: SettingsService) => () => settingsService.init(),
-      deps: [SettingsService],
-      multi: true
-    }
+    CollectionService
   ],
   bootstrap: [AppComponent],
   entryComponents: [

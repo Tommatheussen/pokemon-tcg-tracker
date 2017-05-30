@@ -11,31 +11,23 @@ import * as Datastore from 'nedb';
 export class SettingStore {
   constructor(private db: Datastore) { }
 
-  /**
-   * List Sets
-   */
-  public init(): Observable<Setting[]> {
-    const settingsSubject: Subject<Setting[]> = new Subject();
-
-    this.db.find<Setting>({}).exec((err, settings) => {
-      if(settings.length === 0) {
-        this.db.insert({
-          key: 'auto-update',
-          value: true
-        });
-      }
-      settingsSubject.next(settings);
-    });
-
-    return settingsSubject;
+  private defaultValues: { [key: string]: any } = {
+    "auto-update": true
   }
 
   public getSetting(key: string): Observable<Setting> {
     const settingsSubject: Subject<Setting> = new Subject();
 
     this.db.findOne<Setting>({ key: key }, ((err, setting: Setting) => {
-      console.log(err, setting);
-      settingsSubject.next(setting);
+      // Setting doesn't exist, insert default
+      if (setting === null) {
+        console.log(`setting doesn't exist, inserting: ${key}`);
+        this.db.insert(new Setting(key, this.defaultValues[key]), (err, setting) => {
+          settingsSubject.next(setting);
+        });
+      } else {
+        settingsSubject.next(setting);
+      }
     }));
 
     return settingsSubject;
