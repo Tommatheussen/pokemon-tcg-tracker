@@ -1,9 +1,3 @@
-export class Setting {
-  key: string;
-  value: string;
-
-  constructor(key: string, value: string) {
-    this.key = key;
-    this.value = value;
-  }
+export class Settings {
+  auto_update: false
 }

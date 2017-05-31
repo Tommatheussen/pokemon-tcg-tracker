@@ -2,11 +2,12 @@ import { Injectable, NgZone } from '@angular/core';
 
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/Observable/of';
 
 import * as Datastore from 'nedb';
-import { Setting } from '../models/setting.interface';
+import { Settings } from '../models/setting.interface';
 
-import { SettingStore } from '../database/settings.store';
+import { SettingsStore } from '../database/settings.store';
 
 import { ElectronService } from 'ngx-electron';
 
@@ -14,46 +15,58 @@ import { MdlDialogReference, MdlDialogService } from '@angular-mdl/core';
 
 import { SettingsDialogComponent } from './settings-dialog.component';
 
+import { SETTINGS } from '../models/settings.token';
+
 @Injectable()
 export class SettingsService {
-  private settingStore: SettingStore;
-  private settings: Setting[];
-
   constructor(
     private electronService: ElectronService,
     private ngZone: NgZone,
-    private mdlDialogService: MdlDialogService
+    private mdlDialogService: MdlDialogService,
+    private settingsStore: SettingsStore
   ) {
-    const db: Datastore = new Datastore({ filename: 'settings.db', autoload: true });
-    this.settingStore = new SettingStore(db);
-
     this.setupSettingsHandler();
   }
 
-  public getSetting(key): Observable<Setting> {
-    return this.settingStore.getSetting(key);
+  public getSetting(key): Observable<any> {
+    return Observable.of(this.settingsStore.getSetting(key));
+  }
+
+  public getAllSettings(): Observable<Settings> {
+    return Observable.of(this.settingsStore.getAllSettings());
   }
 
   private setupSettingsHandler(): void {
     this.electronService.ipcRenderer.on('open-settings', (ev) => {
-      this.ngZone.run(() => {
-        const updateAvailableDialog: Observable<MdlDialogReference> = this.mdlDialogService.showCustomDialog({
-          component: SettingsDialogComponent,
-          isModal: true,
-          styles: { 'width': '650px' },
-          clickOutsideToClose: false,
-          enterTransitionDuration: 400,
-          leaveTransitionDuration: 400
-        });
+      this.getAllSettings()
+        .subscribe(settings => {
+          this.ngZone.run(() => {
+            const updateAvailableDialog: Observable<MdlDialogReference> = this.mdlDialogService.showCustomDialog({
+              component: SettingsDialogComponent,
+              providers: [
+                {
+                  provide: SETTINGS,
+                  useValue: { ...settings }
+                }],
+              isModal: true,
+              styles: { 'width': '400px' },
+              clickOutsideToClose: false,
+              enterTransitionDuration: 400,
+              leaveTransitionDuration: 400
+            });
 
-        updateAvailableDialog.subscribe((dialogRef: MdlDialogReference) => {
-          dialogRef.onHide().subscribe((data) => {
-            if (data) {
-              //this.electronService.ipcRenderer.send('download-update');
-            }
+            updateAvailableDialog.subscribe((dialogRef: MdlDialogReference) => {
+              dialogRef.onHide().subscribe((data) => {
+                console.log(data, settings);
+                if (data && data !== settings) {
+                  this.settingsStore.saveSettings(data);
+                  console.log('will save');
+                  //TODO: Save
+                }
+              });
+            });
           });
         });
-      });
     });
   }
 }

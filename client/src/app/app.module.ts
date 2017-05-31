@@ -1,6 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, ErrorHandler } from '@angular/core';
+import { NgModule, ErrorHandler, APP_INITIALIZER } from '@angular/core';
 import { HttpModule } from '@angular/http';
+
+import { FormsModule } from '@angular/forms';
+
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MdlModule } from '@angular-mdl/core';
@@ -24,6 +28,8 @@ import { SettingsService } from './settings/settings.service';
 import { UpdateAvailableDialogComponent } from './update/update-available-dialog.component';
 import { SettingsDialogComponent } from './settings/settings-dialog.component';
 
+import { SettingsStore } from './database/settings.store';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,14 +44,22 @@ import { SettingsDialogComponent } from './settings/settings-dialog.component';
     HttpModule,
     BrowserAnimationsModule,
     MdlModule,
-    NgxDatatableModule
+    NgxDatatableModule,
+    FormsModule
   ],
   providers: [
     SettingsService,
     UpdaterService,
     SetService,
     CardService,
-    CollectionService
+    CollectionService,
+    SettingsStore,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: (settingsStore: SettingsStore) => () => settingsStore.initSettings(),
+      deps: [SettingsStore],
+      multi: true
+    }
   ],
   bootstrap: [AppComponent],
   entryComponents: [

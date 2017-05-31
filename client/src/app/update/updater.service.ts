@@ -33,9 +33,10 @@ export class UpdaterService {
     this.setupDownloadFinishedHandler();
     // this.setupDownloadProgressHandler();
 
-    this.settingsService.getSetting('auto-update')
+    this.settingsService.getSetting('auto_update')
       .subscribe((setting) => {
-        if (!setting || setting.value) {
+        console.log(setting);
+        if (setting !== null && setting.value) {
           this.electronService.ipcRenderer.send('check-update');
         }
       });
