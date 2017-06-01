@@ -2,9 +2,9 @@ import { Component, OnInit, ViewChild, TemplateRef, ViewEncapsulation } from '@a
 
 import { MdlDefaultTableModel } from '@angular-mdl/core';
 
-import { SetService } from '../set.service';
-import { CardService } from '../card.service';
-import { CollectionService } from '../collection.service';
+import { SetService } from '../database/set.service';
+import { CardService } from '../database/card.service';
+import { CollectionService } from '../database/collection.service';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';

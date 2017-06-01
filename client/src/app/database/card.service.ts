@@ -4,10 +4,10 @@ import { Http } from '@angular/http';
 import { Observable } from 'rxjs/observable';
 
 import * as Datastore from 'nedb';
-import { Card } from './models/card.interface';
-import { Set } from './models/set.interface';
+import { Card } from '../models/card.interface';
+import { Set } from '../models/set.interface';
 
-import { CardStore } from './database/card.store';
+import { CardStore } from './card.store';
 
 @Injectable()
 export class CardService {

@@ -4,6 +4,17 @@ const { notify } = require('./communicate');
 
 const template = [
   {
+    label: 'Edit',
+    submenu: [
+      {
+        label: 'Settings',
+        click() {
+          notify('open-settings');
+        }
+      }
+    ]
+  },
+  {
     role: 'window',
     submenu: [
       { role: 'minimize' },

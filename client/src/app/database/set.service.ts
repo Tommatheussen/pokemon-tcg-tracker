@@ -4,9 +4,9 @@ import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
 import * as Datastore from 'nedb';
-import { Set } from './models/set.interface';
+import { Set } from '../models/set.interface';
 
-import { SetStore } from './database/set.store';
+import { SetStore } from './set.store';
 
 @Injectable()
 export class SetService {
