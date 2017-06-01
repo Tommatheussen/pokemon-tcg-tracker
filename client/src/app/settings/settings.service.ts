@@ -57,11 +57,8 @@ export class SettingsService {
 
             updateAvailableDialog.subscribe((dialogRef: MdlDialogReference) => {
               dialogRef.onHide().subscribe((data) => {
-                console.log(data, settings);
                 if (data && data !== settings) {
                   this.settingsStore.saveSettings(data);
-                  console.log('will save');
-                  //TODO: Save
                 }
               });
             });

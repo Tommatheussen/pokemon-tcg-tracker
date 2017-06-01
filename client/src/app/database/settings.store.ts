@@ -31,22 +31,18 @@ export class SettingsStore {
 
   public saveSettings(settings: Settings): void {
     this.db.update(this.settings, settings, {}, (err, numReplaced) => {
-
       this.settings = settings;
-      console.log(err, numReplaced);
     });
   }
 
   public initSettings(): Promise<Settings> {
     return new Promise((resolve, reject) => {
-      this.db.findOne({}, (err, settings) => {
-        console.log(settings);
+      this.db.findOne<Settings>({}, (err, settings) => {
         if (settings !== null) {
           this.settings = settings;
           resolve(this.settings);
         } else {
           this.db.insert(this.defaultValues, (err, settings) => {
-            console.log(settings);
             this.settings = settings;
             resolve(this.settings);
           });

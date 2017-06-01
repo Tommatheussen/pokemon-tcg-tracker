@@ -35,8 +35,7 @@ export class UpdaterService {
 
     this.settingsService.getSetting('auto_update')
       .subscribe((setting) => {
-        console.log(setting);
-        if (setting !== null && setting.value) {
+        if (setting !== null && setting) {
           this.electronService.ipcRenderer.send('check-update');
         }
       });
