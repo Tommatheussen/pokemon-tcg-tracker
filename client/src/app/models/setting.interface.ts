@@ -1,3 +1,3 @@
 export class Settings {
-  auto_update: false
+  auto_update: boolean
 }

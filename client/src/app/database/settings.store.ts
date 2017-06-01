@@ -18,7 +18,7 @@ export class SettingsStore {
   }
 
   private defaultValues: Settings = {
-    auto_update: false
+    auto_update: true
   };
 
   public getSetting(key): any{
