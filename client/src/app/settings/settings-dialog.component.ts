@@ -1,6 +1,5 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MdlDialogReference } from '@angular-mdl/core';
-import { SettingsService } from './settings.service';
 import { Settings } from '../models/setting.interface';
 
 import { FormGroup } from '@angular/forms';
@@ -12,7 +11,7 @@ import { SETTINGS } from '../models/settings.token';
   templateUrl: './settings-dialog.component.html',
   styleUrls: ['./settings-dialog.component.css']
 })
-export class SettingsDialogComponent implements OnInit {
+export class SettingsDialogComponent {
   public settings: Settings;
   public settingsForm: FormGroup;
 
@@ -21,10 +20,6 @@ export class SettingsDialogComponent implements OnInit {
     private dialog: MdlDialogReference
   ) {
     this.settings = settings;
-  }
-
-  ngOnInit(): void {
-
   }
 
   public cancel(): void {

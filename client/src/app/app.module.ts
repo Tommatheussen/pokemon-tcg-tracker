@@ -30,10 +30,6 @@ import { SettingsDialogComponent } from './settings/settings-dialog.component';
 
 import { SettingsStore } from './database/settings.store';
 
-import { RouterModule } from '@angular/router';
-
-import { TestrouteComponent } from './testroute.component';
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,7 +37,6 @@ import { TestrouteComponent } from './testroute.component';
     MenuItemComponent,
     UpdateAvailableDialogComponent,
     SettingsDialogComponent
-    TestrouteComponent
   ],
   imports: [
     NgxElectronModule,
@@ -50,17 +45,7 @@ import { TestrouteComponent } from './testroute.component';
     BrowserAnimationsModule,
     MdlModule,
     NgxDatatableModule,
-    FormsModule,
-    RouterModule.forRoot([
-      {
-        path: 'test-route',
-        component: TestrouteComponent
-      },
-      {
-        path: 'home',
-        component: HomeComponent
-      }
-    ])
+    FormsModule
   ],
   providers: [
     SettingsService,
