@@ -1,6 +1,6 @@
 import { Component, AfterViewInit, Input, Output, EventEmitter } from '@angular/core';
 
-import { CollectionService } from '../collection.service';
+import { CollectionService } from '../database/collection.service';
 
 import { Set } from '../models/set.interface';
 

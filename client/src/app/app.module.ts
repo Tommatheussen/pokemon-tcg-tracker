@@ -1,6 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, ErrorHandler } from '@angular/core';
+import { NgModule, ErrorHandler, APP_INITIALIZER } from '@angular/core';
 import { HttpModule } from '@angular/http';
+
+import { FormsModule } from '@angular/forms';
+
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MdlModule } from '@angular-mdl/core';
@@ -8,25 +12,31 @@ import { MdlModule } from '@angular-mdl/core';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 
-import { SetService } from './set.service';
-import { CardService } from './card.service';
-import { CollectionService } from './collection.service';
+import { SetService } from './database/set.service';
+import { CardService } from './database/card.service';
+import { CollectionService } from './database/collection.service';
 import { MenuItemComponent } from './menu-item/menu-item.component';
 
-import { UpdaterService } from './updater.service';
+import { UpdaterService } from './update/updater.service';
 
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 import { NgxElectronModule } from 'ngx-electron';
 
-import { UpdateAvailableDialogComponent } from './dialog/update-available-dialog.component';
+import { SettingsService } from './settings/settings.service';
+
+import { UpdateAvailableDialogComponent } from './update/update-available-dialog.component';
+import { SettingsDialogComponent } from './settings/settings-dialog.component';
+
+import { SettingsStore } from './database/settings.store';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     MenuItemComponent,
-    UpdateAvailableDialogComponent
+    UpdateAvailableDialogComponent,
+    SettingsDialogComponent
   ],
   imports: [
     NgxElectronModule,
@@ -34,17 +44,27 @@ import { UpdateAvailableDialogComponent } from './dialog/update-available-dialog
     HttpModule,
     BrowserAnimationsModule,
     MdlModule,
-    NgxDatatableModule
+    NgxDatatableModule,
+    FormsModule
   ],
   providers: [
+    SettingsService,
     UpdaterService,
     SetService,
     CardService,
-    CollectionService
+    CollectionService,
+    SettingsStore,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: (settingsStore: SettingsStore) => () => settingsStore.initSettings(),
+      deps: [SettingsStore],
+      multi: true
+    }
   ],
   bootstrap: [AppComponent],
   entryComponents: [
-    UpdateAvailableDialogComponent
+    UpdateAvailableDialogComponent,
+    SettingsDialogComponent
   ]
 })
 export class AppModule { }

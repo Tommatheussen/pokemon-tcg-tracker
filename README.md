@@ -1,6 +1,8 @@
 # Pokemon TCG Tracker
 Tracker for Pokemon TCG cards
 
+[![Github Releases](https://img.shields.io/github/downloads/tommatheussen/pokemon-tcg-tracker/latest/total.svg)](https://github.com/Tommatheussen/pokemon-tcg-tracker)
+
 ## What is it?
 A desktop application, which makes it easy to keep track of collected Pokemon Trading Card Games.
 
