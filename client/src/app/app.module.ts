@@ -30,6 +30,8 @@ import { SettingsDialogComponent } from './settings/settings-dialog.component';
 
 import { SettingsStore } from './database/settings.store';
 
+import { settingsFactory } from './settings.factory';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -56,7 +58,7 @@ import { SettingsStore } from './database/settings.store';
     SettingsStore,
     {
       provide: APP_INITIALIZER,
-      useFactory: (settingsStore: SettingsStore) => () => settingsStore.initSettings(),
+      useFactory: settingsFactory,
       deps: [SettingsStore],
       multi: true
     }

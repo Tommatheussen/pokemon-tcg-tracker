@@ -31,7 +31,7 @@
   "devDependencies": {
     "concurrently": "^3.4.0",
     "electron": "^1.6.10",
-    "electron-builder": "^18.0.1",
+    "electron-builder": "^18.3.5",
     "electron-connect": "^0.6.1",
     "gulp": "^3.9.1"
   },
