@@ -29,7 +29,9 @@ export class UpdaterService {
     //   }
     // });
 
-    this._electronService.ipcRenderer.send('check-update');
+    if (!isDevMode()) {
+      this._electronService.ipcRenderer.send('check-update');
+    }
   }
 
   private setupNewVersionHandler(): void {
@@ -81,9 +83,7 @@ export class UpdaterService {
           })
           .afterClosed()
           .subscribe(result => {
-            if (!isDevMode()) {
-              this._electronService.ipcRenderer.send('install-update');
-            }
+            this._electronService.ipcRenderer.send('install-update');
           });
       });
     });
