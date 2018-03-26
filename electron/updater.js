@@ -7,7 +7,7 @@ autoUpdater.autoDownload = false;
 /**
  * Autoupdater events
  */
-autoUpdater.on('update-available', (info) => {
+autoUpdater.on('update-available', info => {
   notify('update-available', info);
 });
 
@@ -15,7 +15,7 @@ autoUpdater.on('update-not-available', () => {
   notify('up-to-date');
 });
 
-autoUpdater.on('download-progress', (progress) => {
+autoUpdater.on('download-progress', progress => {
   notify('update-download-progress', progress);
 });
 
@@ -25,9 +25,11 @@ autoUpdater.on('update-downloaded', (event, info) => {
 
 autoUpdater.on('error', (event, error) => {
   //TODO: Remove, integrate in Angular
-  dialog.showErrorBox('Error: ', error == null ? 'unknown' : (error.stack || error).toString())
+  dialog.showErrorBox(
+    'Error: ',
+    error == null ? 'unknown' : (error.stack || error).toString()
+  );
 });
-
 
 /**
  * IPC events
@@ -52,4 +54,4 @@ handler('install-update', () => {
 
 module.exports = {
   autoUpdater
-}
+};

@@ -13,4 +13,4 @@ function handler(event, func) {
 module.exports = {
   notify,
   handler
-}
+};
