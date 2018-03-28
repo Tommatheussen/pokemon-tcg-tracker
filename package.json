@@ -25,6 +25,7 @@
   },
   "private": true,
   "dependencies": {
+    "@trodi/electron-splashscreen": "^0.3.0",
     "dexie": "^2.0.2",
     "dexie-relationships": "^1.2.10",
     "electron-updater": "^2.21.3",

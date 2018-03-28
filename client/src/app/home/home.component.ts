@@ -1,7 +1,7 @@
 import 'rxjs/add/observable/zip';
 import 'rxjs/add/operator/map';
 
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ElectronService } from 'ngx-electron';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
@@ -19,9 +19,7 @@ export class HomeComponent implements OnInit {
 
   public cards: Card[];
 
-  constructor(
-    private _electronService: ElectronService
-  ) {}
+  constructor(private _electronService: ElectronService) {}
 
   ngOnInit(): void {
     this._electronService.ipcRenderer.once('sets', (event, sets: Set[]) => {
