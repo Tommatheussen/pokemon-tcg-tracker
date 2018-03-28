@@ -1,0 +1,22 @@
+.percent {
+  float: right;
+}
+
+mat-list-item {
+  .release-date,
+  .percent {
+    color: grey;
+
+    :host(.active) & {
+      color: white;
+    }
+  }
+
+  &:hover {
+    background-color: lightgray;
+  }
+
+  :host(.active) & {
+    background-color: lightslategray;
+  }
+}

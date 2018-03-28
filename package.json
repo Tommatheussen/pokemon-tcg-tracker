@@ -1,7 +1,7 @@
 {
   "name": "pokemon-tcg-tracker",
   "description": "Desktop app which keeps track of all collected Pokemon Cards",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "author": "Tom Matheussen",
   "license": "MIT",
   "main": "main.js",
@@ -28,6 +28,7 @@
     "dexie": "^2.0.2",
     "dexie-relationships": "^1.2.10",
     "electron-updater": "^2.21.3",
+    "nedb": "^1.8.0",
     "pokemontcgsdk": "^1.1.0"
   },
   "devDependencies": {

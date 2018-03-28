@@ -1,12 +1,13 @@
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { MatButtonModule, MatDialogModule, MatSidenavModule, MatSnackBarModule } from '@angular/material';
+import { MatButtonModule, MatDialogModule, MatListModule, MatSidenavModule, MatSnackBarModule } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxElectronModule } from 'ngx-electron';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
+import { SetItemComponent } from './set-item/set-item.component';
 import { UpdateAvailableDialogComponent } from './update/update-available/update-available-dialog.component';
 import { UpdateDownloadedDialogComponent } from './update/update-downloaded/update-downloaded-dialog.component';
 import { UpdaterService } from './update/updater.service';
@@ -15,6 +16,9 @@ import { UpdaterService } from './update/updater.service';
   declarations: [
     AppComponent,
     HomeComponent,
+
+    SetItemComponent,
+
     // MenuItemComponent,
     UpdateAvailableDialogComponent,
     UpdateDownloadedDialogComponent
@@ -25,6 +29,7 @@ import { UpdaterService } from './update/updater.service';
     MatDialogModule,
     MatButtonModule,
     MatSidenavModule,
+    MatListModule,
 
     NgxElectronModule,
     BrowserModule,

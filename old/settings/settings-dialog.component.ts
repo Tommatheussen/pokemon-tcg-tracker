@@ -1,15 +1,14 @@
-import { Component, Inject } from '@angular/core';
 import { MdlDialogReference } from '@angular-mdl/core';
-import { Settings } from '../models/setting.interface';
-
+import { Component, Inject } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
+import { Settings } from '../models/setting.interface';
 import { SETTINGS } from '../models/settings.token';
 
 @Component({
   selector: 'pokemon-settings-dialog-component',
   templateUrl: './settings-dialog.component.html',
-  styleUrls: ['./settings-dialog.component.css']
+  styleUrls: ['./settings-dialog.component.scss']
 })
 export class SettingsDialogComponent {
   public settings: Settings;

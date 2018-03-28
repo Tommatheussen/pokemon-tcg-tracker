@@ -39,7 +39,7 @@ function createWindow() {
   });
 
   require('./electron/menu');
-  // require('./electron/database');
+  require('./electron/database');
 }
 
 // This method will be called when Electron has finished
