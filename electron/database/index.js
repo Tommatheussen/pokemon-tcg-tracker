@@ -1,59 +1,14 @@
 const { SETS } = require('./sets');
 
-const { db } = require('./database');
+const { initDatabases, db } = require('./database');
+
+const { updateSets } = require('./sets');
+const { setLatestUpdate } = require('./updates');
 
 const pokemon = require('pokemontcgsdk');
 
-function updateSets() {
-  return new Promise((resolve, reject) => {
-    db.updates.findOne({ key: 'sets' }, (err, lastUpdate) => {
-      if (err) {
-        reject(err);
-      } else {
-        if (lastUpdate) {
-          console.log(lastUpdate);
-          const latestUpdateDate = +new Date(lastUpdate.date);
-          const weekAgo = new Date() - 604800000;
-          if (latestUpdateDate < weekAgo) {
-            console.log('should update');
-            resolve();
-          } else {
-            console.log('still good');
-            resolve();
-          }
-          console.log(latestUpdateDate);
-          console.log(weekAgo);
-        } else {
-          console.log('Should seed!');
-
-          let setEmitter = pokemon.set.all({ pageSize: 1000 });
-
-          setEmitter.on('data', set => {
-            console.log(`Set received: ${set.name}`);
-          });
-          setEmitter.on('end', () => {
-            db.updates.insert({ key: 'sets', date: new Date() }, (err, doc) => {
-              if (err) {
-                reject(err);
-              } else {
-                console.log(err, doc);
-
-                console.log(`Sets finished`);
-                resolve();
-              }
-            });
-          });
-          setEmitter.on('error', err => {
-            console.log(`Error received: ${err}`);
-            reject();
-          });
-        }
-      }
-    });
-  });
-}
-
 module.exports = {
+  initDatabases,
   updateSets
 };
 
@@ -120,7 +75,9 @@ handler('load-sets', () => {
     console.log(err, count);
   });
 
-  notify('sets', SETS);
+  db.sets.find({}, (err, docs) => {
+    notify('sets', docs);
+  });
 });
 
 handler('load-cards', (event, args) => {

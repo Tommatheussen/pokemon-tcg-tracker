@@ -30,7 +30,8 @@
     "dexie-relationships": "^1.2.10",
     "electron-updater": "^2.21.3",
     "nedb": "^1.8.0",
-    "pokemontcgsdk": "^1.1.0"
+    "pokemontcgsdk": "^1.1.0",
+    "request-promise": "^4.2.2"
   },
   "devDependencies": {
     "electron": "^1.8.4",

@@ -1,5 +1,8 @@
 const electron = require('electron');
 const isDev = require('electron-is-dev');
+
+const { initDatabases, updateSets } = require('./electron/database');
+
 // Module to control application life.
 const app = electron.app;
 // Module to create native browser window.
@@ -67,12 +70,14 @@ app.on('ready', () => {
   console.log('app ready');
   mainWindow = splashScreen.initSplashScreen(config);
   console.log('splash should be here now');
-  const database = require('./electron/database');
-  console.log('database loaded');
-  database.updateSets().then(() => {
-    console.log('Now main window!');
-    createWindow();
-  });
+
+  initDatabases()
+    .then(() => {
+      return updateSets();
+    })
+    .then(() => {
+      createWindow();
+    });
 });
 
 // Quit when all windows are closed.
@@ -97,10 +102,4 @@ app.on('activate', function() {
 
 if (!isDev) {
   require('./electron/updater');
-} else {
-  // Enable live reload for Electron too
-  require('electron-reload')('./electron/**/**', {
-    // Note that the path to electron may vary according to the main file
-    electron: require(`${__dirname}/node_modules/electron`)
-  });
 }

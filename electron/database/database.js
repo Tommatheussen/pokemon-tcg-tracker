@@ -1,21 +1,43 @@
-const datastore = require('nedb');
+const DataStore = require('nedb');
+
+const db = {};
 
 function createDatabase(name) {
-  return new datastore({
-    autoload: true,
-    filename: `./databases/${name}.db`,
-    onload: error => {
-      if (error) {
-        console.log(`${name} database failed to load: ${error}`);
+  return new Promise((resolve, reject) => {
+    const datastore = new DataStore({
+      autoload: true,
+      filename: `./databases/${name}.db`,
+      onload: error => {
+        if (error) {
+          console.log(`${name} database failed to load: ${error}`);
+          reject(error);
+        } else {
+          resolve(datastore);
+        }
       }
-    }
+    });
   });
 }
 
-let db = {
-  sets: createDatabase('sets'),
-  updates: createDatabase('updates')
-};
+function initDatabases() {
+  return new Promise((resolve, reject) => {
+    Promise.all([
+      createDatabase('sets'),
+      createDatabase('cards'),
+      createDatabase('updates')
+    ])
+      .then(datastores => {
+        db.sets = datastores[0];
+        db.cards = datastores[1];
+        db.updates = datastores[2];
+
+        resolve();
+      })
+      .catch(error => {
+        reject(error);
+      });
+  });
+}
 
 // const relationships = require('dexie-relationships');
 
@@ -34,5 +56,6 @@ let db = {
 // });
 
 module.exports = {
-  db
+  db,
+  initDatabases
 };

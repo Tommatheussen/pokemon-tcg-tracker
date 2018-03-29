@@ -1,5 +1,5 @@
 <mat-list-item>
-  <img matListAvatar [src]="set.symbolUrl">
+  <img matListAvatar [src]="'data:image/png;base64,'+set.symbol">
   <h3 mat-line>{{ set.name }}</h3>
   <p mat-line class="release-date">{{ set.releaseDate | date }}</p>
   <span class="percent">{{ (count | async) / set.totalCards | percent:'1.0-2' }}</span>
