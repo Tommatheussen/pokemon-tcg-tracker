@@ -86,6 +86,7 @@ function upsertSet(set) {
           totalCards: set.totalCards,
           releaseDate: set.releaseDate
           // symbol: await getSymbol(set.symbolUrl)
+          // TODO: store symbol
         }
       },
       {
@@ -113,6 +114,22 @@ function upsertSet(set) {
 //       });
 //   });
 // }
+
+//****************//
+//  IPC functions //
+//****************//
+const { handler, notify } = require('../communicate');
+
+handler('sets:load', () => {
+  db.sets.find({}, (err, docs) => {
+    notify('sets:list', docs);
+  });
+});
+
+handler('sets:count', (event, args) => {
+  // TODO: Count!
+  notify(`sets:count:${args.code}`, 0);
+});
 
 module.exports = {
   updateSets

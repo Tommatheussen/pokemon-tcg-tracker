@@ -22,25 +22,42 @@ export class HomeComponent implements OnInit {
   constructor(private _electronService: ElectronService) {}
 
   ngOnInit(): void {
-    this._electronService.ipcRenderer.once('sets', (event, sets: Set[]) => {
-      this.sets.next(
-        sets.sort((setA, setB) => {
-          return new Date(setA.releaseDate) < new Date(setB.releaseDate)
-            ? -1
-            : 1;
-        })
-      );
-    });
+    this._setupSetlistHandler();
+    this._setupCardlistHandler();
 
-    this._electronService.ipcRenderer.on('cards', (event, cards: Card[]) => {
-      console.log(cards);
-    });
-
-    this._electronService.ipcRenderer.send('load-sets');
+    this._electronService.ipcRenderer.send('sets:load');
   }
 
   selectSet(set: Set) {
-    this.selectedSet = set.code;
-    this._electronService.ipcRenderer.send('load-cards', { setCode: set.code });
+    if (this.selectedSet !== set.code) {
+      this.selectedSet = set.code;
+      this._electronService.ipcRenderer.send('cards:load', {
+        setCode: set.code
+      });
+    }
+  }
+
+  private _setupSetlistHandler() {
+    this._electronService.ipcRenderer.once(
+      'sets:list',
+      (event, sets: Set[]) => {
+        this.sets.next(
+          sets.sort((setA, setB) => {
+            return new Date(setA.releaseDate) < new Date(setB.releaseDate)
+              ? -1
+              : 1;
+          })
+        );
+      }
+    );
+  }
+
+  private _setupCardlistHandler() {
+    this._electronService.ipcRenderer.on(
+      'cards:list',
+      (event, cards: Card[]) => {
+        console.log(cards);
+      }
+    );
   }
 }
