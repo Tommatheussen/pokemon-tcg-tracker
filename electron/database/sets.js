@@ -21,7 +21,7 @@ function updateSets() {
           console.log(`Wil update sets!`);
 
           await loadSets({
-            updatedSince: latestUpdateDate.format('MM/DD/YYYY HH:MM:SS')
+            updatedSince: latestUpdateDate.format('MM/DD/YYYY HH:mm:ss')
           });
 
           await setLatestUpdate('sets');
@@ -65,10 +65,10 @@ async function loadSets(params) {
       Promise.all(setPromises).then(() => {
         resolve();
       });
-      setEmitter.on('error', error => {
-        console.log(`Error! ${error}`);
-        reject(error);
-      });
+    });
+    setEmitter.on('error', error => {
+      console.log(`Error! ${error}`);
+      reject(error);
     });
   });
 }
@@ -84,7 +84,8 @@ function upsertSet(set) {
           name: set.name,
           series: set.series,
           totalCards: set.totalCards,
-          releaseDate: set.releaseDate
+          releaseDate: set.releaseDate,
+          updatedAt: moment(set.updatedAt, 'MM-DD-YYYY HH:mm:ss').format()
           // symbol: await getSymbol(set.symbolUrl)
           // TODO: store symbol
         }
@@ -100,6 +101,18 @@ function upsertSet(set) {
         }
       }
     );
+  });
+}
+
+function getSet(setCode) {
+  return new Promise((resolve, reject) => {
+    db.sets.findOne({ code: setCode }, (err, doc) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(doc);
+      }
+    });
   });
 }
 
@@ -132,5 +145,6 @@ handler('sets:count', (event, args) => {
 });
 
 module.exports = {
-  updateSets
+  updateSets,
+  getSet
 };

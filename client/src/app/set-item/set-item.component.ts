@@ -30,8 +30,7 @@ export class SetItemComponent implements OnInit {
     );
 
     this._electronService.ipcRenderer.send('count', {
-      code: this.set.code,
-      max: this.set.totalCards
+      code: this.set.code
     });
   }
 

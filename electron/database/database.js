@@ -6,12 +6,14 @@ function initDatabases() {
   return new Promise(async (resolve, reject) => {
     try {
       await createDatabase('sets');
-      await ensureIndex(db.sets, 'code');
+      await ensureIndex(db.sets, 'code', true);
 
       await createDatabase('cards');
+      await ensureIndex(db.cards, 'setCode');
+      await ensureIndex(db.cards, 'id', true);
 
       await createDatabase('updates');
-      await ensureIndex(db.updates, 'key');
+      await ensureIndex(db.updates, 'key', true);
 
       console.log('Databases finished');
 
@@ -42,9 +44,9 @@ function createDatabase(name) {
   });
 }
 
-function ensureIndex(databaseTable, index) {
+function ensureIndex(databaseTable, index, unique) {
   return new Promise((resolve, reject) => {
-    databaseTable.ensureIndex({ fieldName: index, unique: true }, err => {
+    databaseTable.ensureIndex({ fieldName: index, unique: unique }, err => {
       if (err) {
         reject(err);
       } else {
