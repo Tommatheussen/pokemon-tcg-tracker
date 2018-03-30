@@ -2,9 +2,32 @@ const DataStore = require('nedb');
 
 const db = {};
 
+function initDatabases() {
+  return new Promise(async (resolve, reject) => {
+    try {
+      await createDatabase('sets');
+      await ensureIndex(db.sets, 'code');
+
+      await createDatabase('cards');
+
+      await createDatabase('updates');
+      await ensureIndex(db.updates, 'key');
+
+      console.log('Databases finished');
+
+      resolve();
+    } catch (error) {
+      reject(error);
+    }
+  });
+}
+
+//*********************//
+// Private functions   //
+//*********************//
 function createDatabase(name) {
   return new Promise((resolve, reject) => {
-    const datastore = new DataStore({
+    db[name] = new DataStore({
       autoload: true,
       filename: `./databases/${name}.db`,
       onload: error => {
@@ -12,30 +35,22 @@ function createDatabase(name) {
           console.log(`${name} database failed to load: ${error}`);
           reject(error);
         } else {
-          resolve(datastore);
+          resolve();
         }
       }
     });
   });
 }
 
-function initDatabases() {
+function ensureIndex(databaseTable, index) {
   return new Promise((resolve, reject) => {
-    Promise.all([
-      createDatabase('sets'),
-      createDatabase('cards'),
-      createDatabase('updates')
-    ])
-      .then(datastores => {
-        db.sets = datastores[0];
-        db.cards = datastores[1];
-        db.updates = datastores[2];
-
+    databaseTable.ensureIndex({ fieldName: index, unique: true }, err => {
+      if (err) {
+        reject(err);
+      } else {
         resolve();
-      })
-      .catch(error => {
-        reject(error);
-      });
+      }
+    });
   });
 }
 

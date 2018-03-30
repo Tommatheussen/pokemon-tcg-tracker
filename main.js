@@ -66,18 +66,19 @@ function createWindow() {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', () => {
+app.on('ready', async () => {
   console.log('app ready');
   mainWindow = splashScreen.initSplashScreen(config);
-  console.log('splash should be here now');
 
-  initDatabases()
-    .then(() => {
-      return updateSets();
-    })
-    .then(() => {
-      createWindow();
-    });
+  try {
+    await initDatabases();
+    await updateSets();
+
+    createWindow();
+  } catch (error) {
+    console.log(`Error! ${error}`);
+    app.quit();
+  }
 });
 
 // Quit when all windows are closed.
