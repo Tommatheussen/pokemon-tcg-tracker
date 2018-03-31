@@ -26,6 +26,7 @@ handler('collection:new', (event, args) => {
     },
     (err, doc) => {
       console.log(err, doc);
+      notify(`collection:added:${args.setCode}`, 'ok');
     }
   );
 });

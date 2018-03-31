@@ -29,12 +29,16 @@ export class SetItemComponent implements OnInit {
       }
     );
 
+    this._electronService.ipcRenderer.on(
+      `collection:added:${this.set.code}`,
+      (event, args) => {
+        let value = this.count.value;
+        this.count.next(++value);
+      }
+    );
+
     this._electronService.ipcRenderer.send('collection:count', {
       setCode: this.set.code
     });
-  }
-
-  increment() {
-    this.count.next(this.count.getValue() + 1);
   }
 }
