@@ -9,17 +9,14 @@ const template = [
       {
         label: 'Settings',
         click() {
-          notify('open-settings');
+          notify('settings:open');
         }
       }
     ]
   },
   {
     role: 'window',
-    submenu: [
-      { role: 'minimize' },
-      {role: 'togglefullscreen'}
-    ]
+    submenu: [{ role: 'minimize' }, { role: 'togglefullscreen' }]
   },
   {
     role: 'help',
@@ -27,15 +24,17 @@ const template = [
       {
         label: 'Check for Updates',
         click() {
-          autoUpdater.checkForUpdates()
+          autoUpdater.checkForUpdates();
         }
       },
       {
         label: 'Report a bug',
         click() {
-          require('electron').shell.openExternal('https://github.com/Tommatheussen/pokemon-tcg-tracker/issues');
+          require('electron').shell.openExternal(
+            'https://github.com/Tommatheussen/pokemon-tcg-tracker/issues'
+          );
         }
-      }/*,
+      } /*,
       {
         label: 'About',
         click() {
@@ -44,20 +43,20 @@ const template = [
       }*/
     ]
   }
-]
+];
 
 if (process.platform === 'darwin') {
   template.unshift({
     label: app.getName(),
     submenu: [
-      {role: 'hide'},
-      {role: 'hideothers'},
-      {role: 'unhide'},
-      {type: 'separator'},
-      {role: 'quit'}
+      { role: 'hide' },
+      { role: 'hideothers' },
+      { role: 'unhide' },
+      { type: 'separator' },
+      { role: 'quit' }
     ]
-  })
+  });
 }
 
-const menu = Menu.buildFromTemplate(template)
-Menu.setApplicationMenu(menu)
+const menu = Menu.buildFromTemplate(template);
+Menu.setApplicationMenu(menu);

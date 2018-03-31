@@ -1,0 +1,9 @@
+<h1 mat-dialog-title>Settings</h1>
+<hr>
+<div mat-dialog-content>
+  <mat-checkbox [(ngModel)]="settings.auto_update">Auto update application</mat-checkbox>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button color="primary" [mat-dialog-close]="settings">Save</button>
+  <button mat-raised-button mat-dialog-close>Cancel</button>
+</div>

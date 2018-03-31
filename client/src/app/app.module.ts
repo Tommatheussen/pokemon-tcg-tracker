@@ -1,7 +1,10 @@
+import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import {
   MatButtonModule,
+  MatCheckboxModule,
   MatDialogModule,
   MatIconModule,
   MatListModule,
@@ -17,6 +20,8 @@ import { NgxElectronModule } from 'ngx-electron';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { SetItemComponent } from './set-item/set-item.component';
+import { SettingsDialogComponent } from './settings/settings-dialog.component';
+import { SettingsService } from './settings/settings.service';
 import { UpdateAvailableDialogComponent } from './update/update-available/update-available-dialog.component';
 import { UpdateDownloadedDialogComponent } from './update/update-downloaded/update-downloaded-dialog.component';
 import { UpdaterService } from './update/updater.service';
@@ -28,10 +33,9 @@ import { UpdaterService } from './update/updater.service';
 
     SetItemComponent,
 
-    // MenuItemComponent,
     UpdateAvailableDialogComponent,
-    UpdateDownloadedDialogComponent
-    // SettingsDialogComponent
+    UpdateDownloadedDialogComponent,
+    SettingsDialogComponent
   ],
   imports: [
     MatSnackBarModule,
@@ -42,19 +46,18 @@ import { UpdaterService } from './update/updater.service';
     MatTableModule,
     MatProgressSpinnerModule,
     MatIconModule,
+    MatCheckboxModule,
 
     NgxElectronModule,
+    CommonModule,
     BrowserModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [
-    //SettingsService,
+    SettingsService,
     UpdaterService
-    // SetService,
-    // CardService,
-    // CollectionService,
-    // SettingsStore,
     // {
     //   provide: APP_INITIALIZER,
     //   useFactory: (settingsStore: SettingsStore) => () =>
@@ -66,8 +69,8 @@ import { UpdaterService } from './update/updater.service';
   bootstrap: [AppComponent],
   entryComponents: [
     UpdateAvailableDialogComponent,
-    UpdateDownloadedDialogComponent
-    // SettingsDialogComponent
+    UpdateDownloadedDialogComponent,
+    SettingsDialogComponent
   ]
 })
 export class AppModule {}
