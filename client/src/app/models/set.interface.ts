@@ -4,5 +4,5 @@ export interface Set {
   totalCards: number;
   code: string;
   releaseDate: string;
-  collectedCount: number;
+  updatedAt: Date;
 }

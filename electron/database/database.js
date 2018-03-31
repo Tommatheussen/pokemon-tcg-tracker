@@ -12,6 +12,10 @@ function initDatabases() {
       await ensureIndex(db.cards, 'setCode');
       await ensureIndex(db.cards, 'id', true);
 
+      await createDatabase('collection');
+      await ensureIndex(db.collection, 'setCode');
+      await ensureIndex(db.collection, 'cardId', true);
+
       await createDatabase('updates');
       await ensureIndex(db.updates, 'key', true);
 

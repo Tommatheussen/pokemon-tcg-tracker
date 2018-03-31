@@ -7,6 +7,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subject } from 'rxjs/Subject';
 
 import { Card } from '../models/card.interface';
+import { Collection } from '../models/collection.interface';
 import { Set } from '../models/set.interface';
 
 @Component({
@@ -38,12 +39,18 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this._setupSetlistHandler();
     this._setupCardlistHandler();
+    this._setupCollectionListHandler();
 
     this._electronService.ipcRenderer.send('sets:load');
   }
 
-  collect(code) {
-    this.collection[code] = new Date();
+  collect(cardId) {
+    this._electronService.ipcRenderer.send('collection:new', {
+      setCode: this.selectedSet,
+      cardId: cardId
+    });
+
+    this.collection[cardId] = new Date();
   }
 
   selectSet(set: Set) {
@@ -51,6 +58,9 @@ export class HomeComponent implements OnInit {
       this.cards$.next();
       this.selectedSet = set.code;
       this._electronService.ipcRenderer.send('cards:load', {
+        setCode: set.code
+      });
+      this._electronService.ipcRenderer.send('collection:load', {
         setCode: set.code
       });
     }
@@ -81,6 +91,20 @@ export class HomeComponent implements OnInit {
               return cardA.number - cardB.number;
             })
           );
+        });
+      }
+    );
+  }
+
+  private _setupCollectionListHandler() {
+    this._electronService.ipcRenderer.on(
+      'collection:list',
+      (event, collection: Collection[]) => {
+        this._zone.run(() => {
+          this.collection = collection.reduce((accumulator, collectedCard) => {
+            accumulator[collectedCard.cardId] = collectedCard.collectionDate;
+            return accumulator;
+          }, {});
         });
       }
     );

@@ -139,11 +139,6 @@ handler('sets:load', () => {
   });
 });
 
-handler('sets:count', (event, args) => {
-  // TODO: Count!
-  notify(`sets:count:${args.code}`, 0);
-});
-
 module.exports = {
   updateSets,
   getSet

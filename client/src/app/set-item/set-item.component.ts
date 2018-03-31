@@ -22,15 +22,15 @@ export class SetItemComponent implements OnInit {
 
   ngOnInit() {
     this._electronService.ipcRenderer.once(
-      `count-${this.set.code}`,
+      `collection:count:${this.set.code}`,
       (event, args) => {
         this.count.next(args);
         this._cd.detectChanges();
       }
     );
 
-    this._electronService.ipcRenderer.send('count', {
-      code: this.set.code
+    this._electronService.ipcRenderer.send('collection:count', {
+      setCode: this.set.code
     });
   }
 
