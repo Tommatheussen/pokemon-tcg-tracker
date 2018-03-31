@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import {
   MatButtonModule,
   MatDialogModule,
+  MatIconModule,
   MatListModule,
   MatProgressSpinnerModule,
   MatSidenavModule,
@@ -40,6 +41,7 @@ import { UpdaterService } from './update/updater.service';
     MatListModule,
     MatTableModule,
     MatProgressSpinnerModule,
+    MatIconModule,
 
     NgxElectronModule,
     BrowserModule,

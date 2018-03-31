@@ -15,7 +15,15 @@ import { Set } from '../models/set.interface';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  displayedColumns: string[] = ['number', 'name', 'rarity', 'supertype'];
+  collection = {};
+
+  displayedColumns: string[] = [
+    'number',
+    'name',
+    'rarity',
+    'supertype',
+    'collected'
+  ];
 
   public sets: BehaviorSubject<Set[]> = new BehaviorSubject(null);
   public selectedSet: string;
@@ -32,6 +40,10 @@ export class HomeComponent implements OnInit {
     this._setupCardlistHandler();
 
     this._electronService.ipcRenderer.send('sets:load');
+  }
+
+  collect(code) {
+    this.collection[code] = new Date();
   }
 
   selectSet(set: Set) {

@@ -37,10 +37,23 @@
         <mat-cell *matCellDef="let element">{{ element.supertype }}</mat-cell>
       </ng-container>
 
+      <ng-container matColumnDef="collected">
+        <mat-header-cell *matHeaderCellDef>Collected</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <ng-container *ngIf="!collection[element.id]">
+            <button mat-mini-fab (click)="collect(element.id)">
+              <mat-icon aria-label="Collect">library_add</mat-icon>
+            </button>
+          </ng-container>
+          <ng-container *ngIf="collection[element.id]">
+            {{ collection[element.id] | date }}
+          </ng-container>
+        </mat-cell>
+      </ng-container>
+
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let element; columns: displayedColumns;"></mat-row>
     </mat-table>
-    <!-- <p *ngIf="cards$ | async; let cards; else loading">{{ cards.length }}</p> -->
   </mat-sidenav-content>
 
   <ng-template #loading>
@@ -58,10 +71,3 @@
     </mdl-layout-header-row>
   </mdl-layout-header>
 <mdl-layout>
-
-<ng-template #collectionTmpl let-row='row' let-value='value'>
-  <button *ngIf='!value' mdl-button mdl-button-type='mini-fab' (click)='collectCard(row)'>
-    <mdl-icon>library_add</mdl-icon>
-  </button>
-  <div *ngIf='value'>{{ value | date : 'mediumDate' }}</div>
-</ng-template> -->
