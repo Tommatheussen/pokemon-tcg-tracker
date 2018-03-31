@@ -1,9 +1,10 @@
 import 'rxjs/add/observable/zip';
 import 'rxjs/add/operator/map';
 
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { ElectronService } from 'ngx-electron';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Subject } from 'rxjs/Subject';
 
 import { Card } from '../models/card.interface';
 import { Set } from '../models/set.interface';
@@ -14,12 +15,17 @@ import { Set } from '../models/set.interface';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  public sets: BehaviorSubject<Set[]> = new BehaviorSubject([]);
+  displayedColumns: string[] = ['number', 'name', 'rarity', 'supertype'];
+
+  public sets: BehaviorSubject<Set[]> = new BehaviorSubject(null);
   public selectedSet: string;
 
-  public cards: Card[];
+  public cards$: Subject<Card[]> = new Subject<Card[]>();
 
-  constructor(private _electronService: ElectronService) {}
+  constructor(
+    private _electronService: ElectronService,
+    private _zone: NgZone
+  ) {}
 
   ngOnInit(): void {
     this._setupSetlistHandler();
@@ -30,6 +36,7 @@ export class HomeComponent implements OnInit {
 
   selectSet(set: Set) {
     if (this.selectedSet !== set.code) {
+      this.cards$.next();
       this.selectedSet = set.code;
       this._electronService.ipcRenderer.send('cards:load', {
         setCode: set.code
@@ -56,7 +63,13 @@ export class HomeComponent implements OnInit {
     this._electronService.ipcRenderer.on(
       'cards:list',
       (event, cards: Card[]) => {
-        console.log(cards);
+        this._zone.run(() => {
+          this.cards$.next(
+            cards.sort((cardA, cardB) => {
+              return cardA.number - cardB.number;
+            })
+          );
+        });
       }
     );
   }

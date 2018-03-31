@@ -4,14 +4,48 @@
   <span>Help</span>
 </mat-toolbar> -->
 
-<mat-sidenav-container fullscreen>
+<mat-sidenav-container fullscreen autosize>
   <mat-sidenav mode="side" opened>
     <mat-list>
       <pokemon-set-item *ngFor="let set of sets | async; let last = last" [set]="set" [last]="last" (click)="selectSet(set)" [class.active]="set.code == selectedSet">
       </pokemon-set-item>
     </mat-list>
   </mat-sidenav>
-  <mat-sidenav-content>Main content</mat-sidenav-content>
+  <mat-sidenav-content>
+    <div class="example-loading-shade" *ngIf="!(cards$ | async)">
+      <mat-spinner></mat-spinner>
+    </div>
+
+    <mat-table [hidden]="!(cards$ | async)" #table [dataSource]="cards$">
+      <ng-container matColumnDef="number">
+        <mat-header-cell *matHeaderCellDef>Number</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.number }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.name }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="rarity">
+        <mat-header-cell *matHeaderCellDef>Rarity</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.rarity }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="supertype">
+        <mat-header-cell *matHeaderCellDef>Supertype</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.supertype }}</mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let element; columns: displayedColumns;"></mat-row>
+    </mat-table>
+    <!-- <p *ngIf="cards$ | async; let cards; else loading">{{ cards.length }}</p> -->
+  </mat-sidenav-content>
+
+  <ng-template #loading>
+    Loading now!
+  </ng-template>
 </mat-sidenav-container>
 
 
@@ -23,17 +57,6 @@
       <mdl-layout-title>Set: {{ selectedSet }}</mdl-layout-title>
     </mdl-layout-header-row>
   </mdl-layout-header>
-  <mdl-layout-content>
-    <ngx-datatable
-      class='material'
-      [columnMode]='"force"'
-      [rowHeight]='"auto"'
-      [rows]='cards'
-      [columns]='columns'
-      [rowClass]='getRowClass'
-      [messages]='{ emptyMessage: "No set selected" }'>
-    </ngx-datatable>
-  </mdl-layout-content>
 <mdl-layout>
 
 <ng-template #collectionTmpl let-row='row' let-value='value'>

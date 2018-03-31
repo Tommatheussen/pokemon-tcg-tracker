@@ -1,6 +1,14 @@
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { MatButtonModule, MatDialogModule, MatListModule, MatSidenavModule, MatSnackBarModule } from '@angular/material';
+import {
+  MatButtonModule,
+  MatDialogModule,
+  MatListModule,
+  MatProgressSpinnerModule,
+  MatSidenavModule,
+  MatSnackBarModule,
+  MatTableModule,
+} from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxElectronModule } from 'ngx-electron';
@@ -30,6 +38,8 @@ import { UpdaterService } from './update/updater.service';
     MatButtonModule,
     MatSidenavModule,
     MatListModule,
+    MatTableModule,
+    MatProgressSpinnerModule,
 
     NgxElectronModule,
     BrowserModule,
