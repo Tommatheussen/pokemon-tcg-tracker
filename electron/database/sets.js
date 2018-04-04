@@ -128,6 +128,24 @@ function getSet(setCode) {
 //   });
 // }
 
+async function storeSymbol(path, name, buffer) {
+  return new Promise((resolve, reject) => {
+    mkdirp(path, err => {
+      if (err) {
+        reject(err);
+      } else {
+        fs.writeFile(`${path}/${name}.png`, buffer, err => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve();
+          }
+        });
+      }
+    });
+  });
+}
+
 //****************//
 //  IPC functions //
 //****************//
@@ -136,6 +154,35 @@ const { handler, notify } = require('../communicate');
 handler('sets:load', () => {
   db.sets.find({}, (err, docs) => {
     notify('sets:list', docs);
+  });
+});
+
+const fs = require('fs');
+const request = require('request-promise-native');
+const mkdirp = require('mkdirp');
+
+handler('sets:load:symbol', (event, args) => {
+  fs.readFile(`./databases/images/symbols/${args.setCode}.png`, (err, data) => {
+    if (err) {
+      console.log('No previous data');
+      request({
+        uri: `https://images.pokemontcg.io/${args.setCode}/symbol.png`,
+        encoding: null
+      })
+        .then(async body => {
+          await storeSymbol('./databases/images/symbols/', args.setCode, body);
+          notify(`sets:symbol:${args.setCode}`, body.toString('base64'));
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    } else {
+      console.log('Stored already');
+      notify(`sets:symbol:${args.setCode}`, data.toString('base64'));
+    }
+
+    // console.log(err);
+    // console.log(data);
   });
 });
 

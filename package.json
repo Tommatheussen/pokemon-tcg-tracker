@@ -27,9 +27,11 @@
   "dependencies": {
     "@trodi/electron-splashscreen": "^0.3.0",
     "electron-updater": "^2.21.3",
+    "mkdirp": "^0.5.1",
     "moment": "^2.21.0",
     "nedb": "^1.8.0",
-    "pokemontcgsdk": "^1.1.0"
+    "pokemontcgsdk": "^1.1.0",
+    "request-promise-native": "^1.0.5"
   },
   "devDependencies": {
     "electron": "^1.8.4",
