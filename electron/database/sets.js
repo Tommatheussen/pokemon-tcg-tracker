@@ -162,28 +162,28 @@ const request = require('request-promise-native');
 const mkdirp = require('mkdirp');
 
 handler('sets:load:symbol', (event, args) => {
-  fs.readFile(`./databases/images/symbols/${args.setCode}.png`, (err, data) => {
-    if (err) {
-      console.log('No previous data');
-      request({
-        uri: `https://images.pokemontcg.io/${args.setCode}/symbol.png`,
-        encoding: null
-      })
-        .then(async body => {
-          await storeSymbol('./databases/images/symbols/', args.setCode, body);
-          notify(`sets:symbol:${args.setCode}`, body.toString('base64'));
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    } else {
-      console.log('Stored already');
-      notify(`sets:symbol:${args.setCode}`, data.toString('base64'));
-    }
+  fs.readFile(
+    `./databases/images/symbols/${args.setCode}.png`,
+    async (err, data) => {
+      if (err) {
+        //TODO: Check if err == no existing file or something else
 
-    // console.log(err);
-    // console.log(data);
-  });
+        const imageBuffer = await request({
+          uri: `https://images.pokemontcg.io/${args.setCode}/symbol.png`,
+          encoding: null
+        });
+
+        await storeSymbol(
+          './databases/images/symbols/',
+          args.setCode,
+          imageBuffer
+        );
+        notify(`sets:symbol:${args.setCode}`, imageBuffer.toString('base64'));
+      } else {
+        notify(`sets:symbol:${args.setCode}`, data.toString('base64'));
+      }
+    }
+  );
 });
 
 module.exports = {
