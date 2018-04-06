@@ -6,6 +6,8 @@ import { ElectronService } from 'ngx-electron';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subject } from 'rxjs/Subject';
 
+import { CardPreviewOverlayRef } from '../card-preview/card-preview-overlay.ref';
+import { CardPreviewOverlayService } from '../card-preview/card-preview.service';
 import { Card } from '../models/card.interface';
 import { Collection } from '../models/collection.interface';
 import { Set } from '../models/set.interface';
@@ -33,8 +35,21 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private _electronService: ElectronService,
-    private _zone: NgZone
+    private _zone: NgZone,
+    private _cardPreviewOverlayService: CardPreviewOverlayService
   ) {}
+
+  openDialog(setCode: string, cardNumber: string) {
+    console.log(setCode);
+    let dialogRef: CardPreviewOverlayRef = this._cardPreviewOverlayService.open(
+      {
+        data: {
+          cardNumber,
+          setCode
+        }
+      }
+    );
+  }
 
   ngOnInit(): void {
     this._setupSetlistHandler();

@@ -52,7 +52,7 @@
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let element; columns: displayedColumns;"></mat-row>
+      <mat-row *matRowDef="let element; columns: displayedColumns;" (click)="openDialog(element.setCode, element.number)"></mat-row>
     </mat-table>
   </mat-sidenav-content>
 </mat-sidenav-container>

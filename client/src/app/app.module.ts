@@ -1,3 +1,4 @@
+import { OverlayModule } from '@angular/cdk/overlay';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import {
@@ -15,6 +16,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxElectronModule } from 'ngx-electron';
 
 import { AppComponent } from './app.component';
+import { CardPreviewOverlayComponent } from './card-preview/card-preview.component';
+import { CardPreviewOverlayService } from './card-preview/card-preview.service';
 import { HomeComponent } from './home/home.component';
 import { SetItemComponent } from './set-item/set-item.component';
 import { UpdateAvailableDialogComponent } from './update/update-available/update-available-dialog.component';
@@ -30,7 +33,8 @@ import { UpdaterService } from './update/updater.service';
 
     // MenuItemComponent,
     UpdateAvailableDialogComponent,
-    UpdateDownloadedDialogComponent
+    UpdateDownloadedDialogComponent,
+    CardPreviewOverlayComponent
     // SettingsDialogComponent
   ],
   imports: [
@@ -46,11 +50,16 @@ import { UpdaterService } from './update/updater.service';
     NgxElectronModule,
     BrowserModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+
+    OverlayModule
   ],
   providers: [
     //SettingsService,
-    UpdaterService
+    UpdaterService,
+
+    CardPreviewOverlayService
+
     // SetService,
     // CardService,
     // CollectionService,
@@ -66,7 +75,8 @@ import { UpdaterService } from './update/updater.service';
   bootstrap: [AppComponent],
   entryComponents: [
     UpdateAvailableDialogComponent,
-    UpdateDownloadedDialogComponent
+    UpdateDownloadedDialogComponent,
+    CardPreviewOverlayComponent
     // SettingsDialogComponent
   ]
 })
