@@ -1,8 +1,11 @@
 <mat-list-item>
-  <!-- TODO: Enable avatar -->
-  <!-- <img matListAvatar [src]="'data:image/png;base64,'+set.symbol"> -->
+  <img *ngIf="img$ | async as img; else loading" matListAvatar [src]="img">
   <h3 mat-line>{{ set.name }}</h3>
   <p mat-line class="release-date">{{ set.releaseDate | date }}</p>
   <span class="percent">{{ (count | async) / set.totalCards | percent:'1.0-2' }}</span>
 </mat-list-item>
 <mat-divider *ngIf="!last"></mat-divider>
+
+<ng-template #loading>
+  <mat-spinner matListAvatar diameter="40"></mat-spinner>
+</ng-template>

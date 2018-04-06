@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { ElectronService } from 'ngx-electron';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Subject } from 'rxjs/Subject';
 
 import { Set } from '../models/set.interface';
 
@@ -14,6 +15,7 @@ export class SetItemComponent implements OnInit {
   @Input() last: boolean;
 
   count: BehaviorSubject<number> = new BehaviorSubject(0);
+  img$: Subject<string> = new Subject<string>();
 
   constructor(
     private _electronService: ElectronService,
@@ -36,6 +38,18 @@ export class SetItemComponent implements OnInit {
         this.count.next(++value);
       }
     );
+
+    this._electronService.ipcRenderer.once(
+      `sets:symbol:${this.set.code}`,
+      (event, args) => {
+        this.img$.next(`data:image/png;base64,${args}`);
+        this._cd.detectChanges();
+      }
+    );
+
+    this._electronService.ipcRenderer.send('sets:load:symbol', {
+      setCode: this.set.code
+    });
 
     this._electronService.ipcRenderer.send('collection:count', {
       setCode: this.set.code
