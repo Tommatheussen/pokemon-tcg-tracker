@@ -58,7 +58,8 @@ export class HomeComponent implements OnInit {
     this._electronService.ipcRenderer.send('sets:load');
   }
 
-  collect(cardId) {
+  collect(event, cardId) {
+    event.stopPropagation();
     this._electronService.ipcRenderer.send('collection:new', {
       setCode: this.selectedSet,
       cardId: cardId

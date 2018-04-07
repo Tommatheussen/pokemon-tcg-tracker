@@ -41,7 +41,7 @@
         <mat-header-cell *matHeaderCellDef>Collected</mat-header-cell>
         <mat-cell *matCellDef="let element">
           <ng-container *ngIf="!collection[element.id]">
-            <button mat-mini-fab (click)="collect(element.id)">
+            <button mat-mini-fab (click)="collect($event, element.id)">
               <mat-icon aria-label="Collect">library_add</mat-icon>
             </button>
           </ng-container>
