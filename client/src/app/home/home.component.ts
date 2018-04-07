@@ -40,7 +40,6 @@ export class HomeComponent implements OnInit {
   ) {}
 
   openDialog(setCode: string, cardNumber: string) {
-    console.log(setCode);
     let dialogRef: CardPreviewOverlayRef = this._cardPreviewOverlayService.open(
       {
         data: {

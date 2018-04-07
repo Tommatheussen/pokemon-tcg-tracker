@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, NgZone, OnInit } from '@angular/core';
 import { ElectronService } from 'ngx-electron';
 import { Subject } from 'rxjs/Subject';
 
@@ -7,20 +7,8 @@ import { CARD_PREVIEW_OVERLAY_DATA, CardData } from './card-preview-overlay.toke
 
 @Component({
   selector: 'card-preview-overlay',
-  template: `<img *ngIf="img$ | async as img" [src]="img">`,
-  styles: [
-    `
-    :host {
-      display: block;
-      background: white;
-    }
-
-    h1 {
-      margin: 0;
-      padding: 1em;
-    }
-  `
-  ]
+  templateUrl: './card-preview.component.html',
+  styleUrls: ['./card-preview.component.css']
 })
 export class CardPreviewOverlayComponent implements OnInit {
   img$: Subject<string> = new Subject<string>();
@@ -29,16 +17,16 @@ export class CardPreviewOverlayComponent implements OnInit {
     public dialogRef: CardPreviewOverlayRef,
     @Inject(CARD_PREVIEW_OVERLAY_DATA) public cardData: CardData,
     private _electronService: ElectronService,
-    private _cd: ChangeDetectorRef
+    private _zone: NgZone
   ) {}
 
   ngOnInit() {
-    console.log(this.cardData);
     this._electronService.ipcRenderer.once(
       `cards:image:${this.cardData.setCode}-${this.cardData.cardNumber}`,
       (event, args) => {
-        this.img$.next(`data:image/png;base64,${args}`);
-        this._cd.detectChanges();
+        this._zone.run(() => {
+          this.img$.next(`data:image/png;base64,${args}`);
+        });
       }
     );
     this._electronService.ipcRenderer.send('cards:load:image', {
