@@ -118,3 +118,63 @@ handler('sets:count', (event, args) => {
   // TODO: Count!
   notify(`sets:count:${args.code}`, 0);
 });
+
+const fs = require('fs');
+const request = require('request-promise-native');
+const mkdirp = require('mkdirp');
+
+handler('cards:load:image', (event, args) => {
+  fs.readFile(
+    `./databases/images/cards/${args.setCode}/${args.cardNumber}.png`,
+    async (err, data) => {
+      if (err) {
+        //TODO: Check if err == no existing file or something else
+
+        console.log(args);
+
+        const imageBuffer = await request({
+          uri: `https://images.pokemontcg.io/${args.setCode}/${
+            args.cardNumber
+          }.png`,
+          encoding: null
+        });
+
+        console.log('received buffee');
+
+        await storeImage(
+          `./databases/images/cards/${args.setCode}`,
+          args.cardNumber,
+          imageBuffer
+        );
+        notify(
+          `cards:image:${args.setCode}-${args.cardNumber}`,
+          imageBuffer.toString('base64')
+        );
+      } else {
+        notify(
+          `cards:image:${args.setCode}-${args.cardNumber}`,
+          data.toString('base64')
+        );
+      }
+    }
+  );
+});
+
+async function storeImage(path, cardNumber, buffer) {
+  console.log(path, cardNumber);
+  return new Promise((resolve, reject) => {
+    mkdirp(path, err => {
+      if (err) {
+        reject(err);
+      } else {
+        fs.writeFile(`${path}/${cardNumber}.png`, buffer, err => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve();
+          }
+        });
+      }
+    });
+  });
+}
