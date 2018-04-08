@@ -10,6 +10,7 @@ import {
   MatSidenavModule,
   MatSnackBarModule,
   MatTableModule,
+  MatToolbarModule,
 } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -46,6 +47,7 @@ import { UpdaterService } from './update/updater.service';
     MatTableModule,
     MatProgressSpinnerModule,
     MatIconModule,
+    MatToolbarModule,
 
     NgxElectronModule,
     BrowserModule,

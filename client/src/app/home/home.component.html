@@ -7,7 +7,7 @@
 <mat-sidenav-container fullscreen autosize>
   <mat-sidenav mode="side" opened>
     <mat-list>
-      <pokemon-set-item *ngFor="let set of sets | async; let last = last" [set]="set" [last]="last" (click)="selectSet(set)" [class.active]="set.code == selectedSet">
+      <pokemon-set-item *ngFor="let set of sets | async; let last = last" [set]="set" [last]="last" (click)="selectSet(set)" [class.active]="set.code == selectedSet?.code">
       </pokemon-set-item>
     </mat-list>
   </mat-sidenav>
@@ -15,11 +15,31 @@
     <div class="example-loading-shade" *ngIf="!(cards$ | async)">
       <mat-spinner></mat-spinner>
     </div>
+    <mat-toolbar>
+      <img *ngIf="img$ | async as img" [src]="img">
+      <span>{{ selectedSet?.name }}</span>
+      <span class="spacer"></span>
+      <ng-container *ngIf="editing">
+        <button mat-icon-button (click)="switchMode()">
+          <mat-icon>home</mat-icon>
+        </button>
+      </ng-container>
+      <ng-container *ngIf="!editing">
+        <button mat-icon-button (click)="switchMode()">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </ng-container>
+    </mat-toolbar>
 
     <mat-table [hidden]="!(cards$ | async)" #table [dataSource]="cards$">
       <ng-container matColumnDef="number">
         <mat-header-cell *matHeaderCellDef>Number</mat-header-cell>
         <mat-cell *matCellDef="let element">{{ element.number }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="select">
+        <mat-header-cell *matHeaderCellDef>New</mat-header-cell>
+        <mat-cell *matCellDef="let element">new</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="name">

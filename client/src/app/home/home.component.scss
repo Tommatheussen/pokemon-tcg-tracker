@@ -22,3 +22,20 @@
 .mat-row:hover {
   background: lightgray;
 }
+
+mat-sidenav-content {
+  overflow: hidden;
+
+  mat-table {
+    overflow: auto;
+    height: calc(100vh - 64px);
+  }
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+mat-toolbar img {
+  max-height: 44px;
+}

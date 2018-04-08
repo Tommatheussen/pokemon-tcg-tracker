@@ -20,7 +20,7 @@ import { Set } from '../models/set.interface';
 export class HomeComponent implements OnInit {
   collection = {};
 
-  displayedColumns: string[] = [
+  defaultColumns: string[] = [
     'number',
     'name',
     'rarity',
@@ -28,10 +28,15 @@ export class HomeComponent implements OnInit {
     'collected'
   ];
 
+  displayedColumns: string[];
+
+  editing = false;
+
   public sets: BehaviorSubject<Set[]> = new BehaviorSubject(null);
-  public selectedSet: string;
+  public selectedSet: Set;
 
   public cards$: Subject<Card[]> = new Subject<Card[]>();
+  img$: Subject<string> = new Subject<string>();
 
   constructor(
     private _electronService: ElectronService,
@@ -39,6 +44,14 @@ export class HomeComponent implements OnInit {
     private _cardPreviewOverlayService: CardPreviewOverlayService
   ) {}
 
+  switchMode() {
+    this.editing = !this.editing;
+    if (this.editing) {
+      this.displayedColumns.unshift('select');
+    } else {
+      this.displayedColumns = this.defaultColumns.slice();
+    }
+  }
   openDialog(setCode: string, cardNumber: string) {
     let dialogRef: CardPreviewOverlayRef = this._cardPreviewOverlayService.open(
       {
@@ -56,12 +69,14 @@ export class HomeComponent implements OnInit {
     this._setupCollectionListHandler();
 
     this._electronService.ipcRenderer.send('sets:load');
+
+    this.displayedColumns = this.defaultColumns.slice();
   }
 
   collect(event, cardId) {
     event.stopPropagation();
     this._electronService.ipcRenderer.send('collection:new', {
-      setCode: this.selectedSet,
+      setCode: this.selectedSet.code,
       cardId: cardId
     });
 
@@ -69,13 +84,24 @@ export class HomeComponent implements OnInit {
   }
 
   selectSet(set: Set) {
-    if (this.selectedSet !== set.code) {
+    if (!this.selectedSet || this.selectedSet.code !== set.code) {
       this.cards$.next();
-      this.selectedSet = set.code;
+      this.selectedSet = set;
       this._electronService.ipcRenderer.send('cards:load', {
         setCode: set.code
       });
       this._electronService.ipcRenderer.send('collection:load', {
+        setCode: set.code
+      });
+
+      this._electronService.ipcRenderer.once(
+        `sets:symbol:${set.code}`,
+        (event, args) => {
+          this.img$.next(`data:image/png;base64,${args}`);
+        }
+      );
+
+      this._electronService.ipcRenderer.send('sets:load:symbol', {
         setCode: set.code
       });
     }

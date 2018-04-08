@@ -130,16 +130,12 @@ handler('cards:load:image', (event, args) => {
       if (err) {
         //TODO: Check if err == no existing file or something else
 
-        console.log(args);
-
         const imageBuffer = await request({
           uri: `https://images.pokemontcg.io/${args.setCode}/${
             args.cardNumber
           }.png`,
           encoding: null
         });
-
-        console.log('received buffee');
 
         await storeImage(
           `./databases/images/cards/${args.setCode}`,
@@ -161,7 +157,6 @@ handler('cards:load:image', (event, args) => {
 });
 
 async function storeImage(path, cardNumber, buffer) {
-  console.log(path, cardNumber);
   return new Promise((resolve, reject) => {
     mkdirp(path, err => {
       if (err) {
