@@ -1,6 +1,7 @@
 import 'rxjs/add/observable/zip';
 import 'rxjs/add/operator/map';
 
+import { SelectionModel } from '@angular/cdk/collections';
 import { Component, NgZone, OnInit } from '@angular/core';
 import { ElectronService } from 'ngx-electron';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -30,12 +31,14 @@ export class HomeComponent implements OnInit {
 
   displayedColumns: string[];
 
+  selection = new SelectionModel<Card>(true, []);
+
   editing = false;
 
   public sets: BehaviorSubject<Set[]> = new BehaviorSubject(null);
   public selectedSet: Set;
 
-  public cards$: Subject<Card[]> = new Subject<Card[]>();
+  public cards$: BehaviorSubject<Card[]> = new BehaviorSubject<Card[]>(null);
   img$: Subject<string> = new Subject<string>();
 
   constructor(
@@ -44,11 +47,25 @@ export class HomeComponent implements OnInit {
     private _cardPreviewOverlayService: CardPreviewOverlayService
   ) {}
 
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.cards$.getValue().length;
+    return numSelected == numRows;
+  }
+
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
+    this.isAllSelected()
+      ? this.selection.clear()
+      : this.cards$.getValue().forEach(row => this.selection.select(row));
+  }
+
   switchMode() {
     this.editing = !this.editing;
     if (this.editing) {
       this.displayedColumns.unshift('select');
     } else {
+      this.selection.clear();
       this.displayedColumns = this.defaultColumns.slice();
     }
   }
@@ -85,8 +102,11 @@ export class HomeComponent implements OnInit {
 
   selectSet(set: Set) {
     if (!this.selectedSet || this.selectedSet.code !== set.code) {
-      this.cards$.next();
+      this.cards$.next(null);
       this.selectedSet = set;
+      if (this.editing) {
+        this.switchMode();
+      }
       this._electronService.ipcRenderer.send('cards:load', {
         setCode: set.code
       });

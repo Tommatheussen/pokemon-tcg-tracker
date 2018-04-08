@@ -3,6 +3,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import {
   MatButtonModule,
+  MatCheckboxModule,
   MatDialogModule,
   MatIconModule,
   MatListModule,
@@ -48,6 +49,7 @@ import { UpdaterService } from './update/updater.service';
     MatProgressSpinnerModule,
     MatIconModule,
     MatToolbarModule,
+    MatCheckboxModule,
 
     NgxElectronModule,
     BrowserModule,

@@ -39,3 +39,12 @@ mat-sidenav-content {
 mat-toolbar img {
   max-height: 44px;
 }
+
+.mat-column-select {
+  overflow: initial;
+  max-width: 70px;
+}
+
+.mat-column-number {
+  max-width: 100px;
+}
