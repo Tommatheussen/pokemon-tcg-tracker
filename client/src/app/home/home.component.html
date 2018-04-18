@@ -20,13 +20,20 @@
       <span>{{ selectedSet?.name }}</span>
       <span class="spacer"></span>
       <ng-container *ngIf="editing">
-        <button mat-icon-button (click)="switchMode()">
-          <mat-icon>home</mat-icon>
+        <div class="v-divider"></div>
+        <button mat-icon-button>
+          <mat-icon>delete_sweep</mat-icon>
         </button>
+        <div class="v-divider"></div>
+        <button mat-icon-button>
+          <mat-icon>done_all</mat-icon>
+        </button>
+        <div class="v-divider"></div>
       </ng-container>
-      <ng-container *ngIf="!editing">
+      <ng-container>
         <button mat-icon-button (click)="switchMode()">
-          <mat-icon>edit</mat-icon>
+          <mat-icon *ngIf="!editing">edit</mat-icon>
+          <mat-icon *ngIf="editing">cancel</mat-icon>
         </button>
       </ng-container>
     </mat-toolbar>
@@ -68,7 +75,7 @@
         <mat-cell *matCellDef="let element">
           <ng-container *ngIf="!collection[element.id]">
             <button mat-mini-fab (click)="collect($event, element.id)">
-              <mat-icon aria-label="Collect">library_add</mat-icon>
+              <mat-icon aria-label="Collect">check</mat-icon>
             </button>
           </ng-container>
           <ng-container *ngIf="collection[element.id]">
