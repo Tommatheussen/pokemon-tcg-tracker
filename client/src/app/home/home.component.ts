@@ -92,12 +92,24 @@ export class HomeComponent implements OnInit {
 
   collect(event, cardId) {
     event.stopPropagation();
+    this.collectCard(cardId);
+  }
+
+  collectCard(cardId) {
     this._electronService.ipcRenderer.send('collection:new', {
       setCode: this.selectedSet.code,
       cardId: cardId
     });
 
     this.collection[cardId] = new Date();
+  }
+
+  collectAll() {
+    this.selection.selected.forEach((card: Card) => {
+      if (!this.collection[card.id]) {
+        this.collectCard(card.id);
+      }
+    });
   }
 
   selectSet(set: Set) {
