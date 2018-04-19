@@ -35,6 +35,14 @@ export class SetItemComponent implements OnInit {
     );
 
     this._ipcService.setupIpcListener(
+      `collection:removed:${this.set.code}`,
+      (event, args) => {
+        let value = this.count.value;
+        this.count.next(--value);
+      }
+    );
+
+    this._ipcService.setupIpcListener(
       `sets:symbol:${this.set.code}`,
       (event, args) => {
         this.img$.next(`data:image/png;base64,${args}`);

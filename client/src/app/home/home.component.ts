@@ -110,6 +110,20 @@ export class HomeComponent implements OnInit {
     this.switchMode();
   }
 
+  deleteAll() {
+    this.selection.selected.forEach((card: Card) => {
+      if (this.collection[card.id]) {
+        this._ipcService.sendMessage('collection:remove', {
+          setCode: this.selectedSet.code,
+          cardId: card.id
+        });
+
+        delete this.collection[card.id];
+      }
+    });
+    this.switchMode();
+  }
+
   selectSet(set: Set) {
     if (!this.selectedSet || this.selectedSet.code !== set.code) {
       this.cards$.next(null);
