@@ -1,13 +1,11 @@
-import 'rxjs/add/observable/zip';
-import 'rxjs/add/operator/map';
-
-import { Component, NgZone, OnInit } from '@angular/core';
-import { ElectronService } from 'ngx-electron';
+import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subject } from 'rxjs/Subject';
-
+import 'rxjs/add/observable/zip';
+import 'rxjs/add/operator/map';
 import { CardPreviewOverlayRef } from '../card-preview/card-preview-overlay.ref';
 import { CardPreviewOverlayService } from '../card-preview/card-preview.service';
+import { IpcService } from '../ipc.service';
 import { Card } from '../models/card.interface';
 import { Collection } from '../models/collection.interface';
 import { Set } from '../models/set.interface';
@@ -34,8 +32,7 @@ export class HomeComponent implements OnInit {
   public cards$: Subject<Card[]> = new Subject<Card[]>();
 
   constructor(
-    private _electronService: ElectronService,
-    private _zone: NgZone,
+    private _ipcService: IpcService,
     private _cardPreviewOverlayService: CardPreviewOverlayService
   ) {}
 
@@ -55,12 +52,12 @@ export class HomeComponent implements OnInit {
     this._setupCardlistHandler();
     this._setupCollectionListHandler();
 
-    this._electronService.ipcRenderer.send('sets:load');
+    this._ipcService.sendMessage('sets:load');
   }
 
   collect(event, cardId) {
     event.stopPropagation();
-    this._electronService.ipcRenderer.send('collection:new', {
+    this._ipcService.sendMessage('collection:new', {
       setCode: this.selectedSet,
       cardId: cardId
     });
@@ -72,55 +69,45 @@ export class HomeComponent implements OnInit {
     if (this.selectedSet !== set.code) {
       this.cards$.next();
       this.selectedSet = set.code;
-      this._electronService.ipcRenderer.send('cards:load', {
+      this._ipcService.sendMessage('cards:load', {
         setCode: set.code
       });
-      this._electronService.ipcRenderer.send('collection:load', {
+      this._ipcService.sendMessage('collection:load', {
         setCode: set.code
       });
     }
   }
 
   private _setupSetlistHandler() {
-    this._electronService.ipcRenderer.once(
-      'sets:list',
-      (event, sets: Set[]) => {
-        this.sets.next(
-          sets.sort((setA, setB) => {
-            return new Date(setA.releaseDate) < new Date(setB.releaseDate)
-              ? -1
-              : 1;
-          })
-        );
-      }
-    );
+    this._ipcService.setupIpcListenerOnce('sets:list', (event, sets: Set[]) => {
+      this.sets.next(
+        sets.sort((setA, setB) => {
+          return new Date(setA.releaseDate) < new Date(setB.releaseDate)
+            ? -1
+            : 1;
+        })
+      );
+    });
   }
 
   private _setupCardlistHandler() {
-    this._electronService.ipcRenderer.on(
-      'cards:list',
-      (event, cards: Card[]) => {
-        this._zone.run(() => {
-          this.cards$.next(
-            cards.sort((cardA, cardB) => {
-              return cardA.number - cardB.number;
-            })
-          );
-        });
-      }
-    );
+    this._ipcService.setupIpcListener('cards:list', (event, cards: Card[]) => {
+      this.cards$.next(
+        cards.sort((cardA, cardB) => {
+          return cardA.number - cardB.number;
+        })
+      );
+    });
   }
 
   private _setupCollectionListHandler() {
-    this._electronService.ipcRenderer.on(
+    this._ipcService.setupIpcListener(
       'collection:list',
       (event, collection: Collection[]) => {
-        this._zone.run(() => {
-          this.collection = collection.reduce((accumulator, collectedCard) => {
-            accumulator[collectedCard.cardId] = collectedCard.collectionDate;
-            return accumulator;
-          }, {});
-        });
+        this.collection = collection.reduce((accumulator, collectedCard) => {
+          accumulator[collectedCard.cardId] = collectedCard.collectionDate;
+          return accumulator;
+        }, {});
       }
     );
   }

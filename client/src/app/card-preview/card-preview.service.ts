@@ -1,9 +1,11 @@
 import { Overlay, OverlayConfig, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal, PortalInjector } from '@angular/cdk/portal';
 import { ComponentRef, Injectable, Injector } from '@angular/core';
-
 import { CardPreviewOverlayRef } from './card-preview-overlay.ref';
-import { CARD_PREVIEW_OVERLAY_DATA, CardData } from './card-preview-overlay.tokens';
+import {
+  CARD_PREVIEW_OVERLAY_DATA,
+  CardData
+} from './card-preview-overlay.tokens';
 import { CardPreviewOverlayComponent } from './card-preview.component';
 
 const DEFAULT_CONFIG: CardPreviewOverlayConfig = {
