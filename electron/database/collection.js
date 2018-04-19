@@ -25,8 +25,23 @@ handler('collection:new', (event, args) => {
       collectionDate: new Date()
     },
     (err, doc) => {
-      console.log(err, doc);
-      notify(`collection:added:${args.setCode}`, 'ok');
+      notify(`collection:added:${args.setCode}`);
+    }
+  );
+});
+
+handler('collection:remove', (event, args) => {
+  db.collection.remove(
+    {
+      setCode: args.setCode,
+      cardId: args.cardId
+    },
+    {},
+    (err, numRemoved) => {
+      if (err) {
+        console.log(err);
+      }
+      notify(`collection:removed:${args.setCode}`);
     }
   );
 });

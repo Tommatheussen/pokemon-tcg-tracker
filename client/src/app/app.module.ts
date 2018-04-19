@@ -3,6 +3,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import {
   MatButtonModule,
+  MatCheckboxModule,
   MatDialogModule,
   MatIconModule,
   MatListModule,
@@ -10,15 +11,16 @@ import {
   MatSidenavModule,
   MatSnackBarModule,
   MatTableModule,
+  MatToolbarModule,
 } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxElectronModule } from 'ngx-electron';
-
 import { AppComponent } from './app.component';
 import { CardPreviewOverlayComponent } from './card-preview/card-preview.component';
 import { CardPreviewOverlayService } from './card-preview/card-preview.service';
 import { HomeComponent } from './home/home.component';
+import { IpcService } from './ipc.service';
 import { SetItemComponent } from './set-item/set-item.component';
 import { UpdateAvailableDialogComponent } from './update/update-available/update-available-dialog.component';
 import { UpdateDownloadedDialogComponent } from './update/update-downloaded/update-downloaded-dialog.component';
@@ -46,6 +48,8 @@ import { UpdaterService } from './update/updater.service';
     MatTableModule,
     MatProgressSpinnerModule,
     MatIconModule,
+    MatToolbarModule,
+    MatCheckboxModule,
 
     NgxElectronModule,
     BrowserModule,
@@ -57,6 +61,7 @@ import { UpdaterService } from './update/updater.service';
   providers: [
     //SettingsService,
     UpdaterService,
+    IpcService,
 
     CardPreviewOverlayService
 

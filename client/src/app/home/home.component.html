@@ -7,7 +7,7 @@
 <mat-sidenav-container fullscreen autosize>
   <mat-sidenav mode="side" opened>
     <mat-list>
-      <pokemon-set-item *ngFor="let set of sets | async; let last = last" [set]="set" [last]="last" (click)="selectSet(set)" [class.active]="set.code == selectedSet">
+      <pokemon-set-item *ngFor="let set of sets | async; let last = last" [set]="set" [last]="last" (click)="selectSet(set)" [class.active]="set.code == selectedSet?.code">
       </pokemon-set-item>
     </mat-list>
   </mat-sidenav>
@@ -15,11 +15,44 @@
     <div class="example-loading-shade" *ngIf="!(cards$ | async)">
       <mat-spinner></mat-spinner>
     </div>
+    <mat-toolbar>
+      <img *ngIf="img$ | async as img" [src]="img">
+      <span>{{ selectedSet?.name }}</span>
+      <span class="spacer"></span>
+      <ng-container *ngIf="editing">
+        <div class="v-divider"></div>
+        <button mat-icon-button (click)="deleteAll()">
+          <mat-icon>delete_sweep</mat-icon>
+        </button>
+        <div class="v-divider"></div>
+        <button mat-icon-button (click)="collectAll()">
+          <mat-icon>done_all</mat-icon>
+        </button>
+      </ng-container>
+      <div class="v-divider"></div>
+      <ng-container>
+        <button mat-icon-button (click)="switchMode()">
+          <mat-icon *ngIf="!editing">edit</mat-icon>
+          <mat-icon *ngIf="editing">cancel</mat-icon>
+        </button>
+      </ng-container>
+    </mat-toolbar>
 
     <mat-table [hidden]="!(cards$ | async)" #table [dataSource]="cards$">
       <ng-container matColumnDef="number">
         <mat-header-cell *matHeaderCellDef>Number</mat-header-cell>
         <mat-cell *matCellDef="let element">{{ element.number }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="select">
+        <mat-header-cell *matHeaderCellDef>
+          <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()">
+          </mat-checkbox>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)">
+          </mat-checkbox>
+        </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="name">
@@ -42,7 +75,7 @@
         <mat-cell *matCellDef="let element">
           <ng-container *ngIf="!collection[element.id]">
             <button mat-mini-fab (click)="collect($event, element.id)">
-              <mat-icon aria-label="Collect">library_add</mat-icon>
+              <mat-icon aria-label="Collect">check</mat-icon>
             </button>
           </ng-container>
           <ng-container *ngIf="collection[element.id]">
