@@ -1,9 +1,5 @@
-import 'rxjs/add/observable/zip';
-import 'rxjs/add/operator/map';
-
 import { SelectionModel } from '@angular/cdk/collections';
-import { Component, NgZone, OnInit } from '@angular/core';
-import { ElectronService } from 'ngx-electron';
+import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/observable/zip';
@@ -127,14 +123,14 @@ export class HomeComponent implements OnInit {
         setCode: set.code
       });
 
-      this._electronService.ipcRenderer.once(
+      this._ipcService.setupIpcListenerOnce(
         `sets:symbol:${set.code}`,
         (event, args) => {
           this.img$.next(`data:image/png;base64,${args}`);
         }
       );
 
-      this._electronService.ipcRenderer.send('sets:load:symbol', {
+      this._ipcService.sendMessage('sets:load:symbol', {
         setCode: set.code
       });
     }
