@@ -107,6 +107,7 @@ export class HomeComponent implements OnInit {
         this.collectCard(card.id);
       }
     });
+    this.switchMode();
   }
 
   selectSet(set: Set) {

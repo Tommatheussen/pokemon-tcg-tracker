@@ -20,16 +20,16 @@
       <span>{{ selectedSet?.name }}</span>
       <span class="spacer"></span>
       <ng-container *ngIf="editing">
-        <div class="v-divider"></div>
+        <!-- <div class="v-divider"></div>
         <button mat-icon-button>
           <mat-icon>delete_sweep</mat-icon>
-        </button>
+        </button> -->
         <div class="v-divider"></div>
         <button mat-icon-button (click)="collectAll()">
           <mat-icon>done_all</mat-icon>
         </button>
-        <div class="v-divider"></div>
       </ng-container>
+      <div class="v-divider"></div>
       <ng-container>
         <button mat-icon-button (click)="switchMode()">
           <mat-icon *ngIf="!editing">edit</mat-icon>
