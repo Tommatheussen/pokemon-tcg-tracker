@@ -1,9 +1,11 @@
-import { Component, Inject, NgZone, OnInit } from '@angular/core';
-import { ElectronService } from 'ngx-electron';
+import { Component, Inject, OnInit } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
-
+import { IpcService } from '../ipc.service';
 import { CardPreviewOverlayRef } from './card-preview-overlay.ref';
-import { CARD_PREVIEW_OVERLAY_DATA, CardData } from './card-preview-overlay.tokens';
+import {
+  CARD_PREVIEW_OVERLAY_DATA,
+  CardData
+} from './card-preview-overlay.tokens';
 
 @Component({
   selector: 'card-preview-overlay',
@@ -16,20 +18,17 @@ export class CardPreviewOverlayComponent implements OnInit {
   constructor(
     public dialogRef: CardPreviewOverlayRef,
     @Inject(CARD_PREVIEW_OVERLAY_DATA) public cardData: CardData,
-    private _electronService: ElectronService,
-    private _zone: NgZone
+    private _ipcService: IpcService
   ) {}
 
   ngOnInit() {
-    this._electronService.ipcRenderer.once(
+    this._ipcService.setupIpcListenerOnce(
       `cards:image:${this.cardData.setCode}-${this.cardData.cardNumber}`,
       (event, args) => {
-        this._zone.run(() => {
-          this.img$.next(`data:image/png;base64,${args}`);
-        });
+        this.img$.next(`data:image/png;base64,${args}`);
       }
     );
-    this._electronService.ipcRenderer.send('cards:load:image', {
+    this._ipcService.sendMessage('cards:load:image', {
       setCode: this.cardData.setCode,
       cardNumber: this.cardData.cardNumber
     });

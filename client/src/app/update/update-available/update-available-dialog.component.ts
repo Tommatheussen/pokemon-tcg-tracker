@@ -1,6 +1,5 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material';
-
 import { UpdateInfo } from '../../models/update-info.interface';
 
 @Component({

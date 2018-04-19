@@ -1,8 +1,7 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
-import { ElectronService } from 'ngx-electron';
+import { Component, Input, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subject } from 'rxjs/Subject';
-
+import { IpcService } from '../ipc.service';
 import { Set } from '../models/set.interface';
 
 @Component({
@@ -17,21 +16,17 @@ export class SetItemComponent implements OnInit {
   count: BehaviorSubject<number> = new BehaviorSubject(0);
   img$: Subject<string> = new Subject<string>();
 
-  constructor(
-    private _electronService: ElectronService,
-    private _cd: ChangeDetectorRef
-  ) {}
+  constructor(private _ipcService: IpcService) {}
 
   ngOnInit() {
-    this._electronService.ipcRenderer.once(
+    this._ipcService.setupIpcListenerOnce(
       `collection:count:${this.set.code}`,
       (event, args) => {
         this.count.next(args);
-        this._cd.detectChanges();
       }
     );
 
-    this._electronService.ipcRenderer.on(
+    this._ipcService.setupIpcListener(
       `collection:added:${this.set.code}`,
       (event, args) => {
         let value = this.count.value;
@@ -39,19 +34,18 @@ export class SetItemComponent implements OnInit {
       }
     );
 
-    this._electronService.ipcRenderer.once(
+    this._ipcService.setupIpcListener(
       `sets:symbol:${this.set.code}`,
       (event, args) => {
         this.img$.next(`data:image/png;base64,${args}`);
-        this._cd.detectChanges();
       }
     );
 
-    this._electronService.ipcRenderer.send('sets:load:symbol', {
+    this._ipcService.sendMessage('sets:load:symbol', {
       setCode: this.set.code
     });
 
-    this._electronService.ipcRenderer.send('collection:count', {
+    this._ipcService.sendMessage('collection:count', {
       setCode: this.set.code
     });
   }
