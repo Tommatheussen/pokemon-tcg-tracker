@@ -1,7 +1,6 @@
-import { Injectable, isDevMode, NgZone } from '@angular/core';
+import { Injectable, isDevMode } from '@angular/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
-import { ElectronService } from 'ngx-electron';
-
+import { IpcService } from '../ipc.service';
 import { UpdateInfo } from '../models/update-info.interface';
 import { UpdateAvailableDialogComponent } from './update-available/update-available-dialog.component';
 import { UpdateDownloadedDialogComponent } from './update-downloaded/update-downloaded-dialog.component';
@@ -9,11 +8,9 @@ import { UpdateDownloadedDialogComponent } from './update-downloaded/update-down
 @Injectable()
 export class UpdaterService {
   constructor(
-    // private settingsService: SettingsService,
-    private _electronService: ElectronService,
+    private _ipcService: IpcService,
     private _snackbar: MatSnackBar,
-    private _dialog: MatDialog,
-    private _zone: NgZone
+    private _dialog: MatDialog
   ) {}
 
   public setupHandlers(): void {
@@ -30,67 +27,59 @@ export class UpdaterService {
     // });
 
     if (!isDevMode()) {
-      this._electronService.ipcRenderer.send('check-update');
+      this._ipcService.sendMessage('check-update');
     }
   }
 
   private setupNewVersionHandler(): void {
-    this._electronService.ipcRenderer.on(
+    this._ipcService.setupIpcListener(
       'update-available',
       (ev, info: UpdateInfo) => {
-        this._zone.run(() => {
-          this._dialog
-            .open(UpdateAvailableDialogComponent, {
-              data: info,
-              width: '500px'
-            })
-            .afterClosed()
-            .subscribe(result => {
-              if (result) {
-                this._electronService.ipcRenderer.send('download-update');
-              }
-            });
-        });
+        this._dialog
+          .open(UpdateAvailableDialogComponent, {
+            data: info,
+            width: '500px'
+          })
+          .afterClosed()
+          .subscribe(result => {
+            if (result) {
+              this._ipcService.sendMessage('download-update');
+            }
+          });
       }
     );
   }
 
   private setupUpToDateHandler(): void {
-    this._electronService.ipcRenderer.on('up-to-date', event => {
-      this._zone.run(() => {
-        this._openSnackbar("Hooray, you're using the latest version!");
-      });
+    this._ipcService.setupIpcListener('up-to-date', event => {
+      this._openSnackbar("Hooray, you're using the latest version!");
     });
   }
 
   private setupDownloadStartedHandler(): void {
-    this._electronService.ipcRenderer.on('update-download-started', () => {
-      this._zone.run(() => {
-        this._openSnackbar(
-          'Update downloading, you will be prompted when it is ready to be installed.'
-        );
-      });
+    this._ipcService.setupIpcListener('update-download-started', () => {
+      this._openSnackbar(
+        'Update downloading, you will be prompted when it is ready to be installed.'
+      );
     });
   }
 
   private setupDownloadFinishedHandler(): void {
-    this._electronService.ipcRenderer.on('update-download-finished', () => {
-      this._zone.run(() => {
-        this._dialog
-          .open(UpdateDownloadedDialogComponent, {
-            width: '500px',
-            disableClose: true
-          })
-          .afterClosed()
-          .subscribe(result => {
-            this._electronService.ipcRenderer.send('install-update');
-          });
-      });
+    this._ipcService.setupIpcListener('update-download-finished', () => {
+      this._dialog
+        .open(UpdateDownloadedDialogComponent, {
+          width: '500px',
+          disableClose: true
+        })
+        .afterClosed()
+        .subscribe(result => {
+          this._ipcService.sendMessage('install-update');
+        });
     });
   }
 
   private setupDownloadProgressHandler(): void {
-    this._electronService.ipcRenderer.on(
+    this._ipcService.setupIpcListener(
       'update-download-progress',
       (event, progress) => {
         console.log(progress);

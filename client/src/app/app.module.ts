@@ -23,6 +23,7 @@ import { SetItemComponent } from './set-item/set-item.component';
 import { UpdateAvailableDialogComponent } from './update/update-available/update-available-dialog.component';
 import { UpdateDownloadedDialogComponent } from './update/update-downloaded/update-downloaded-dialog.component';
 import { UpdaterService } from './update/updater.service';
+import { IpcService } from './ipc.service';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import { UpdaterService } from './update/updater.service';
   providers: [
     //SettingsService,
     UpdaterService,
+    IpcService,
 
     CardPreviewOverlayService
 
