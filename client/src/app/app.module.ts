@@ -26,12 +26,15 @@ import { UpdateAvailableDialogComponent } from './update/update-available/update
 import { UpdateDownloadedDialogComponent } from './update/update-downloaded/update-downloaded-dialog.component';
 import { UpdaterService } from './update/updater.service';
 
+import { ChartsComponent } from './chart/chart.component';
+
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
+    ChartsComponent,
 
     SetItemComponent,
 

@@ -1,0 +1,61 @@
+.spacer {
+  flex: 1 1 auto;
+}
+
+.example-loading-shade {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0px;
+  right: 0;
+  background: rgba(0, 0, 0, 0.15);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mat-column-collected {
+  overflow: initial;
+}
+
+.mat-row:hover {
+  background: lightgray;
+}
+
+mat-sidenav-content {
+  overflow: hidden;
+
+  mat-table {
+    overflow: auto;
+    height: calc(100vh - 64px);
+  }
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+mat-toolbar img {
+  max-height: 44px;
+}
+
+.mat-column-select {
+  overflow: initial;
+  max-width: 70px;
+}
+
+.mat-column-number {
+  max-width: 100px;
+}
+
+.v-divider {
+  width: 1px;
+  border-left: 1px solid black;
+  height: 50px;
+}
+
+mat-toolbar button {
+  margin-left: 10px;
+  margin-right: 10px;
+}
