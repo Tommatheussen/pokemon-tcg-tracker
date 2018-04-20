@@ -32,7 +32,7 @@ export class UpdaterService {
   }
 
   private setupNewVersionHandler(): void {
-    this._ipcService.setupIpcListener(
+    this._ipcService.setupIpcListenerOnce(
       'update-available',
       (ev, info: UpdateInfo) => {
         this._dialog
@@ -51,13 +51,13 @@ export class UpdaterService {
   }
 
   private setupUpToDateHandler(): void {
-    this._ipcService.setupIpcListener('up-to-date', event => {
+    this._ipcService.setupIpcListenerOnce('up-to-date', event => {
       this._openSnackbar("Hooray, you're using the latest version!");
     });
   }
 
   private setupDownloadStartedHandler(): void {
-    this._ipcService.setupIpcListener('update-download-started', () => {
+    this._ipcService.setupIpcListenerOnce('update-download-started', () => {
       this._openSnackbar(
         'Update downloading, you will be prompted when it is ready to be installed.'
       );
@@ -65,7 +65,7 @@ export class UpdaterService {
   }
 
   private setupDownloadFinishedHandler(): void {
-    this._ipcService.setupIpcListener('update-download-finished', () => {
+    this._ipcService.setupIpcListenerOnce('update-download-finished', () => {
       this._dialog
         .open(UpdateDownloadedDialogComponent, {
           width: '500px',
@@ -79,7 +79,7 @@ export class UpdaterService {
   }
 
   private setupDownloadProgressHandler(): void {
-    this._ipcService.setupIpcListener(
+    this._ipcService.setupIpcListenerOnce(
       'update-download-progress',
       (event, progress) => {
         console.log(progress);
