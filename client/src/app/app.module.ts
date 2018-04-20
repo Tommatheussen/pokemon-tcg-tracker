@@ -11,7 +11,7 @@ import {
   MatSidenavModule,
   MatSnackBarModule,
   MatTableModule,
-  MatToolbarModule,
+  MatToolbarModule
 } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -25,6 +25,8 @@ import { SetItemComponent } from './set-item/set-item.component';
 import { UpdateAvailableDialogComponent } from './update/update-available/update-available-dialog.component';
 import { UpdateDownloadedDialogComponent } from './update/update-downloaded/update-downloaded-dialog.component';
 import { UpdaterService } from './update/updater.service';
+
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 @NgModule({
   declarations: [
@@ -55,6 +57,7 @@ import { UpdaterService } from './update/updater.service';
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    NgxChartsModule,
 
     OverlayModule
   ],

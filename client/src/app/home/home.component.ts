@@ -27,6 +27,8 @@ export class HomeComponent implements OnInit {
     'collected'
   ];
 
+  data: { name: string; value: number }[] = [];
+
   displayedColumns: string[];
 
   selection = new SelectionModel<Card>(true, []);
@@ -83,6 +85,10 @@ export class HomeComponent implements OnInit {
     this._setupCollectionListHandler();
 
     this._ipcService.sendMessage('sets:load');
+
+    this._setupChartingHandler();
+
+    this._ipcService.sendMessage('chart:load');
 
     this.displayedColumns = this.defaultColumns.slice();
   }
@@ -160,6 +166,23 @@ export class HomeComponent implements OnInit {
             : 1;
         })
       );
+    });
+  }
+
+  private _setupChartingHandler() {
+    console.log('setup handler');
+    this._ipcService.setupIpcListenerOnce('chart:data', (event, data) => {
+      console.log('got data');
+      this.data = [
+        {
+          name: 'Collected',
+          value: data.collected
+        },
+        {
+          name: 'Not Collected',
+          value: data.total - data.collected
+        }
+      ];
     });
   }
 

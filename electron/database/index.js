@@ -4,6 +4,7 @@ const { notify, handler } = require('../communicate');
 
 require('./cards');
 require('./collection');
+require('./chart');
 
 module.exports = {
   initDatabases,

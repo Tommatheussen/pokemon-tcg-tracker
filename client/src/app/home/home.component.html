@@ -12,81 +12,87 @@
     </mat-list>
   </mat-sidenav>
   <mat-sidenav-content>
-    <div class="example-loading-shade" *ngIf="!(cards$ | async)">
-      <mat-spinner></mat-spinner>
-    </div>
-    <mat-toolbar>
-      <img *ngIf="img$ | async as img" [src]="img">
-      <span>{{ selectedSet?.name }}</span>
-      <span class="spacer"></span>
-      <ng-container *ngIf="editing">
+    <ng-container *ngIf="(sets | async) && !selectedSet">
+      <ngx-charts-pie-chart [results]="data" [view]="[250, 250]">
+      </ngx-charts-pie-chart>
+    </ng-container>
+    <ng-container *ngIf="selectedSet">
+      <div class="example-loading-shade" *ngIf="!(cards$ | async)">
+        <mat-spinner></mat-spinner>
+      </div>
+      <mat-toolbar>
+        <img *ngIf="img$ | async as img" [src]="img">
+        <span>{{ selectedSet?.name }}</span>
+        <span class="spacer"></span>
+        <ng-container *ngIf="editing">
+          <div class="v-divider"></div>
+          <button mat-icon-button (click)="deleteAll()">
+            <mat-icon>delete_sweep</mat-icon>
+          </button>
+          <div class="v-divider"></div>
+          <button mat-icon-button (click)="collectAll()">
+            <mat-icon>done_all</mat-icon>
+          </button>
+        </ng-container>
         <div class="v-divider"></div>
-        <button mat-icon-button (click)="deleteAll()">
-          <mat-icon>delete_sweep</mat-icon>
-        </button>
-        <div class="v-divider"></div>
-        <button mat-icon-button (click)="collectAll()">
-          <mat-icon>done_all</mat-icon>
-        </button>
-      </ng-container>
-      <div class="v-divider"></div>
-      <ng-container>
-        <button mat-icon-button (click)="switchMode()">
-          <mat-icon *ngIf="!editing">edit</mat-icon>
-          <mat-icon *ngIf="editing">cancel</mat-icon>
-        </button>
-      </ng-container>
-    </mat-toolbar>
+        <ng-container>
+          <button mat-icon-button (click)="switchMode()">
+            <mat-icon *ngIf="!editing">edit</mat-icon>
+            <mat-icon *ngIf="editing">cancel</mat-icon>
+          </button>
+        </ng-container>
+      </mat-toolbar>
 
-    <mat-table [hidden]="!(cards$ | async)" #table [dataSource]="cards$">
-      <ng-container matColumnDef="number">
-        <mat-header-cell *matHeaderCellDef>Number</mat-header-cell>
-        <mat-cell *matCellDef="let element">{{ element.number }}</mat-cell>
-      </ng-container>
+      <mat-table [hidden]="!(cards$ | async)" #table [dataSource]="cards$">
+        <ng-container matColumnDef="number">
+          <mat-header-cell *matHeaderCellDef>Number</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{ element.number }}</mat-cell>
+        </ng-container>
 
-      <ng-container matColumnDef="select">
-        <mat-header-cell *matHeaderCellDef>
-          <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()">
-          </mat-checkbox>
-        </mat-header-cell>
-        <mat-cell *matCellDef="let row">
-          <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)">
-          </mat-checkbox>
-        </mat-cell>
-      </ng-container>
+        <ng-container matColumnDef="select">
+          <mat-header-cell *matHeaderCellDef>
+            <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()">
+            </mat-checkbox>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)">
+            </mat-checkbox>
+          </mat-cell>
+        </ng-container>
 
-      <ng-container matColumnDef="name">
-        <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
-        <mat-cell *matCellDef="let element">{{ element.name }}</mat-cell>
-      </ng-container>
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{ element.name }}</mat-cell>
+        </ng-container>
 
-      <ng-container matColumnDef="rarity">
-        <mat-header-cell *matHeaderCellDef>Rarity</mat-header-cell>
-        <mat-cell *matCellDef="let element">{{ element.rarity }}</mat-cell>
-      </ng-container>
+        <ng-container matColumnDef="rarity">
+          <mat-header-cell *matHeaderCellDef>Rarity</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{ element.rarity }}</mat-cell>
+        </ng-container>
 
-      <ng-container matColumnDef="supertype">
-        <mat-header-cell *matHeaderCellDef>Supertype</mat-header-cell>
-        <mat-cell *matCellDef="let element">{{ element.supertype }}</mat-cell>
-      </ng-container>
+        <ng-container matColumnDef="supertype">
+          <mat-header-cell *matHeaderCellDef>Supertype</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{ element.supertype }}</mat-cell>
+        </ng-container>
 
-      <ng-container matColumnDef="collected">
-        <mat-header-cell *matHeaderCellDef>Collected</mat-header-cell>
-        <mat-cell *matCellDef="let element">
-          <ng-container *ngIf="!collection[element.id]">
-            <button mat-mini-fab (click)="collect($event, element.id)">
-              <mat-icon aria-label="Collect">check</mat-icon>
-            </button>
-          </ng-container>
-          <ng-container *ngIf="collection[element.id]">
-            {{ collection[element.id] | date }}
-          </ng-container>
-        </mat-cell>
-      </ng-container>
+        <ng-container matColumnDef="collected">
+          <mat-header-cell *matHeaderCellDef>Collected</mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <ng-container *ngIf="!collection[element.id]">
+              <button mat-mini-fab (click)="collect($event, element.id)">
+                <mat-icon aria-label="Collect">check</mat-icon>
+              </button>
+            </ng-container>
+            <ng-container *ngIf="collection[element.id]">
+              {{ collection[element.id] | date }}
+            </ng-container>
+          </mat-cell>
+        </ng-container>
 
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let element; columns: displayedColumns;" (click)="openDialog(element.setCode, element.number)"></mat-row>
-    </mat-table>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let element; columns: displayedColumns;" (click)="openDialog(element.setCode, element.number)"></mat-row>
+      </mat-table>
+    </ng-container>
   </mat-sidenav-content>
 </mat-sidenav-container>
 
