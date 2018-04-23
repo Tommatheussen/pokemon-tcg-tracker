@@ -16,7 +16,74 @@ handler('chart:load', async () => {
   });
 });
 
-async function countCollection() {
+handler('chart:load:series', async () => {
+  let seriesCall = loadSeries();
+  let collectionCall = loadCollection();
+
+  let results = await Promise.all([seriesCall, collectionCall]);
+
+  let allSeries = results[0];
+  let collectionCount = results[1];
+
+  let seriesData = [];
+
+  for (let series in allSeries) {
+    let seriesInfo = {
+      name: series,
+      series: allSeries[series].map(set => {
+        return {
+          name: set.name,
+          value: (collectionCount[set.code] || 0) / set.totalCards * 100
+        };
+      })
+    };
+    seriesData.push(seriesInfo);
+  }
+
+  notify('chart:data:series', seriesData);
+  console.log(seriesData);
+});
+
+function loadCollection() {
+  return new Promise((resolve, reject) => {
+    db.collection.find({}, (err, collection) => {
+      if (err) {
+        reject(err);
+      } else {
+        let setCount = collection.reduce((setCounts, currentCollection) => {
+          if (!setCounts[currentCollection.setCode]) {
+            setCounts[currentCollection.setCode] = 0;
+          }
+          setCounts[currentCollection.setCode]++;
+          return setCounts;
+        }, {});
+        resolve(setCount);
+      }
+    });
+  });
+}
+
+function loadSeries() {
+  return new Promise((resolve, reject) => {
+    db.sets.find({}, (err, sets) => {
+      if (err) {
+        reject(err);
+      } else {
+        let series = sets.reduce((allSeries, currentSet) => {
+          if (!allSeries[currentSet.series]) {
+            allSeries[currentSet.series] = [];
+          }
+          allSeries[currentSet.series].push(currentSet);
+          return allSeries;
+        }, {});
+
+        resolve(series);
+      }
+    });
+  });
+}
+
+function countCollection() {
   return new Promise((resolve, reject) => {
     db.collection.count({}, (err, count) => {
       if (err) {
@@ -28,7 +95,7 @@ async function countCollection() {
   });
 }
 
-async function countTotal() {
+function countTotal() {
   return new Promise((resolve, reject) => {
     db.sets.find({}, (err, sets) => {
       if (err) {
