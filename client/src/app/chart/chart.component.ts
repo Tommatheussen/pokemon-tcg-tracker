@@ -57,31 +57,41 @@ export class ChartsComponent implements OnInit {
 
   chart: Chart[];
 
+  series: string[];
+
   constructor(private _ipcService: IpcService) {}
 
   ngOnInit(): void {
+    this._setupSeriesHandler();
+
     this._setupChartingHandler();
     this._ipcService.sendMessage('chart:load');
 
-    this._setupSeriesDataHandler();
-    this._ipcService.sendMessage('chart:load:series');
+    // this._setupSeriesDataHandler();
+    // this._ipcService.sendMessage('chart:load:series');
 
-    this.chart = new Chart('canvas', {
-      type: 'polarArea',
-      data: {
-        labels: ['Series 1', 'Series 2', 'Series 3', 'Series 4', 'Series 5'],
-        datasets: [
-          {
-            data: [15, 52, 17, 93, 100]
-          }
-        ]
-      }
-    });
+    // this.chart = new Chart('canvas', {
+    //   type: 'polarArea',
+    //   data: {
+    //     labels: ['Series 1', 'Series 2', 'Series 3', 'Series 4', 'Series 5'],
+    //     datasets: [
+    //       {
+    //         data: [15, 52, 17, 93, 100]
+    //       }
+    //     ]
+    //   }
+    // });
   }
 
   private _setupChartingHandler() {
     this._ipcService.setupIpcListenerOnce('chart:data', (event, data) => {
       this.totalProgress = data.collected / data.total * 100;
+    });
+  }
+
+  private _setupSeriesHandler() {
+    this._ipcService.setupIpcListenerOnce('series:data', (event, data) => {
+      this.series = data;
     });
   }
 

@@ -12,9 +12,7 @@
     </mat-list>
   </mat-sidenav>
   <mat-sidenav-content>
-    <ng-container *ngIf="(sets | async) && !selectedSet">
-      <pokemon-charts></pokemon-charts>
-    </ng-container>
+    <pokemon-charts *ngIf="(sets | async) && !selectedSet"></pokemon-charts>
     <ng-container *ngIf="selectedSet">
       <div class="example-loading-shade" *ngIf="!(cards$ | async)">
         <mat-spinner></mat-spinner>

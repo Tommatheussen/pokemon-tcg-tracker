@@ -16,6 +16,28 @@ handler('chart:load', async () => {
   });
 });
 
+handler('series:data:load', async (event, args) => {
+  let sets = await loadSets(args);
+
+  let setCodes = sets.map(set => {
+    return set.code;
+  });
+
+  let collections = await loadCollections(setCodes);
+
+  let seriesInfo = sets.map(set => {
+    let setCollection = collections.filter(
+      collection => set.code === collection.setCode
+    );
+    return {
+      name: set.name,
+      value: (setCollection.length / set.totalCards * 100).toFixed(2)
+    };
+  });
+
+  notify(`series:data:${args}`, seriesInfo);
+});
+
 handler('chart:load:series', async () => {
   let seriesCall = loadSeries();
   let collectionCall = loadCollection();
@@ -33,7 +55,11 @@ handler('chart:load:series', async () => {
       series: allSeries[series].map(set => {
         return {
           name: set.name,
-          value: (collectionCount[set.code] || 0) / set.totalCards * 100
+          value: (
+            (collectionCount[set.code] || 0) /
+            set.totalCards *
+            100
+          ).toFixed(2)
         };
       })
     };
@@ -41,8 +67,38 @@ handler('chart:load:series', async () => {
   }
 
   notify('chart:data:series', seriesData);
-  console.log(seriesData);
 });
+
+function loadSets(seriesName) {
+  return new Promise((resolve, reject) => {
+    db.sets.find({ series: seriesName }, (err, sets) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(sets);
+      }
+    });
+  });
+}
+
+function loadCollections(setCodes) {
+  return new Promise((resolve, reject) => {
+    db.collection.find(
+      {
+        setCode: {
+          $in: setCodes
+        }
+      },
+      (err, collection) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(collection);
+        }
+      }
+    );
+  });
+}
 
 function loadCollection() {
   return new Promise((resolve, reject) => {

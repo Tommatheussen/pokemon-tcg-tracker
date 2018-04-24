@@ -30,6 +30,7 @@ import { UpdaterService } from './update/updater.service';
 import { ChartsComponent } from './chart/chart.component';
 
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { SeriesChartComponent } from './chart/series-chart.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,9 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     // MenuItemComponent,
     UpdateAvailableDialogComponent,
     UpdateDownloadedDialogComponent,
-    CardPreviewOverlayComponent
+    CardPreviewOverlayComponent,
+
+    SeriesChartComponent
     // SettingsDialogComponent
   ],
   imports: [

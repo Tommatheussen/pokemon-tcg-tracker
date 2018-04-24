@@ -1,5 +1,7 @@
 <!-- Total collection progress -->
-<mat-progress-bar mode="determinate" [value]="totalProgress"></mat-progress-bar>
+
+
+<!-- <mat-progress-bar mode="determinate" [value]="totalProgress"></mat-progress-bar> -->
 
 <!-- <ngx-charts-pie-chart [results]="data" [view]="[250, 250]">
 </ngx-charts-pie-chart>
@@ -10,11 +12,11 @@ Series
 </ngx-charts-bar-horizontal-stacked> -->
 
 <!-- Series collection charts -->
-<div [hidden]="!chart">
+<!-- <div [hidden]="!chart">
   <canvas id="canvas">{{ chart }}</canvas>
-</div>
+</div> -->
 
 
 <div *ngFor="let set of charts">
-  <canvas [id]="set">{{ chartData[set] }}</canvas>
+  <pokemon-series-chart [series]="set"></pokemon-series-chart>
 </div>
