@@ -2,7 +2,6 @@ import { AfterViewInit, Component } from '@angular/core';
 import { Chart } from 'chart.js';
 import { IpcService } from '../ipc.service';
 
-
 @Component({
   selector: 'pokemon-charts',
   templateUrl: './chart.component.html',
@@ -55,7 +54,7 @@ export class ChartsComponent implements AfterViewInit {
   ];
   chartData = {};
 
-  chart: Chart[];
+  generalChart: Chart;
 
   series: string[];
 
@@ -69,18 +68,6 @@ export class ChartsComponent implements AfterViewInit {
 
     // this._setupSeriesDataHandler();
     // this._ipcService.sendMessage('chart:load:series');
-
-    // this.chart = new Chart('canvas', {
-    //   type: 'polarArea',
-    //   data: {
-    //     labels: ['Series 1', 'Series 2', 'Series 3', 'Series 4', 'Series 5'],
-    //     datasets: [
-    //       {
-    //         data: [15, 52, 17, 93, 100]
-    //       }
-    //     ]
-    //   }
-    // });
   }
 
   private _setupChartingHandler() {

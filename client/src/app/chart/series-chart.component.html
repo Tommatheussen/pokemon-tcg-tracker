@@ -4,7 +4,7 @@
       {{ series }}
     </mat-panel-title>
     <mat-panel-description>
-      <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
+      <mat-progress-bar mode="determinate" [value]="progress"></mat-progress-bar>
     </mat-panel-description>
   </mat-expansion-panel-header>
   <canvas [id]="series">{{ chart }}</canvas>

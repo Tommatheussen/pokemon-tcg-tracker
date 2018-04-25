@@ -2,7 +2,6 @@ import { AfterViewInit, Component, Input } from '@angular/core';
 import { Chart } from 'chart.js';
 import { IpcService } from '../ipc.service';
 
-
 @Component({
   selector: 'pokemon-series-chart',
   templateUrl: './series-chart.component.html',
@@ -13,16 +12,18 @@ export class SeriesChartComponent implements AfterViewInit {
 
   chart;
 
+  progress = 0;
+
   constructor(private _ipcService: IpcService) {}
 
   ngAfterViewInit(): void {
     this._setupSeriesChartHandler();
-    this._ipcService.sendMessage(`series:data:load`, this.series);
+    this._ipcService.sendMessage(`chart:series:load`, this.series);
   }
 
   private _setupSeriesChartHandler() {
     this._ipcService.setupIpcListenerOnce(
-      `series:data:${this.series}`,
+      `chart:series:data:${this.series}`,
       (event, data) => {
         let seriesData = data.reduce(
           (accumulator, currentValue) => {
@@ -45,6 +46,12 @@ export class SeriesChartComponent implements AfterViewInit {
             ]
           }
         });
+
+        this.progress =
+          seriesData.values.reduce((accumulator, currentValue) => {
+            accumulator += parseFloat(currentValue);
+            return accumulator;
+          }, 0) / seriesData.values.length;
       }
     );
   }

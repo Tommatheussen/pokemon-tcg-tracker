@@ -16,7 +16,7 @@ handler('chart:load', async () => {
   });
 });
 
-handler('series:data:load', async (event, args) => {
+handler('chart:series:load', async (event, args) => {
   let sets = await loadSets(args);
 
   let setCodes = sets.map(set => {
@@ -35,7 +35,7 @@ handler('series:data:load', async (event, args) => {
     };
   });
 
-  notify(`series:data:${args}`, seriesInfo);
+  notify(`chart:series:data:${args}`, seriesInfo);
 });
 
 handler('chart:load:series', async () => {
