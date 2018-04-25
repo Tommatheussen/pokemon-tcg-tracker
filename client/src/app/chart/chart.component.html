@@ -1,0 +1,33 @@
+<!-- Total collection progress -->
+
+
+<!-- <mat-progress-bar mode="determinate" [value]="totalProgress"></mat-progress-bar> -->
+
+<!-- <ngx-charts-pie-chart [results]="data" [view]="[250, 250]">
+</ngx-charts-pie-chart>
+
+
+Series
+<ngx-charts-bar-horizontal-stacked [view]="[400, 250]" [results]="seriesData">
+</ngx-charts-bar-horizontal-stacked> -->
+
+<!-- Series collection charts -->
+<!-- <div [hidden]="!chart">
+  <canvas id="canvas">{{ chart }}</canvas>
+</div> -->
+
+<mat-accordion>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        General
+      </mat-panel-title>
+      <mat-panel-description>
+        <mat-progress-bar mode="determinate" [value]="totalProgress"></mat-progress-bar>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <canvas id="general">{{ generalChart }}</canvas>
+  </mat-expansion-panel>
+
+  <pokemon-series-chart *ngFor="let set of charts" [series]="set"></pokemon-series-chart>
+</mat-accordion>

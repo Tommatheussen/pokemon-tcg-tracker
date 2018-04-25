@@ -1,0 +1,12 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+.mat-expansion-panel-header-description {
+  max-width: calc(50% - 17px);
+}
+
+.mat-expansion-panel-header-title {
+  max-width: calc(50% - 17px);
+}
