@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subject } from 'rxjs/Subject';
 import { IpcService } from '../ipc.service';
@@ -9,7 +9,7 @@ import { Set } from '../models/set.interface';
   templateUrl: './set-item.component.html',
   styleUrls: ['./set-item.component.scss']
 })
-export class SetItemComponent implements OnInit {
+export class SetItemComponent implements AfterViewInit {
   @Input() set: Set;
   @Input() last: boolean;
 
@@ -18,7 +18,7 @@ export class SetItemComponent implements OnInit {
 
   constructor(private _ipcService: IpcService) {}
 
-  ngOnInit() {
+  ngAfterViewInit() {
     this._ipcService.setupIpcListenerOnce(
       `collection:count:${this.set.code}`,
       (event, args) => {

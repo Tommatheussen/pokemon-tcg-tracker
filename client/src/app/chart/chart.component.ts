@@ -1,14 +1,14 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
+import { Chart } from 'chart.js';
 import { IpcService } from '../ipc.service';
 
-import { Chart } from 'chart.js';
 
 @Component({
   selector: 'pokemon-charts',
   templateUrl: './chart.component.html',
   styleUrls: ['./chart.component.scss']
 })
-export class ChartsComponent implements OnInit {
+export class ChartsComponent implements AfterViewInit {
   totalProgress = 0;
 
   seriesData: {
@@ -61,7 +61,7 @@ export class ChartsComponent implements OnInit {
 
   constructor(private _ipcService: IpcService) {}
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
     this._setupSeriesHandler();
 
     this._setupChartingHandler();

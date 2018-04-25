@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { UpdaterService } from './update/updater.service';
 
 @Component({
@@ -6,10 +6,10 @@ import { UpdaterService } from './update/updater.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements AfterViewInit {
   constructor(private _updaterService: UpdaterService) {}
 
-  ngOnInit() {
+  ngAfterViewInit() {
     this._updaterService.setupHandlers();
   }
 }

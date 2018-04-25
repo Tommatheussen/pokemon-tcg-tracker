@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Inject } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { IpcService } from '../ipc.service';
 import { CardPreviewOverlayRef } from './card-preview-overlay.ref';
@@ -12,7 +12,7 @@ import {
   templateUrl: './card-preview.component.html',
   styleUrls: ['./card-preview.component.css']
 })
-export class CardPreviewOverlayComponent implements OnInit {
+export class CardPreviewOverlayComponent implements AfterViewInit {
   img$: Subject<string> = new Subject<string>();
 
   constructor(
@@ -21,7 +21,7 @@ export class CardPreviewOverlayComponent implements OnInit {
     private _ipcService: IpcService
   ) {}
 
-  ngOnInit() {
+  ngAfterViewInit() {
     this._ipcService.setupIpcListenerOnce(
       `cards:image:${this.cardData.setCode}-${this.cardData.cardNumber}`,
       (event, args) => {

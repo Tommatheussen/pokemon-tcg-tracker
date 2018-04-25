@@ -5,14 +5,15 @@ import {
   MatButtonModule,
   MatCheckboxModule,
   MatDialogModule,
+  MatExpansionModule,
   MatIconModule,
   MatListModule,
+  MatProgressBarModule,
   MatProgressSpinnerModule,
   MatSidenavModule,
   MatSnackBarModule,
   MatTableModule,
-  MatToolbarModule,
-  MatProgressBarModule
+  MatToolbarModule
 } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -20,17 +21,14 @@ import { NgxElectronModule } from 'ngx-electron';
 import { AppComponent } from './app.component';
 import { CardPreviewOverlayComponent } from './card-preview/card-preview.component';
 import { CardPreviewOverlayService } from './card-preview/card-preview.service';
+import { ChartsComponent } from './chart/chart.component';
+import { SeriesChartComponent } from './chart/series-chart.component';
 import { HomeComponent } from './home/home.component';
 import { IpcService } from './ipc.service';
 import { SetItemComponent } from './set-item/set-item.component';
 import { UpdateAvailableDialogComponent } from './update/update-available/update-available-dialog.component';
 import { UpdateDownloadedDialogComponent } from './update/update-downloaded/update-downloaded-dialog.component';
 import { UpdaterService } from './update/updater.service';
-
-import { ChartsComponent } from './chart/chart.component';
-
-import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { SeriesChartComponent } from './chart/series-chart.component';
 
 @NgModule({
   declarations: [
@@ -60,12 +58,12 @@ import { SeriesChartComponent } from './chart/series-chart.component';
     MatToolbarModule,
     MatCheckboxModule,
     MatProgressBarModule,
+    MatExpansionModule,
 
     NgxElectronModule,
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    NgxChartsModule,
 
     OverlayModule
   ],

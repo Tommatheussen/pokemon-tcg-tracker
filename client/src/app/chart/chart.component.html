@@ -16,7 +16,6 @@ Series
   <canvas id="canvas">{{ chart }}</canvas>
 </div> -->
 
-
-<div *ngFor="let set of charts">
-  <pokemon-series-chart [series]="set"></pokemon-series-chart>
-</div>
+<mat-accordion>
+  <pokemon-series-chart *ngFor="let set of charts" [series]="set"></pokemon-series-chart>
+</mat-accordion>

@@ -1,7 +1,7 @@
-import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
+import { AfterViewInit, Component, Input } from '@angular/core';
+import { Chart } from 'chart.js';
 import { IpcService } from '../ipc.service';
 
-import { Chart } from 'chart.js';
 
 @Component({
   selector: 'pokemon-series-chart',
