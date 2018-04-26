@@ -1,4 +1,100 @@
-<mdl-layout mdl-layout-fixed-drawer md-layout-fixed-header>
+<!-- <mat-toolbar>
+  <span>Second Line</span>
+  <span class="spacer"></span>
+  <span>Help</span>
+</mat-toolbar> -->
+
+<mat-sidenav-container fullscreen autosize>
+  <mat-sidenav mode="side" opened>
+    <mat-list>
+      <pokemon-set-item *ngFor="let set of sets | async; let last = last" [set]="set" [last]="last" (click)="selectSet(set)" [class.active]="set.code == selectedSet?.code">
+      </pokemon-set-item>
+    </mat-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <pokemon-charts *ngIf="(sets | async) && !selectedSet"></pokemon-charts>
+    <ng-container *ngIf="selectedSet">
+      <div class="example-loading-shade" *ngIf="!(cards$ | async)">
+        <mat-spinner></mat-spinner>
+      </div>
+      <mat-toolbar>
+        <img *ngIf="img$ | async as img" [src]="img">
+        <span>{{ selectedSet?.name }}</span>
+        <span class="spacer"></span>
+        <ng-container *ngIf="editing">
+          <div class="v-divider"></div>
+          <button mat-icon-button (click)="deleteAll()">
+            <mat-icon>delete_sweep</mat-icon>
+          </button>
+          <div class="v-divider"></div>
+          <button mat-icon-button (click)="collectAll()">
+            <mat-icon>done_all</mat-icon>
+          </button>
+        </ng-container>
+        <div class="v-divider"></div>
+        <ng-container>
+          <button mat-icon-button (click)="switchMode()">
+            <mat-icon *ngIf="!editing">edit</mat-icon>
+            <mat-icon *ngIf="editing">cancel</mat-icon>
+          </button>
+        </ng-container>
+      </mat-toolbar>
+
+      <mat-table [hidden]="!(cards$ | async)" #table [dataSource]="cards$">
+        <ng-container matColumnDef="number">
+          <mat-header-cell *matHeaderCellDef>Number</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{ element.number }}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="select">
+          <mat-header-cell *matHeaderCellDef>
+            <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()">
+            </mat-checkbox>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)">
+            </mat-checkbox>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{ element.name }}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="rarity">
+          <mat-header-cell *matHeaderCellDef>Rarity</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{ element.rarity }}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="supertype">
+          <mat-header-cell *matHeaderCellDef>Supertype</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{ element.supertype }}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="collected">
+          <mat-header-cell *matHeaderCellDef>Collected</mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <ng-container *ngIf="!collection[element.id]">
+              <button mat-mini-fab (click)="collect($event, element.id)">
+                <mat-icon aria-label="Collect">check</mat-icon>
+              </button>
+            </ng-container>
+            <ng-container *ngIf="collection[element.id]">
+              {{ collection[element.id] | date }}
+            </ng-container>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let element; columns: displayedColumns;" (click)="openDialog(element.setCode, element.number)"></mat-row>
+      </mat-table>
+    </ng-container>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+
+<!-- <mdl-layout mdl-layout-fixed-drawer md-layout-fixed-header>
   <mdl-layout-header>
     <mdl-layout-header-row>
       <mdl-layout-title>Pokemon TCG Collection Tracker</mdl-layout-title>
@@ -6,32 +102,5 @@
       <mdl-layout-title>Set: {{ selectedSet }}</mdl-layout-title>
     </mdl-layout-header-row>
   </mdl-layout-header>
-  <mdl-layout-drawer>
-    <mdl-layout-title>Sets</mdl-layout-title>
-     <mdl-list class='set-list'>
-    <pokemon-menu-item *ngFor='let set of (sets | async)'
-      [set]='set'
-      (selectSet)='selectSet($event)'
-      [selectedSet]='selectedSet'
-      ></pokemon-menu-item>
-    </mdl-list>
-  </mdl-layout-drawer>
-  <mdl-layout-content>
-    <ngx-datatable
-      class='material'
-      [columnMode]='"force"'
-      [rowHeight]='"auto"'
-      [rows]='cards'
-      [columns]='columns'
-      [rowClass]='getRowClass'
-      [messages]='{ emptyMessage: "No set selected" }'>
-    </ngx-datatable>
-  </mdl-layout-content>
 <mdl-layout>
-
-<ng-template #collectionTmpl let-row='row' let-value='value'>
-  <button *ngIf='!value' mdl-button mdl-button-type='mini-fab' (click)='collectCard(row)'>
-    <mdl-icon>library_add</mdl-icon>
-  </button>
-  <div *ngIf='value'>{{ value | date : 'mediumDate' }}</div>
-</ng-template>
+-->

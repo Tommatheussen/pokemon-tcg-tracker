@@ -1,72 +1,97 @@
+import { OverlayModule } from '@angular/cdk/overlay';
+import { HttpClientModule } from '@angular/common/http';
+import { NgModule } from '@angular/core';
+import {
+  MatButtonModule,
+  MatCheckboxModule,
+  MatDialogModule,
+  MatExpansionModule,
+  MatIconModule,
+  MatListModule,
+  MatProgressBarModule,
+  MatProgressSpinnerModule,
+  MatSidenavModule,
+  MatSnackBarModule,
+  MatTableModule,
+  MatToolbarModule
+} from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, ErrorHandler, APP_INITIALIZER } from '@angular/core';
-import { HttpModule } from '@angular/http';
-
-import { FormsModule } from '@angular/forms';
-
-
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-import { MdlModule } from '@angular-mdl/core';
-
-import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
-
-import { SetService } from './database/set.service';
-import { CardService } from './database/card.service';
-import { CollectionService } from './database/collection.service';
-import { MenuItemComponent } from './menu-item/menu-item.component';
-
-import { UpdaterService } from './update/updater.service';
-
-import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-
 import { NgxElectronModule } from 'ngx-electron';
-
-import { SettingsService } from './settings/settings.service';
-
-import { UpdateAvailableDialogComponent } from './update/update-available-dialog.component';
-import { SettingsDialogComponent } from './settings/settings-dialog.component';
-
-import { SettingsStore } from './database/settings.store';
-
-import { settingsFactory } from './settings.factory';
+import { AppComponent } from './app.component';
+import { CardPreviewOverlayComponent } from './card-preview/card-preview.component';
+import { CardPreviewOverlayService } from './card-preview/card-preview.service';
+import { ChartsComponent } from './chart/chart.component';
+import { SeriesChartComponent } from './chart/series-chart.component';
+import { HomeComponent } from './home/home.component';
+import { IpcService } from './ipc.service';
+import { SetItemComponent } from './set-item/set-item.component';
+import { UpdateAvailableDialogComponent } from './update/update-available/update-available-dialog.component';
+import { UpdateDownloadedDialogComponent } from './update/update-downloaded/update-downloaded-dialog.component';
+import { UpdaterService } from './update/updater.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    MenuItemComponent,
+    ChartsComponent,
+
+    SetItemComponent,
+
+    // MenuItemComponent,
     UpdateAvailableDialogComponent,
-    SettingsDialogComponent
+    UpdateDownloadedDialogComponent,
+    CardPreviewOverlayComponent,
+
+    SeriesChartComponent
+    // SettingsDialogComponent
   ],
   imports: [
+    MatSnackBarModule,
+    MatDialogModule,
+    MatButtonModule,
+    MatSidenavModule,
+    MatListModule,
+    MatTableModule,
+    MatProgressSpinnerModule,
+    MatIconModule,
+    MatToolbarModule,
+    MatCheckboxModule,
+    MatProgressBarModule,
+    MatExpansionModule,
+
     NgxElectronModule,
     BrowserModule,
-    HttpModule,
     BrowserAnimationsModule,
-    MdlModule,
-    NgxDatatableModule,
-    FormsModule
+    HttpClientModule,
+
+    OverlayModule
   ],
   providers: [
-    SettingsService,
+    //SettingsService,
     UpdaterService,
-    SetService,
-    CardService,
-    CollectionService,
-    SettingsStore,
-    {
-      provide: APP_INITIALIZER,
-      useFactory: settingsFactory,
-      deps: [SettingsStore],
-      multi: true
-    }
+    IpcService,
+
+    CardPreviewOverlayService
+
+    // SetService,
+    // CardService,
+    // CollectionService,
+    // SettingsStore,
+    // {
+    //   provide: APP_INITIALIZER,
+    //   useFactory: (settingsStore: SettingsStore) => () =>
+    //     settingsStore.initSettings(),
+    //   deps: [SettingsStore],
+    //   multi: true
+    // }
   ],
   bootstrap: [AppComponent],
   entryComponents: [
     UpdateAvailableDialogComponent,
-    SettingsDialogComponent
+    UpdateDownloadedDialogComponent,
+    CardPreviewOverlayComponent
+    // SettingsDialogComponent
   ]
 })
-export class AppModule { }
+export class AppModule {}

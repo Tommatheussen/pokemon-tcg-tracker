@@ -1,0 +1,11 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+
+body {
+  margin: 0;
+}
+
+.dark-backdrop {
+  background: #000;
+  opacity: 0.85 !important;
+}

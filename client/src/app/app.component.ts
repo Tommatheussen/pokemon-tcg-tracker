@@ -1,15 +1,15 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { UpdaterService } from './update/updater.service';
 
 @Component({
   selector: 'pokemon-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
-  constructor(
-    private updaterService: UpdaterService
-  ) {
-    this.updaterService.setupHandlers();
+export class AppComponent implements AfterViewInit {
+  constructor(private _updaterService: UpdaterService) {}
+
+  ngAfterViewInit() {
+    this._updaterService.setupHandlers();
   }
 }

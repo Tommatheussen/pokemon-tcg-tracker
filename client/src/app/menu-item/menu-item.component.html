@@ -1,7 +1,0 @@
-<mdl-list-item lines="2" (click)="select()" class="set" [class.active]="set.name == selectedSet">
-  <mdl-list-item-primary-content>
-      <span>{{ set.name }}</span>
-      <mdl-list-item-sub-title>{{ set.releaseDate }}</mdl-list-item-sub-title>
-  </mdl-list-item-primary-content>
-  <span >{{ count / set.totalCards | percent:'1.0-2' }}</span>
-</mdl-list-item>

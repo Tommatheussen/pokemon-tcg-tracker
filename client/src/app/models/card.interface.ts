@@ -3,7 +3,6 @@ export interface Card {
   id: string;
   number: number;
   rarity: string;
-  series: string;
+  supertype: string;
   setCode: string;
-  collected: Date;
 }

@@ -13,7 +13,7 @@
     "dist:mac": "build --mac",
     "dist": "npm run dist:win && npm run dist:mac",
     "ng": "ng",
-    "start": "concurrently \"gulp serve\" \"cd client && ng serve\" ",
+    "start": "electron .",
     "build": "ng build",
     "compile": "cd client && ng build --base-href . --prod -op ../build_client",
     "test-release": "npm run compile && npm run dist:win",
@@ -25,15 +25,18 @@
   },
   "private": true,
   "dependencies": {
-    "electron-updater": "^1.16.0",
-    "js-yaml": "^3.8.4"
+    "@trodi/electron-splashscreen": "^0.3.0",
+    "electron-updater": "^2.21.3",
+    "mkdirp": "^0.5.1",
+    "moment": "^2.21.0",
+    "nedb": "^1.8.0",
+    "pokemontcgsdk": "^1.1.0",
+    "request-promise-native": "^1.0.5"
   },
   "devDependencies": {
-    "concurrently": "^3.4.0",
-    "electron": "^1.6.10",
-    "electron-builder": "^18.3.5",
-    "electron-connect": "^0.6.1",
-    "gulp": "^3.9.1"
+    "electron": "^1.8.4",
+    "electron-builder": "^20.6.2",
+    "electron-reload": "^1.2.2"
   },
   "build": {
     "appId": "pokemon.tcg.tracker",

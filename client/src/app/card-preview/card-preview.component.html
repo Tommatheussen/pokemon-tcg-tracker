@@ -1,0 +1,5 @@
+<img *ngIf="img$ | async as img; else loading" [src]="img">
+
+<ng-template #loading>
+  <mat-spinner matListAvatar diameter="100"></mat-spinner>
+</ng-template>
